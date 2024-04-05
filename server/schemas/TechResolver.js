@@ -1,6 +1,6 @@
 
 // Import all modules 
-const Technology = require('file_path_for_Model_User');
+const Technology = require('../models/Technologies');
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
 
 
