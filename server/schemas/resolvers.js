@@ -1,9 +1,12 @@
-// Resolvers file 
+ // TypeDefs file 
 
-const resolvers = {
-    Query: {
-        hello: () => 'Hello, Everyone.. Welcome to StackBuddy'
-    },
-};
+ const { gql } = require('apollo-server-express');
+ const typeDefs = gql`
+ type Query {
+    hello: String
+ }
+ `;
 
-module.exports = resolvers;
+ module.exports = typeDefs;
+
+ 
