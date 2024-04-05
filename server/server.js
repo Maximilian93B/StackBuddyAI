@@ -3,7 +3,7 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const { authMiddleware } = require('./utils/auth');
+//const { authMiddleware } = require('./utils/auth');
 const logger = require ('morgan') // Import morgan for HTTP request logging
 
 
@@ -19,12 +19,13 @@ app.use(logger('dev'));
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context : async ({ req }) => {
+   /* context : async ({ req }) => {
         // Use the authMiddleware to extract authen data 
         const authData = authMiddleware ({ req });
         // Pass tje auth Data to resolvers
         return{...authData};
     },
+    */
 });
     // Start the server 
     await server.start();

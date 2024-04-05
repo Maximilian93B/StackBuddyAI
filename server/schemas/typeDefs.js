@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 /* Types 
 Project
 User
-TechCategory
+TechCategory --> Selected Tech stack for users projects 
 
 These types will define our main data. 
 ! = Non Nullable = Must return values 
