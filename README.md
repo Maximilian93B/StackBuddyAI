@@ -1,4 +1,4 @@
-# Tech Stack Buddy AI
+# Stack Buddy AI
 
 <br/>
 <p align="center">
