@@ -1,4 +1,3 @@
-const { gql } = require('apollo-server-express');
 
 /* Types 
 Project
@@ -19,6 +18,8 @@ Error Handling ?
 
 */
 
+const { gql } = require('apollo-server-express');
+
 const typeDefs = gql`
    
 #       Define Project type
@@ -27,12 +28,13 @@ type Project {
     id: ID!
     title: String!
     description: String!
-    useQueries: [String!] # User queries for tech stack recommendation
+    userQueries: [String!] # User queries for tech stack recommendation
     techSelection: [TechCategory] # Tech categories and selected technologies
     comments: [String!] # User comments on the project
     dateStamp: String! 
     owner: User! # The user who owns the project --> Will use for permissions for project
 }
+
 
 #           User type
 
@@ -44,45 +46,44 @@ type User {
 }
 
 
+type AuthPayload {
+    token: String!
+    user: User
+}
+
+
 #       Define a Tech Category 
 
 type TechCategory {
-    categpry: String!
+    category: String!
     technologies: [String!] # Technologies selected for each category
 }
 
 
-#            Queries
 type Query {
-    projects: [Project!]! # Fetch all projects
-    project(id: ID! ): Project # Fetch a single project by ID 
-    users: [User!] # Fetch all users
-    user(id: ID): User # Fetch a single user by ID 
+    projects: [Project!]!
+    project(id: ID!): Project
+    users: [User!]
+    user(id: ID!): User
+    me: User
 }
-
-
 
 #           Mutations 
 
 type Mutation {
-    createProject(title: String!, description: String!, useQueries: [String], techSelection: [TechCategoryInput], comments: [String]): Project
-    updateProject(id: ID!, title: String, description: String, userQueries: [String], techSelection: [TechCategoryInput], comments: [String]): Project
+    signup(username: String!, email: String!, password: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
+    createProject(title: String!, description: String!, userQueries: [String!], techSelection: [TechCategoryInput], comments: [String!]): Project
+    updateProject(id: ID!, title: String, description: String, userQueries: [String!], techSelection: [TechCategoryInput], comments: [String!]): Project
 }
 
  #          Inpurt type for tech selection when creating/updating projects
 
  input TechCategoryInput {
     category: String!
-    technologies: [String]!
-  }
-
-
-#           Auth payload for login/signup mutations 
-
-type AuthPayload {
-    token: String! # Authentication token
-    user: User! # Logged in user information
+    technologies: [String!]!
 }
+
 `;
 
 module.exports = typeDefs;
