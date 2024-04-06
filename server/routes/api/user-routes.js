@@ -13,10 +13,8 @@ const { authMiddleware } = require('../../utils/auth');
  * - POST `/` to create a new user (sign up).
  * - POST `/login` for user login, returning a JWT for authenticated sessions.
  * - GET `/me` to retrieve the logged-in user's profile, leveraging the `authMiddleware` for authentication.
- * - PUT `/projects` to update user's current projects, requires authentication.
- * - DELETE `/projects/:projectId` to remove a project from user's list, requires authentication.
  * These routes support the core functionalities related to user account management and
- * authenticationin the Tech Stack Buddy AI application.
+ * authentication in the Tech Stack Buddy AI application.
  */
 
 // Route to sign up a new user
