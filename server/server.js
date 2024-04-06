@@ -7,8 +7,8 @@ const db = require('./config/connection');
 const logger = require ('morgan') // Import morgan for HTTP request logging
 const path = require('path');
 
-// Import user routes
-const userRoutes = require('./routes');
+// Import routes for REST API calls
+const useRESTAPIRoutes = require('./routes');
 
 async function startApolloServer(typeDefs, resolvers) {
     //Define the PORT , use .env or default to 3001 
@@ -21,8 +21,8 @@ async function startApolloServer(typeDefs, resolvers) {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    // Use user routes for REST API calls
-    app.use('/', userRoutes);
+    // Use routes for REST API calls
+    app.use('/', useRESTAPIRoutes);
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 
 const server = new ApolloServer({
