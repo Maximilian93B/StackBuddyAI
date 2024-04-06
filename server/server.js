@@ -7,6 +7,7 @@ const db = require('./config/connection');
 const logger = require ('morgan') // Import morgan for HTTP request logging
 
 
+
 async function startApolloServer(typeDefs, resolvers) {
  //Define the PORT , use .env or default to 3001 
  const PORT = process.env.PORT || 3001;
@@ -14,6 +15,8 @@ async function startApolloServer(typeDefs, resolvers) {
 
 // Use Morgan for detailed request logging during dev phase 
 app.use(logger('dev'));
+
+
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 
 const server = new ApolloServer({
