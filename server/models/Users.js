@@ -47,9 +47,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `projectCount` with the number of saved projects we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+// Define a virtual property 'projectCount' that returns the number of projects
+userSchema.virtual('projectCount').get(function () {
+  return this.currentProjects.length; // Use the actual 'currentProjects' field
 });
 
 const User = mongoose.model('User', userSchema);

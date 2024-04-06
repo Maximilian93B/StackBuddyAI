@@ -5,14 +5,24 @@ const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
 const logger = require ('morgan') // Import morgan for HTTP request logging
+const path = require('path');
+
+// Import user routes
+const userRoutes = require('./routes');
 
 async function startApolloServer(typeDefs, resolvers) {
- //Define the PORT , use .env or default to 3001 
- const PORT = process.env.PORT || 3001;
- const app = express();
+    //Define the PORT , use .env or default to 3001 
+    const PORT = process.env.PORT || 3001;
+    const app = express();
 
-// Use Morgan for detailed request logging during dev phase 
-app.use(logger('dev'));
+    // Use Morgan for detailed request logging during dev phase 
+    app.use(logger('dev'));
+
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+
+    // Use user routes for REST API calls
+    app.use('/', userRoutes);
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 
 const server = new ApolloServer({
