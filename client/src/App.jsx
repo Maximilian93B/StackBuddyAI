@@ -1,33 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { ApolloClient, InMemoryCahce, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from 'apollo/client';
+import { Outlet } from 'react-router-dom';
 import './App.css'
+
+
+// Construct main GraphQl API endpoint
+const httpLink = createHttpLink({
+  uri:'http://localhost:3001/graphql',
+  cache: new InMemoryCahce()
+});
+
+// Construct request middleware that will attach JWT to every request
+const authLink = setContext((_, { headers }) => {
+  // Get the auth token from local storage if it exists 
+  const token = localStorage.getItem('id_token');
+  // Return headers to the contetxt so httplink can read
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+// Create a new Apollo Client Instance 
+
+const client = new ApolloClient ( { 
+  // Set up out client to execute the 'authlink' middleware prior to makinf the request 
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCahce(),
+});
+
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <ApolloProvider client = {client}>
+
+      </ApolloProvider>
     </>
   )
 }

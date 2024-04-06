@@ -5,7 +5,6 @@ const userResolvers = require('./UserResolver');
 const technologyResolvers = require('./UserResolver');
 
 // Merge Resolvers 
-
 const resolvers = { 
     Query: {
         ...projectResolvers.Query,
