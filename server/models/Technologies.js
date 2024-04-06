@@ -1,17 +1,21 @@
 // models/Technologies.js
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const TechnologySchema = new mongoose.Schema({
+const technologySchema = new Schema({
     // The name of the technology
-    name: String,
-    // Category like "Database", "Backend", "Frontend"
-    category: String,
-    comments: [{
-      text: String,
-      postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-      dateStamp: { type: Date, default: Date.now },
-    }],
+    name: { 
+      type: String,
+      required: true,
+      unique: true
+    },
+    // Category "Database", "Backend", "Frontend"
+    category: {
+      type: String,
+      required: true,
+      enum: ['Database', 'Backend', 'Frontend', 'Tool', 'Service']
+    },
+    description: String,
 });
 
-const Technology = mongoose.model('Technology', TechnologySchema);
-module.exports = Technology;
+module.exports = mongoose.model('Technology', technologySchema);

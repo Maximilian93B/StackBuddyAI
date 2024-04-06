@@ -25,6 +25,7 @@ const userResolvers = {
     // Login and return auth token 
     login: async (_, {email, password }) => {
       const user = await User.findOne({ email });
+      // Throw error if user or password does not exist or incorrect
       if (!user || !(await user.isCorrectPassword(password))) {
         throw new AuthenticationError('Incorrect credentials');
       }

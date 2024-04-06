@@ -1,6 +1,6 @@
 // models/User.js
-const mongoose = require('mongoose')
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -28,6 +28,11 @@ const userSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      transform: (doc, ret) => {
+        // Ensure password is not sent back to client
+        delete ret.password;
+        return ret;
+      },
     },
   }
 );
@@ -38,7 +43,6 @@ userSchema.pre('save', async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
@@ -47,11 +51,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// Define a virtual property 'projectCount' that returns the number of projects
+// Define a virtual property 'projectCount' that returns number of projects
 userSchema.virtual('projectCount').get(function () {
-  return this.currentProjects.length; // Use the actual 'currentProjects' field
+  return this.currentProjects.length;
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

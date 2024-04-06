@@ -1,21 +1,26 @@
 // models/Projects.js
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const ProjectSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  // Array to store user queries for tech stack recommendations
-  userQueries: [String],
-  techSelection: [{
-    // Example categories: "Database", "Backend", "Frontend", etc.
-    category: String,
-    // Array of recommended technologies for each category
-    technologies: [String],
+const projectSchema = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  // Reference to the project owner
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  // References to chosen technologies
+  technologies: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Technology'
   }],
-  comments: [String],
-  dateStamp: { type: Date, default: Date.now },
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-});
+}, { timestamps: true });
 
-const Project = mongoose.model('Project', ProjectSchema);
-module.exports = Project;
+module.exports = mongoose.model('Project', projectSchema);
