@@ -1,20 +1,19 @@
-import { ApolloClient, InMemoryCahce, ApolloProvider, createHttpLink } from '@apollo/client';
-import { setContext } from 'apollo/client';
+import React from 'react'; 
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
-import './App.css'
+import './App.css';
 
-
-// Construct main GraphQl API endpoint
+// Construct main GraphQL API endpoint
 const httpLink = createHttpLink({
-  uri:'http://localhost:3001/graphql',
-  cache: new InMemoryCahce()
+  uri: 'http://localhost:3001/graphql',
 });
 
-// Construct request middleware that will attach JWT to every request
+// Construct request middleware that will attach the JWT to every request
 const authLink = setContext((_, { headers }) => {
-  // Get the auth token from local storage if it exists 
+  // Get the auth token from local storage if it exists
   const token = localStorage.getItem('id_token');
-  // Return headers to the contetxt so httplink can read
+  // Return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
@@ -23,26 +22,23 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Create a new Apollo Client Instance 
-
-const client = new ApolloClient ( { 
-  // Set up out client to execute the 'authlink' middleware prior to makinf the request 
+// Create a new Apollo Client instance
+const client = new ApolloClient({
+  // Set up our client to execute the authLink middleware prior to making the request
   link: authLink.concat(httpLink),
-  cache: new InMemoryCahce(),
+  cache: new InMemoryCache(), // Corrected the spelling here
 });
 
-
-
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-    <ApolloProvider client = {client}>
-
+      <ApolloProvider client={client}>
+        <Outlet /> {/* Render child routes */}
       </ApolloProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
