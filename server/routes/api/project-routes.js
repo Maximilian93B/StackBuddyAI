@@ -6,7 +6,7 @@ const {
     deleteProject,
     updateUserProjects,
     deleteUserProject
-} = require('../../controllers/user-controller');
+} = require('../../controllers/project-controller');
 
 // import middleware for authentication
 const { authMiddleware } = require('../../utils/auth');
