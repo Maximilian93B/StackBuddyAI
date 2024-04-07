@@ -48,21 +48,22 @@ const projectResolvers = {
       const project = await Project.findById(id);
       // If project does not exsist
       if(!project) {
-        throw new Error('Project not found')
+        throw new Error('Unable to locate Project with that ID')
       }
       // If not project owner 
       if (project.owner.toString() !== context.user._id) {
-        throw new ForbiddenError (' Unable to update project, You are not the owner')
+        throw new ForbiddenError (' Unable to update project, You must be the owner of a project to make changes to it.')
       }
-
       await Project.findByIdAndUpdate(id, {
-      $set:
-      title,
-      description,
-      userQueries,
-      techSelection,
-      comments,
-    });
+        $set: {
+          ...(title && {title}),
+          ...(description && {description}),
+          ...(userQueries && {userQueries}),
+          ...(techSelection && {techSelection}),
+          ...(comments && {comments}),
+        }
+      });
+      
     // Fetch and populate the updated doc (project)
     return Project.findById(id).populate('owner');
     },

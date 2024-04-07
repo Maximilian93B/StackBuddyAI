@@ -1,7 +1,7 @@
 // Import rall modules required 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schemas');
+const { typeDefs, resolvers } = require('./schemas/index');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
 const logger = require ('morgan') // Import morgan for HTTP request logging
@@ -9,6 +9,7 @@ const path = require('path');
 
 // Import routes for REST API calls
 const useRESTAPIRoutes = require('./routes');
+
 
 async function startApolloServer(typeDefs, resolvers) {
     //Define the PORT , use .env or default to 3001 
@@ -23,6 +24,8 @@ async function startApolloServer(typeDefs, resolvers) {
 
     // Use routes for REST API calls
     app.use('/', useRESTAPIRoutes);
+
+
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 
 const server = new ApolloServer({

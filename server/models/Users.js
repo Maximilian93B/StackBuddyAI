@@ -51,7 +51,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// Define a virtual property 'projectCount' that returns number of projects
+// when we query a user, we'll also get another field called `projectCount` with the number of saved projects we have
 userSchema.virtual('projectCount').get(function () {
   return this.currentProjects.length;
 });
