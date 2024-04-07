@@ -8,17 +8,17 @@ export const SIGNUP_MUTATION = gql`
 mutation Singup($username: String!, $email: String!, $password: String!) {
     signup(username: $username, email: $email, password: $password) {
         token
-        user{
+        user {
             id
             username
-            emial
+            email
         }
     }
 }
 `;
 
 export const LOGIN_MUTATION = gql`
-mutation Login($email: String!, $password: String!) {
+mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
         token 
         user {
