@@ -2,10 +2,12 @@
 // Import Hooks 
 // Import Mutation
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom'; // Corrected import for useNavigate
 import { SIGNUP_MUTATION, LOGIN_MUTATION} from '../utils/UserMutations';
+// Correct import for a default export
+import AuthService from '../utils/auth';
 import styled from 'styled-components';
 
 // SignUp Form Styles
@@ -54,10 +56,19 @@ function AuthForm() {
     const [formError, setFormError] = useState(''); // Handle errors for form submit 
     const navigate = useNavigate(); // useNavigate to redirect the users after success or failure 
 
+    // Effect hook to redirect already loggin users 
+    useEffect(() => {
+        if(AuthService.loggedIn()) {
+            // Redirect user if logged in back the workstation
+            navigate('/workstation')
+        }
+    }, [navigate]);
+
     // Define our mutations + handle SingUp/login redirect to workstation
     // On successfull SignUp redirect the user to our landing page so they can log in and begin onboarding
     const [signup, { loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
-        onCompleted: () => {
+        onCompleted: (data) => {
+            AuthService.login(data.signup.token);
             navigate('/')
             setFormState({ email: '', password: '', username: '',}); // Clean up - clear the form 
         },
@@ -66,21 +77,22 @@ function AuthForm() {
         }
     });
     // On successful login redirect the user to their workstation and forgo all the onboarding. 
-    const [login, { loading: loadingLogin, error: errorLogin }] = useMutation(LOGIN_MUTATION, {
-        onCompleted: () => {
-            navigate('/workstation'); 
-            setFormState({ email: '', password: '', username:'', }); // Clean up
+    const [login, { loading: loadingLogin, error : errorLogin }] = useMutation(LOGIN_MUTATION, {
+        onCompleted: (data) => {
+            AuthService.login(data.login.token); 
+            navigate('/workstation');
         },
         onError: (error) => {
-            setFormError:(error.message); // Same error handling as sign up
+            setFormError(error.message); 
         }
     });
+    
     
     // Function to update formState with current input values whenever a change occurs in the form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormState({ ...formState,[name]: value, });
-        setFormError(''); // Clean up 
+        setFormState({ ...formState, [name]: value });
+        setFormError(''); // Clean up
     };
 
     // Function to handle form submission
@@ -108,7 +120,7 @@ function AuthForm() {
     };
 
     const loading = isLogin ? loadingLogin : loadingSignup;
-    const error = isLogin ? errorLogin : errorSignup;
+
     return (
         <Container>
         <StyledForm onSubmit={handleSubmit}>
