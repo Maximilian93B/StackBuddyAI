@@ -1,5 +1,5 @@
 import React from 'react'
-import Signup from '../components/SignUpForm';
+import Signup from '../components/AuthForm';
 
 function LandingPage(){
 
