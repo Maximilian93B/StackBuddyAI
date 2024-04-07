@@ -51,41 +51,4 @@ module.exports = {
 
     res.json(foundUser);
   },
-  
-  // Update user projects by adding a new project
-  async updateUserProjects(req, res) {
-    const { user, body } = req;
-    try {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $addToSet: { currentProjects: body.projectId } },
-        { new: true, runValidators: true }
-      ).populate('currentProjects');
-
-      return res.json(updatedUser);
-    } catch (err) {
-      console.error(err);
-      return res.status(400).json(err);
-    }
-  },
-  
-  // Delete a project from user's currentProjects
-  async deleteUserProject(req, res) {
-    const { user, params } = req;
-    try {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $pull: { currentProjects: params.projectId } },
-        { new: true }
-      ).populate('currentProjects');
-
-      if (!updatedUser) {
-        return res.status(404).json({ message: "Couldn't find user with this ID." });
-      }
-      return res.json(updatedUser);
-    } catch (err) {
-      console.error(err);
-      return res.status(400).json(err);
-    }
-  },
 };
