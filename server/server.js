@@ -31,12 +31,13 @@ async function startApolloServer(typeDefs, resolvers) {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context : async ({ req }) => {
-        // Use the authMiddleware to extract authen data 
-        const authData = authMiddleware ({ req });
-        // Pass tje auth Data to resolvers
-        return{...authData};
-    },
+    context: ({ req }) => ({ user: req.user }),
+    // context : async ({ req }) => {
+    //     // Use the authMiddleware to extract authen data 
+    //     const authData = authMiddleware ({ req });
+    //     // Pass tje auth Data to resolvers
+    //     return{...authData};
+    // },
 });
     // Start the server 
     await server.start();
