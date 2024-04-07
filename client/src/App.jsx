@@ -1,7 +1,8 @@
 import React from 'react'; 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Outlet } from 'react-router-dom';
+import LandingPage from '../src/pages/LandingPage';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -35,7 +36,10 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
-        <Outlet /> {/* Render child routes */}
+       <Routes> {/* Use Routes to wrap Route components*/}
+          <Route path = '/' element = {<LandingPage />} />
+          {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
+        </Routes>
       </ApolloProvider>
     </>
   );

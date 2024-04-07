@@ -12,8 +12,18 @@ const userResolvers = {
       }
         return await User.findById(context.user._id);
     },
-  },
 
+    // Query to fetch all users 
+    users: async () => {
+      return await User.find({});
+    },
+
+    // Query to fetch a single user 
+    user: async (_, { id }) => {
+      return await User.findById(id);
+    },    
+    // Add querys as we need them 
+  },
   Mutation: {
     // Sign up a new user and return  auth token and  user details
     signup: async (_, { username, email, password }) => {
@@ -33,7 +43,6 @@ const userResolvers = {
       return { token , user }; 
     },
     
-
     // TO DO: 
     // Will need to include more mutations to handle users updating more than email 
     // Need to handle permissions for users still 
