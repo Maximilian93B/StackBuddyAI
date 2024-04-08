@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'; 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import LandingPage from '../src/pages/LandingPage';
+import Workstation from './pages/Workstation';
+import './App.css';
+
+// Construct main GraphQL API endpoint
+const httpLink = createHttpLink({
+  uri: 'http://localhost:3001/graphql',
+});
+
+// Construct request middleware that will attach the JWT to every request
+const authLink = setContext((_, { headers }) => {
+  // Get the auth token from local storage if it exists
+  const token = localStorage.getItem('id_token');
+  // Return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+// Create a new Apollo Client instance
+const client = new ApolloClient({
+  // Set up our client to execute the authLink middleware prior to making the request
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(), // Corrected the spelling here
+});
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ApolloProvider client={client}>
+       <Routes> {/* Use Routes to wrap Route components*/}
+          <Route path = '/' element = {<LandingPage />} />
+          <Route path = '/workstation' element = {<Workstation/> } />
+          {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
+        </Routes>
+      </ApolloProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

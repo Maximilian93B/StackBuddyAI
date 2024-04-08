@@ -1,10 +1,11 @@
 // Import rall modules required 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schemas');
+const { typeDefs, resolvers } = require('./schemas/index');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
 const logger = require ('morgan') // Import morgan for HTTP request logging
+
 
 
 async function startApolloServer(typeDefs, resolvers) {
@@ -14,6 +15,8 @@ async function startApolloServer(typeDefs, resolvers) {
 
 // Use Morgan for detailed request logging during dev phase 
 app.use(logger('dev'));
+
+
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 
 const server = new ApolloServer({
