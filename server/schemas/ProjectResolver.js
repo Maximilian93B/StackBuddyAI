@@ -23,32 +23,52 @@ const projectResolvers = {
       if(!context.user) {
         throw new AuthenticationError('You must be logged in to create a project');
       }
+    try {
+      // Create a new project with title , description and project owner
+      const newProject = new Project({
+        title,
+        description,
+        owner: context.user._id
+      });
+      // save New project instance 
+      await newProject.save();
 
-      try {
-      // Create a new project with onle the title and description+ owner is required 
-          const newProject = new Project({ 
-              title,
-              description,
-              owner: context.user._id,
-            });
-            // Save the new project and return 
-            await newProject.save();
-            return {
-              ...newProject.toObject(),
-              id: newProject._id.toString(),
-              // Add owner to the return // This will become tidious -- > Change shcmeas in models ??
-              owner: {
-                ...newProject.owner.toObject(),
-                id: newProject.owner._id.toString(), // Ensure the owner's ID is a string
-            },
-            };
-      // Catch errors
-            } catch (error) {
-              console.error("Error creating project:", error);
-              throw new Error('Failed to create project. Please try again.');
-            }
-          },
+      // Log for debug ISSUE # 26 
+      console.log('New Project with owner:', newProject);
 
+
+
+      // Prepare the project object for the response. This includes:
+      // - Converting the project document to a plain JavaScript object
+      // - Ensuring getters and virtuals are applied, which might be necessary
+      //   for fields that are computed or transformed when converting the document
+      const projectResponseObject = {
+        ...newProject.toObject({ getters: true, virtuals: true }), // Ensure getters and virtuals are applied
+        id: newProject._id.toString(), // Convert the MongoDB ObjectId (_id) to a string for the ID field
+        owner: {
+          id: newProject.owner._id.toString(),
+        username: newProject.owner.username, // Include the owner's username 
+        },
+      };
+
+      // Directly transform the owner field if it's already an ObjectId
+      // Check and handle if owner needs to be populated for further details
+      if (newProject.owner) {
+        projectResponseObject.owner = {
+          id: newProject.owner.toString(), // Assuming owner is not populated and is an ObjectId
+        };
+      }
+
+         // Log the final project response object to be returned
+         console.log("Project response:", projectResponseObject);
+
+      // Return the transformed project object
+      return projectResponseObject;
+    } catch (error) {
+      console.error("Error creating project:", error);
+      throw new Error('Failed to create project. Please try again.');
+    }
+  },
     // Update a projects properties 
     updateProject: async (_, { id, title, description, userQueries, techSelection, comments }, context) => {
       // If user is not logged in, throw auth error
