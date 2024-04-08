@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import LandingPage from '../src/pages/LandingPage';
+import Workstation from './pages/Workstation';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -38,6 +39,7 @@ function App() {
       <ApolloProvider client={client}>
        <Routes> {/* Use Routes to wrap Route components*/}
           <Route path = '/' element = {<LandingPage />} />
+          <Route path = '/workstation' element = {<Workstation/> } />
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
         </Routes>
       </ApolloProvider>
