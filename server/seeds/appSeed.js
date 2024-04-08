@@ -1,5 +1,5 @@
 // to run from /server directory
-// node seeds/userSeed.js
+// node seeds/appSeed.js
 
 const mongoose = require('mongoose');
 const db = require('../config/connection'); // Adjust the path as needed
