@@ -1,0 +1,41 @@
+Apollo Query 
+
+mutation CreateProject(
+    $title: String!, 
+    $description: String!, 
+    $userQueries: [String!],
+    $techSelection: [TechCategoryInput!],
+    $comments: [String!]
+) {
+   createProject(title: $title,description: $description, userQueries: $userQueries,techSelection: $techSelection, comments: $comments){
+       id
+       title
+       description
+       userQueries
+       techSelection {
+        category
+        technologies
+       }
+       comments 
+       dateStamp
+       owner {
+        id
+        username
+       }
+    }
+}
+
+Variables : 
+
+{
+  "title": "Sample Project",
+  "description": "This is a sample project.",
+  "userQueries": ["How to start?", "Best practices"],
+  "techSelection": [
+    {
+      "category": "Front-end Frameworks",
+      "technologies": ["React", "Vue.js"]
+    }
+  ],
+  "comments": ["Initial commit", "Added React"]
+}

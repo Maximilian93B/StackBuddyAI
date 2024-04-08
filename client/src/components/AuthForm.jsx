@@ -2,7 +2,7 @@
 // Import Hooks 
 // Import Mutation
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom'; // Corrected import for useNavigate
 import { SIGNUP_MUTATION, LOGIN_MUTATION} from '../utils/UserMutations';
@@ -56,13 +56,6 @@ function AuthForm() {
     const [formError, setFormError] = useState(''); // Handle errors for form submit 
     const navigate = useNavigate(); // useNavigate to redirect the users after success or failure 
 
-    // Effect hook to redirect already loggin users 
-    useEffect(() => {
-        if(AuthService.loggedIn()) {
-            // Redirect user if logged in back the workstation
-            navigate('/workstation')
-        }
-    }, [navigate]);
 
     // Define our mutations + handle SingUp/login redirect to workstation
     // On successfull SignUp redirect the user to our landing page so they can log in and begin onboarding
@@ -82,9 +75,7 @@ function AuthForm() {
             AuthService.login(data.login.token); 
             navigate('/workstation');
         },
-        onError: (error) => {
-            setFormError(error.message); 
-        }
+        onError: (error) => { setFormError(error.message); }
     });
     
     
