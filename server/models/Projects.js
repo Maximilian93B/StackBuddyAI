@@ -14,7 +14,7 @@ const ProjectSchema = new mongoose.Schema({
   }],
   comments: [String],
   dateStamp: { type: Date, default: Date.now },
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // No project Can exist without an Owner 
 });
 
 const Project = mongoose.model('Project', ProjectSchema);

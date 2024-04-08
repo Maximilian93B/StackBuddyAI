@@ -44,15 +44,11 @@ const ErrorMessage = styled.p`
   color: red;
 `;
 
-
-
 // Initial state for the form, reseting the form every time 
 // We are excluding the comments + userQueries properties for the CreateProject
-// 
 const initialFormState = {
   title: '',
   description: '',
-  techSelection: '',
 };
 
 // The CreateProjectForm component
@@ -70,62 +66,51 @@ const CreateProjectForm = () => {
 
   // Handles form submission
   const handleSubmit = async (e) => {
-      e.preventDefault(); // Prevent default form submission behavior
-      const techSelectionValue = formData.techSelection || ''; // Define for availability 
-      // Prepares variables for the GraphQL mutation from the form data
-      const variables = {
-         title: formData.title,
-         description: formData.description,
-         //!!!!! NEED TO FIGURE OUT HOW WE EXPECT techSelection TO BE FORMATTED!! 
-         techSelection: techSelectionValue.split(',').map(tech => ({
-          category: tech.trim(), // Assuming the category is directly the tech name
-          technologies: [], // Adjust based on your actual requirements
-      })),
-  };
-      try {
-        await createProject({ variables }); // Execute mutation with prepared variables
-        alert('Project created successfully!'); // Show success message
-        setFormData(initialFormState); // Reset form to initial state
-      }   catch (error) {
-        console.error('Error creating project:', error); // Log any error
-      }
-    };
+    e.preventDefault(); // Prevent default form submission behavior
+    // extract title and descripton from formData
 
-  // Render the form
+    try {
+      await createProject({
+        variables: {
+          title: formData.title,
+          description: formData.description,
+          // techSelection: formatTechSelection(formData.techSelection),
+        },
+      });
+      alert('Project created successfully!');
+      setFormData(initialFormState); // Reset form to initial state
+    } catch (error) {
+      console.error('Error creating project:', error);
+    }
+  };
+  
+  
+  // Render the form to Create a Project 
   return (
     <Form onSubmit={handleSubmit}>
-        <div>
-            <Label>Title</Label>
-            <Input
-              name="title"
-              type="text"
-              value={formData.title}
-              onChange={handleInputChange}
-              required
-            />
-        </div>
-        <div>
-            <Label>Description</Label>
-            <TextArea
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              required
-            />
-        </div>
-        <div>
-            <Label>Tech Selection (comma-separated)</Label>
-            <Input
-              name="techSelection"
-              type="text"
-              value={formData.techSelection}
-              onChange={handleInputChange}
-            />
-        </div>
-        <Button type="submit" disabled={loading}>Create Project</Button>
-        {error && <ErrorMessage>{error.message}</ErrorMessage>}
+      <div>
+        <Label>Title</Label>
+        <Input
+          name="title"
+          type="text"
+          value={formData.title}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div>
+        <Label>Description</Label>
+        <TextArea
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <Button type="submit" disabled={loading}>Create Project</Button>
+      {error && <ErrorMessage>Error creating project: {error.message}</ErrorMessage>}
     </Form>
-);
+  );
 };
 
 export default CreateProjectForm;
