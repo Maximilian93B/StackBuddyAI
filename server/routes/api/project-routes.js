@@ -37,12 +37,4 @@ router.put('/:projectId', authMiddleware, updateProject);
 // Delete a specific project
 router.delete('/:projectId', authMiddleware, deleteProject);
 
-// User-project association management routes
-
-// Add a project to user's list
-router.put('/user-projects', authMiddleware, updateUserProjects);
-
-// Remove a project from user's list
-router.delete('/user-projects/:projectId', authMiddleware, deleteUserProject);
-
 module.exports = router;

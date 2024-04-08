@@ -8,10 +8,10 @@ module.exports = {
         // Extract project description from request
         const { description } = req.body;
         
-        // Obtain a recommendation from the OpenAI service
+        // Obtain a recommendation from OpenAI service
         const recommendation = await getTechStackRecommendation(description);
         
-        // Send the recommendation back to the client
+        // Send recommendation back to client
         res.json({ recommendation });
     } catch (error) {
         console.error(`Error fetching recommendation: ${error}`);

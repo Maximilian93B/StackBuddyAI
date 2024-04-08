@@ -54,9 +54,19 @@ module.exports = {
   // Function to delete a project
   async deleteProject(req, res) {
     try {
-      await Project.findByIdAndRemove(req.params.projectId);
-      // Optionally, remove the project from the user's currentProjects
-      await User.findByIdAndUpdate(req.user._id, { $pull: { currentProjects: req.params.projectId } }, { new: true });
+      // delete project by ID
+      const deletedProject = await Project.findByIdAndDelete(req.params.projectId);
+      if (!deletedProject) {
+        return res.status(404).json({ message: "No project found with this ID!" });
+      }
+
+      // remove project from user's currentProjects
+      await User.findByIdAndUpdate(
+        deletedProject.owner,
+        { $pull: { currentProjects: deletedProject._id } },
+        { new: true }
+      );
+
       res.json({ message: "Project deleted successfully" });
     } catch (error) {
       console.error(error);
@@ -64,40 +74,4 @@ module.exports = {
     }
   },
 
-  // Update user projects by adding a new project
-  async updateUserProjects(req, res) {
-    const { user, body } = req;
-    try {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $addToSet: { currentProjects: body.projectId } },
-        { new: true, runValidators: true }
-      ).populate('currentProjects');
-
-      return res.json(updatedUser);
-    } catch (err) {
-      console.error(err);
-      return res.status(400).json(err);
-    }
-  },
-  
-  // Delete a project from user's currentProjects
-  async deleteUserProject(req, res) {
-    const { user, params } = req;
-    try {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $pull: { currentProjects: params.projectId } },
-        { new: true }
-      ).populate('currentProjects');
-
-      if (!updatedUser) {
-        return res.status(404).json({ message: "Couldn't find user with this ID." });
-      }
-      return res.json(updatedUser);
-    } catch (err) {
-      console.error(err);
-      return res.status(400).json(err);
-    }
-  },
 };
