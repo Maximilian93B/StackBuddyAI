@@ -17,6 +17,8 @@
       "concurrently": "^8.2.0"
     },
     "dependencies": {
+      "apollo-server-express": "^3.13.0",
+      "graphql": "^16.8.1",
       "react-markdown": "^9.0.1"
     }
   }
