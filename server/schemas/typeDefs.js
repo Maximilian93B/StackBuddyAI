@@ -73,9 +73,23 @@ type Query {
 type Mutation {
     signup(username: String!, email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
-    createProject(title: String!, description: String!, userQueries: [String!], techSelection: [TechCategoryInput], comments: [String!]): Project
-    updateProject(id: ID!, title: String, description: String, userQueries: [String!], techSelection: [TechCategoryInput], comments: [String!]): Project
-}
+    createProject(
+      title: String!,
+      description: String!,
+      userQueries: [String], # Made optional
+      techSelection: [TechCategoryInput!], # require at least one TechCategoryInput
+      comments: [String] # Made optional
+    ): Project
+    updateProject(
+      id: ID!,
+      title: String,
+      description: String,
+      userQueries: [String], # optional as well
+      techSelection: [TechCategoryInput], #  updating might not require changing tech selection
+      comments: [String] #  optional 
+    ): Project
+  }
+  
 
  #          Inpurt type for tech selection when creating/updating projects
 

@@ -22,20 +22,17 @@ const projectResolvers = {
         throw new AuthenticationError('You must be logged in to create a project');
       }
 
-      const newProject = new Project(id, { 
-        $set: {
+      const newProject = new Project({ 
           title,
           description,
           userQueries,
           techSelection,
           comments,
           owner: context.user._id,
-        }
-      });
-    
+        });
       // Save the new project 
       await newProject.save();
-     
+    
       return newProject;
     },
     // Update a projects properties 
@@ -54,6 +51,7 @@ const projectResolvers = {
       if (project.owner.toString() !== context.user._id) {
         throw new ForbiddenError (' Unable to update project, You must be the owner of a project to make changes to it.')
       }
+
       await Project.findByIdAndUpdate(id, {
         $set: {
           ...(title && {title}),

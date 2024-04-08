@@ -46,13 +46,13 @@ const ErrorMessage = styled.p`
 
 
 
-// Initial state for the form, resetting all fields to empty or default values
+// Initial state for the form, reseting the form every time 
+// We are excluding the comments + userQueries properties for the CreateProject
+// 
 const initialFormState = {
   title: '',
   description: '',
-  userQueries: '',
   techSelection: '',
-  comments: '',
 };
 
 // The CreateProjectForm component
@@ -71,53 +71,61 @@ const CreateProjectForm = () => {
   // Handles form submission
   const handleSubmit = async (e) => {
       e.preventDefault(); // Prevent default form submission behavior
+      const techSelectionValue = formData.techSelection || ''; // Define for availability 
       // Prepares variables for the GraphQL mutation from the form data
       const variables = {
-          ...formData,
-          userQueries: formData.userQueries.split(',').map(query => query.trim()), // Converts comma-separated string to array
-          techSelection: formData.techSelection.split(',').map(tech => ({
-              category: tech, // Assumes category is the same as tech name; adjust as needed
-              technologies: [], // Currently empty; adjust according to actual data structure
-          })),
-          comments: formData.comments.split(',').map(comment => comment.trim()), // Converts comma-separated string to array
-      };
-
-      try {
-          await createProject({ variables }); // Execute mutation with prepared variables
-          alert('Project created successfully!'); // Show success message
-          setFormData(initialFormState); // Reset form to initial state
-      } catch (error) {
-          console.error('Error creating project:', error); // Log any error
-      }
+         title: formData.title,
+         description: formData.description,
+         //!!!!! NEED TO FIGURE OUT HOW WE EXPECT techSelection TO BE FORMATTED!! 
+         techSelection: techSelectionValue.split(',').map(tech => ({
+          category: tech.trim(), // Assuming the category is directly the tech name
+          technologies: [], // Adjust based on your actual requirements
+      })),
   };
+      try {
+        await createProject({ variables }); // Execute mutation with prepared variables
+        alert('Project created successfully!'); // Show success message
+        setFormData(initialFormState); // Reset form to initial state
+      }   catch (error) {
+        console.error('Error creating project:', error); // Log any error
+      }
+    };
 
   // Render the form
   return (
-      <Form onSubmit={handleSubmit}>
-          <div>
-              <Label>Title</Label>
-              <Input name="title" type="text" value={formData.title} onChange={handleInputChange} required />
-          </div>
-          <div>
-              <Label>Description</Label>
-              <TextArea name="description" value={formData.description} onChange={handleInputChange} required />
-          </div>
-          <div>
-              <Label>User Queries (comma-separated)</Label>
-              <Input name="userQueries" type="text" value={formData.userQueries} onChange={handleInputChange} />
-          </div>
-          <div>
-              <Label>Tech Selection (comma-separated)</Label>
-              <Input name="techSelection" type="text" value={formData.techSelection} onChange={handleInputChange} />
-          </div>
-          <div>
-              <Label>Comments (comma-separated)</Label>
-              <Input name="comments" type="text" value={formData.comments} onChange={handleInputChange} />
-          </div>
-          <Button type="submit" disabled={loading}>Create Project</Button>
-          {error && <ErrorMessage>Error creating project: {error.message}</ErrorMessage>} {/* Display any error messages */}
-      </Form>
-  );
+    <Form onSubmit={handleSubmit}>
+        <div>
+            <Label>Title</Label>
+            <Input
+              name="title"
+              type="text"
+              value={formData.title}
+              onChange={handleInputChange}
+              required
+            />
+        </div>
+        <div>
+            <Label>Description</Label>
+            <TextArea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+            />
+        </div>
+        <div>
+            <Label>Tech Selection (comma-separated)</Label>
+            <Input
+              name="techSelection"
+              type="text"
+              value={formData.techSelection}
+              onChange={handleInputChange}
+            />
+        </div>
+        <Button type="submit" disabled={loading}>Create Project</Button>
+        {error && <ErrorMessage>{error.message}</ErrorMessage>}
+    </Form>
+);
 };
 
 export default CreateProjectForm;

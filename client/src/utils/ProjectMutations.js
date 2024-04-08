@@ -6,28 +6,27 @@ import { gql } from '@apollo/client';
 export const CREATE_PROJECT = gql`
 mutation CreateProject(
     $title: String!, 
-    $description: String!, 
-    $userQueries: [String!],
-    $techSelection: [TechCategoryInput!],
-    $comments: [String!]
-) {
-   createProject(title: $title,description: $description, userQueries: $userQueries,techSelection: $techSelection, comments: $comments){
-       id
-       title
-       description
-       userQueries
-       techSelection {
+    $description: String!,
+    $techSelection: [TechCategoryInput!]
+  ) {
+    createProject(
+      title: $title,
+      description: $description,
+      techSelection: $techSelection
+    ) {
+      id
+      title
+      description
+      techSelection {
         category
         technologies
-       }
-       comments 
-       dateStamp
-       owner {
+      }
+      owner {
         id
         username
-       }
+      }
     }
-}
+  }
 `;
 
 // Update an exisiting project 
