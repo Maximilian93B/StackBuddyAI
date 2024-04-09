@@ -5,7 +5,10 @@ function LandingPage(){
 
 
     return(
+        <>
+    
         <div><Signup></Signup></div>
+        </>
     )
 
 };

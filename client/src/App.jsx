@@ -4,6 +4,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import LandingPage from '../src/pages/LandingPage';
 import Workstation from './pages/Workstation';
+import NavBar from './components/Navbar';
+import Footer from './components/Footer';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -37,11 +39,13 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
+      <NavBar />
        <Routes> {/* Use Routes to wrap Route components*/}
           <Route path = '/' element = {<LandingPage />} />
           <Route path = '/workstation' element = {<Workstation/> } />
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
         </Routes>
+        <Footer />
       </ApolloProvider>
     </>
   );

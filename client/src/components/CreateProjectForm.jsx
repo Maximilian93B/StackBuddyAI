@@ -5,38 +5,53 @@ import styled from 'styled-components';
 
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  max-width: 500px;
+display: flex;
+flex-direction: column;
+gap: 8px; /* Reduced gap for a more compact look */
+width: 90%; /* Adjusted to fit within the dropdown container */
+max-width: 400px; /* Slightly reduced to ensure it fits well in the dropdown */
+margin: 0 auto; /* Center the form in the dropdown */
+padding: 10px;
 `;
 
 const Label = styled.label`
-  margin-bottom: 5px;
+font-size: 0.9rem; /* Smaller font size for labels */
+  color: #333; /* Slightly darker for better readability */
+ padding: 10px;
 `;
 
 const Input = styled.input`
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+padding: 8px;
+border-radius: 4px;
+border: 1px solid #ccc;
+font-size: 0.9rem; 
 `;
 
 const TextArea = styled.textarea`
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+display:flex;
+padding: 8px;
+border-radius: 4px;
+border: 1px solid #ccc;
+font-size: 0.9rem;
 `;
 
 const Button = styled.button`
-  padding: 10px 15px;
+padding: 10px 15px;
   border-radius: 4px;
   border: none;
-  background-color: blue;
+  background-color: #007bff; /* Adjusted to a more standard button color */
   color: white;
   cursor: pointer;
+  font-size: 0.9rem; /* Match other form elements */
+  transition: background-color 0.3s; /* Smooth transition for user feedback */
+
+  &:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+
   &:disabled {
     background-color: #ccc;
+    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
   }
 `;
 

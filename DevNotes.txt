@@ -1,31 +1,8 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Apollo Query 
+
+
+
 
 mutation CreateProject(
     $title: String!, 
@@ -52,8 +29,9 @@ mutation CreateProject(
     }
 }
 
-Variables : 
 
+
+Variables : 
 {
   "title": "Sample Project",
   "description": "This is a sample project.",
