@@ -1,3 +1,66 @@
+TO DO's : 
+
+Back-End: 
+
+// Implement userQueries for AI chabot 
+// Tech selection still needs to be calirified 
+// Seed the app -- Tech Data -- ADMIN ROLES ? 
+//  Add Enviro variables 
+// 
+
+// Look into having the Users Projects updated when the drop a new tech symbol into the Tree 
+
+
+
+Front-End 
+
+TASK: Make a user Profile component to call in "My Profile" dropdown in our Dashboard component. 
+DEV: Ike 
+
+
+example component : 
+
+// Just need to use Styled-components to add styling: 
+
+const UserProfile = ({ data }) => {
+  return (
+    <UserProfileContainer>
+      <Username>Username: {data.username}</Username>
+      <Email>Email: {data.email}</Email>
+      {data.projects && (
+        <Projects>
+          <strong>Projects:</strong>
+          {data.projects.map(project => (
+            <ProjectItem key={project.id}>{project.title}</ProjectItem>
+          ))}
+        </Projects>
+      )}
+    </UserProfileContainer>
+  );
+};
+
+export default UserProfile;
+
+
+TASK :
+DEV: 
+
+
+
+
+
+TASK : 
+DEV : 
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27,6 +90,9 @@
 
 Apollo Query 
 
+
+
+
 mutation CreateProject(
     $title: String!, 
     $description: String!, 
@@ -52,8 +118,9 @@ mutation CreateProject(
     }
 }
 
-Variables : 
 
+
+Variables : 
 {
   "title": "Sample Project",
   "description": "This is a sample project.",

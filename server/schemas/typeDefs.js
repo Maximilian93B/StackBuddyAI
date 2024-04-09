@@ -28,8 +28,8 @@ type User {
     id: ID!
     username: String!
     email: String!
-    currentProjects: [Project!] # Projects owned by the user
-    projectCount: Int
+    projects: [Project] # Projects owned by the user
+    projectCount: Int # added this type
 }
 
 
@@ -50,7 +50,8 @@ type Project {
 
 type TechCategory {
     category: String!
-    technologies: [Technology!] # Technologies selected for each category
+    currentProjects: [Project!] # Projects owned by the user
+    # technologies: [Technology!] # Technologies selected for each category
 }
 
 #       Define Technology type
@@ -67,10 +68,11 @@ type TechCategory {
 
 type Comment {
     id: ID!
-    text: String!
-    postedBy: User!
-    dateStamp: String!
+    username: String!
+    email: String!
+    projects: [Project] # Projects owned by the user
 }
+
 
 type AuthPayload {
     token: String!
