@@ -4,6 +4,8 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas/index');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
+
+const {formatError, errorLoggingPlugin } = require('./utils/apolloBugHutner');
 const logger = require ('morgan') // Import morgan for HTTP request logging
 
 
@@ -28,6 +30,8 @@ const server = new ApolloServer({
         // Pass tje auth Data to resolvers
         return{...authData};
     },
+    formatError, // Custom error format
+    plugins: [errorLoggingPlugin],// custom plugin for logging
 });
     // Start the server 
     await server.start();

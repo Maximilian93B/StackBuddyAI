@@ -6,6 +6,7 @@ import CreateProjectForm from './CreateProjectForm';
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
   display: flex;
+  min-height: 90vh;
   flex-direction: column;
   background: #f5f5f5;
   padding: 20px;
@@ -63,15 +64,15 @@ const Dropdown = ({ title, children }) => {
 const Dashboard = () => {
     return (
       <DashboardContainer>
-        <Dropdown title="User Profile">
+        <Dropdown title="My Profile">
           {/* We will dynamically generate user Profile here based on token + _id */}
           Profile Content
         </Dropdown>
-        <Dropdown title="Current Projects">
+        <Dropdown title="My Projects">
           {/* Current Users projects will need to be fetched  */}
           Projects Content
         </Dropdown>
-        <Dropdown title="Create Project">
+        <Dropdown title="Create A Project">
         {/* Dropdown for creating a new project */}
         <CreateProjectForm />
       </Dropdown>
