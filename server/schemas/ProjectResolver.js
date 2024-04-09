@@ -1,6 +1,7 @@
 // Resolvers file 
 const Project = require('../models/Projects');
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
+const { getTechStackRecommendation } = require('../services/openaiService');
 
 const projectResolvers = {
   Query: {
@@ -47,7 +48,7 @@ const projectResolvers = {
       }
     },
   
-  // Update a projects properties 
+    // Update a projects properties 
     updateProject: async (_, { id, title, description, userQueries, techSelection, comments }, context) => {
       // If user is not logged in, throw auth error
       if (!context.user) {
@@ -87,6 +88,11 @@ const projectResolvers = {
         // tell the user about it ! 
         throw new Error('Failed to update project. Please try again.');
       }
+    },
+    getTechStackRecommendation: async (_, { projectDescription }) => {
+      // Use the OpenAI service to get a recommendation
+      const recommendation = await getTechStackRecommendation(projectDescription);
+      return { recommendation };
     },
   },
 };
