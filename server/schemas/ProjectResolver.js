@@ -17,7 +17,7 @@ const projectResolvers = {
   Mutation: {
     // Create a new project 
     // We only need the user to pass the title and description to create a new project
-    // They will add the Tech stack after discussing with StackBuddy 
+    // They will add the Tech stack after discussing with StackBuddy  --> use UPDATE_PROJECT mutation!.
     createProject: async (_, { title, description,},context) => {
     // If user is not logged in throw auth error 
       if(!context.user) {
@@ -39,19 +39,21 @@ const projectResolvers = {
 
 
       // Prepare the project object for the response. This includes:
-      // - Converting the project document to a plain JavaScript object
-      // - Ensuring getters and virtuals are applied, which might be necessary
-      //   for fields that are computed or transformed when converting the document
+      // Converting the project document to a plain vanilla object
+      // Ensuring getters and virtuals are applied, which might be necessary
+      //  for fields that are computed or transformed when converting the document
       const projectResponseObject = {
-        ...newProject.toObject({ getters: true, virtuals: true }), // Ensure getters and virtuals are applied
-        id: newProject._id.toString(), // Convert the MongoDB ObjectId (_id) to a string for the ID field
+        ...newProject.toObject({ getters: true, virtuals: true }), 
+        id: newProject._id.toString(), // Convert the MongoDB ObjectId (_id) to a string // ISSUE # 26 Solution 
         owner: {
           id: newProject.owner._id.toString(),
         username: newProject.owner.username, // Include the owner's username 
         },
       };
-
-      // Directly transform the owner field if it's already an ObjectId
+      
+      
+      //---- This solution is a work around for now ---- // 
+      // Directly transform the owners field if it's already an ObjectId
       // Check and handle if owner needs to be populated for further details
       if (newProject.owner) {
         projectResponseObject.owner = {
@@ -89,6 +91,8 @@ const projectResolvers = {
         }
     
         // Perform the update
+        // wait for project to be found 
+        // update 
         await Project.findByIdAndUpdate(id, {
           $set: {
             ...(title && { title }),
@@ -102,7 +106,9 @@ const projectResolvers = {
         // Fetch and return the updated document
         return Project.findById(id).populate('owner');
       } catch (error) {
+        // Log error updating project
         console.error('Error updating project:', error);
+        // tell the user about it ! 
         throw new Error('Failed to update project. Please try again.');
       }
     },
