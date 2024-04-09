@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import LandingPage from '../src/pages/LandingPage';
 import Workstation from './pages/Workstation';
+import IntroductionPage from './pages/Introduction';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
@@ -43,6 +44,7 @@ function App() {
        <Routes> {/* Use Routes to wrap Route components*/}
           <Route path = '/' element = {<LandingPage />} />
           <Route path = '/workstation' element = {<Workstation/> } />
+          <Route path ='/introduction' element={<IntroductionPage/>} />
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
         </Routes>
         <Footer />

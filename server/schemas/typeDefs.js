@@ -42,7 +42,7 @@ type User {
     id: ID!
     username: String!
     email: String!
-    projects: [Project!]! # Projects owned by the user
+    projects: [Project] # Projects owned by the user
 }
 
 
