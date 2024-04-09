@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 // Import hooks from react-dnd
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import {useDrag, useDrop } from 'react-dnd';
 // Import backend for drag and drop
 
 import {FaDatabase, FaServer, FaReact, FaNode,FaVuejs,FaAngular} from 'react-icons/fa'; // Example icon
@@ -14,7 +14,7 @@ const TechSymbol = styled.div`
   flex-direction: column;
   padding: 10px;
   margin: 5px 10px;
-  background-color: #fff;
+  background-color: white; // This is the background of the symbols 
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   cursor: grab;
@@ -23,7 +23,7 @@ const TechSymbol = styled.div`
 // Styled component for drop zones
 const DropZone = styled.div`
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: white; // This is the backhground of the Drop Zone 
   margin: 10px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -37,7 +37,7 @@ const DropZone = styled.div`
   &:hover {
     background-color: #e8e8e8; // Change background color on hover
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); // Add a shadow for depth
-    cursor: pointer; // Change cursor to indicate clickable
+    cursor: pointer;
   }
 `;
 
@@ -51,6 +51,12 @@ const Label = styled.div`
 `;
 */
 
+// Define our catergoires and symbols 
+// We need 3 categories / DB / SerSide / FrontENd 
+// Each cat will have a symbols 
+// Each symbole needs {id , icon , label }
+
+
 const techCategories = {
   Databases: [
     { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB' },
@@ -61,9 +67,7 @@ const techCategories = {
     { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database' },
     { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase' },
     { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra' },
-
-
-    // Add other database symbols here
+     // Add other database symbols here using the same syntax
   ],
   ServerSide: [
     { id: 'nodejs', icon: <FaNode />, label: 'Node.js' },
@@ -77,7 +81,7 @@ const techCategories = {
     { id: 'Vue', icon:  <FaVuejs />, label: 'Vue' },
     { id: 'Angluar', icon:  <FaAngular />, label: 'Angluar' },
     
-    /**
+    /* 
      
      */
     
@@ -85,10 +89,7 @@ const techCategories = {
   ],
 };
 
-
-// Define our tech symbols 
-// Assuming you have imported your SVG icons/components as React components
-
+// Main Component
 const TechDragDrop = () => {
   // State to track dropped items by category
   const [droppedItems, setDroppedItems] = useState({
@@ -98,7 +99,6 @@ const TechDragDrop = () => {
   });
 
   // Remove Items from the DropZone 
-  // Find category and itemID of symbol to remove 
   const removeTechSymbol = (category,itemId) => {
     setDroppedItems(prevState => ({
       ...prevState,
@@ -106,6 +106,7 @@ const TechDragDrop = () => {
     }));
   };
 
+  // Component for the draggable tech symbol 
   const DraggableTechSymbol = ({ id, icon, label }) => {
     const [, drag] = useDrag(() => ({
       type: 'tech',
@@ -147,7 +148,7 @@ const TechDragDrop = () => {
   return (
     <>
      {/* Zones to drag from */}
-      <div style={{ display: 'flex', justifyContent: 'space-around', padding: '20px', gap: '40px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', padding: '20px', gap: '40px' }}> {/*styles for Tech categories */}
         {Object.entries(techCategories).map(([category, symbols]) => (
           <div key={category}>
             <h2>{category}</h2>
@@ -158,6 +159,7 @@ const TechDragDrop = () => {
         ))}
       </div>
       {/* Drop zones */}
+      {/* The UI error that is displaying 'Click to remove' is in this block */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '40px' }}>
         {["Database", "ServerSide", "FrontEnd"].map(category => (
           <DropZone key={category} ref={createDropZone(category)}>
