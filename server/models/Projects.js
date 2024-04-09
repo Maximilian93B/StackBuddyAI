@@ -1,18 +1,43 @@
 // models/Projects.js
 const mongoose = require('mongoose');
 
+// Define a schema for individual technology recommendations within a response
+const RecommendedTechSchema = new mongoose.Schema({
+  technologyName: String,
+  reason: String, // why this technology is recommended
+}, { _id: false }); // Prevent separate _id for sub-document
+
+const RecommendationQuerySchema = new mongoose.Schema({
+  queryText: {
+    type: String,
+    required: true
+  },
+  queryDate: {
+    type: Date,
+    default: Date.now
+  },
+  // Add a field to store responses.
+  response: {
+    receivedDate: Date, // When the response was received
+    recommendations: [RecommendedTechSchema], // Array of recommended technologies and reasons
+    additionalNotes: String, // Any additional notes from the recommendation service
+  },
+}, { _id: false });
+
 const ProjectSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  // Array to store user queries for tech stack recommendations
-  userQueries: [String],
-  techSelection: [{
-    // Example categories: "Database", "Backend", "Frontend", etc.
-    category: String,
-    // Array of recommended technologies for each category
-    technologies: [String],
+  technologies: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Technology',
   }],
-  comments: [String],
+  // Array to store user queries for tech stack recommendations
+  recommendationQueries: [RecommendationQuerySchema],
+  comments: [{
+    text: String,
+    postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    dateStamp: { type: Date, default: Date.now },
+  }],
   dateStamp: { type: Date, default: Date.now },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // No project Can exist without an Owner 
 }, {
