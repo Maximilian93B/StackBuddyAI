@@ -3,6 +3,9 @@ import AuthService from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
 import styled from 'styled-components';
+import TechDragDrop from '../components/TechDragDrop';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const WorkstationContainer = styled.div`
   display: flex;
@@ -25,12 +28,15 @@ function Workstation() {
     }, [navigate]);
     
     return (
+      <DndProvider backend={HTML5Backend}>
       <WorkstationContainer>
         <Dashboard />
         <ContentContainer>
             <h1>This is our workstation page</h1>
+            <TechDragDrop />{/* This is where you include the drag-and-drop functionality */}
         </ContentContainer>
       </WorkstationContainer>
+      </DndProvider>
     );
 }
 

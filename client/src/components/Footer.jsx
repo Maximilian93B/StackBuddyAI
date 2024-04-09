@@ -24,7 +24,8 @@ const FooterContainer = styled.nav`
   justify-content: flex-end;
   align-items: center;
   font-family: 'Open Sans', sans-serif; // Switched to a more elegant and readable font
-  border-bottom: 1px solid #f0f0f0; // Light border for a subtle division
+  border-top: 1px solid #f0f0f0; // Light border for a subtle division
+  border-bottom: 1px solid #f0f0f0; 
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 10px 0;
@@ -63,6 +64,9 @@ const Footer  = () => {
         <FooterText>©{new Date().getFullYear()} StackBuddyAI.All rights reserved</FooterText>
         <FooterLinks>
             <Link>{/* Links to our Githubs or portfolios can go here ?? */}</Link>
+            <Link>Link Goes here </Link>
+            <Link> Link Here</Link>
+            <Link>Link Here</Link>
         </FooterLinks>
     </FooterContainer>
     );

@@ -33,7 +33,7 @@ const DropdownHeader = styled.div`
 `;
 
 const DropdownContent = styled.div`
-  display: ${props => props.isOpen ? 'block' : 'none'};
+  display: ${props => props.$isOpen ? 'block' : 'none'};
   padding: 10px;
   background: #ffffff;
   border-radius: 5px;
@@ -43,9 +43,9 @@ const DropdownContent = styled.div`
 
 // Dropdown component to be used in DashBoard 
 // Set state to children  
-const Dropdown = ({ title, children}) => {
+const Dropdown = ({ title, children }) => {
     /// use state to set dashboard open/closed 
-    const [isOpen , setIsOpen ] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     return(
         <DropdownContainer>
@@ -53,7 +53,7 @@ const Dropdown = ({ title, children}) => {
                 {title}
                 <span>{isOpen ? '▲' : '▼'}</span>
             </DropdownHeader>
-            <DropdownContent isOpen={isOpen}>
+            <DropdownContent $isOpen={isOpen}>
                 {children}
             </DropdownContent>
         </DropdownContainer>
