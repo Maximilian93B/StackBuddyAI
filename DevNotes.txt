@@ -1,3 +1,53 @@
+TO DO's : 
+
+Back-End: 
+
+// Implement userQueries for AI chabot 
+// Tech selection still needs to be calirified 
+// Seed the app -- Tech Data -- ADMIN ROLES ? 
+//  Add Enviro variables 
+// 
+
+// Look into having the Users Projects updated when the drop a new tech symbol into the Tree 
+// Front-End 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Apollo Query 
 
