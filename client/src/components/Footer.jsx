@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavLink as RouterNavLink} from 'react-router-dom';
 import styled from 'styled-components';
+
 
 
 const Brand = styled.a`
@@ -13,7 +13,7 @@ const Brand = styled.a`
 `;
 
 // Styles for Nav Container 
-const Nav = styled.nav`
+const FooterContainer = styled.nav`
   position: sticky; 
   top: 0; 
   z-index: 10; // Ensuring it stays above other content
@@ -31,35 +31,41 @@ const Nav = styled.nav`
   }
 `;
 
-// Styled NavLink for elegant navigation
-const NavLink = styled(RouterNavLink)`
-  color: #555; // Elegant, darker grey for readability
+
+const FooterText = styled.p`
+  font-size: 1rem; 
+`;
+
+const FooterLinks = styled.div`
+  margin: 10px 0;
+  display: flex; // To layout links horizontally
+  flex-wrap: wrap; // Allow wrapping for multiple links
+  justify-content: center; // Center links for better aesthetics
+`;
+
+
+const Link = styled.a`
+  color: #e60073; // Neon color for links
+  margin: 0 10px; // Space out the links
   text-decoration: none;
-  font-weight: 600;
-  margin: 0 15px; // Reduced margin for a tighter nav
-  transition: color 0.3s ease; // Smooth transition for hover effect
+  font-size: 0.8rem; 
 
   &:hover {
-    color: #000; // Dark color on hover for contrast
+    animation: glow 1.5s infinite alternate;
   }
 `;
 
 
-// Function to style the active NavLink
-const activeStyle = ({ isActive }) => isActive ? { color: '#007bff', fontWeight: 'bold' } : {};
-    
-const NavBar =() => {
-return(
-    <Nav>
-    <Brand href="/">StackBuddyAI</Brand>
-    <NavLink to="/" style={activeStyle}>Home</NavLink>
-    <NavLink to="/introduction" style={activeStyle}>Intro</NavLink>
-    <NavLink to="/HSL" style={activeStyle}>Tech Selection</NavLink>
-    <NavLink to="/Workstation" style={activeStyle}>My Workstation</NavLink>
-  </Nav>
-);
-}
 
-export default NavBar; 
+const Footer  = () => {
+    return (
+    <FooterContainer>
+        <FooterText>©{new Date().getFullYear()} StackBuddyAI.All rights reserved</FooterText>
+        <FooterLinks>
+            <Link>{/* Links to our Githubs or portfolios can go here ?? */}</Link>
+        </FooterLinks>
+    </FooterContainer>
+    );
+};
 
-
+export default Footer;
