@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BackgroundImg from '../assets/tree1.png';
-
+import Button from '../components/button';
 
 const PageContainer = styled.div`
   display: flex;
@@ -61,6 +61,7 @@ function IntroductionPage() {
               <ContentContainer>
         <Header>Welcome to StackBuddyAI</Header>
         <SubHeader>Your go-to app for simplifying technology selection in full-stack application development. With the power of AI, we provide personalized recommendations based on your project needs, saving you time and resources. Say goodbye to guesswork and hello to smarter decisions. Join us today and unlock the potential of AI-driven technology selection.</SubHeader>
+        <Button/>
         </ContentContainer>
         <ImageContainer> . </ImageContainer> 
         </ContentWrapper>
