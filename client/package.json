@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.10",
+    "axios": "^1.6.8",
     "graphql": "^16.8.1",
     "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import TechDragDrop from '../components/TechDragDrop';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
+import StackBuddy from '../components/StackBuddyAI';
 
 const PageContainer = styled.div`
   display: flex;
@@ -51,6 +51,7 @@ function Workstation() {
             <h1>This is our workstation page</h1>
             <TechDragDrop />{/* This is where you include the drag-and-drop functionality */}
         </ContentContainer>
+        <StackBuddy/>
       </PageContainer>
       </DndProvider>
     );

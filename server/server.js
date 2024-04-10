@@ -4,6 +4,10 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas/index');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
+require('dotenv').config();
+
+// Axios is used for OpenAPI testing 
+const axios = require('axios');
 
 const {formatError, errorLoggingPlugin } = require('./utils/apolloBugHutner');
 const logger = require ('morgan') // Import morgan for HTTP request logging
@@ -17,6 +21,7 @@ async function startApolloServer(typeDefs, resolvers) {
 
 // Use Morgan for detailed request logging during dev phase 
 app.use(logger('dev'));
+app.use(express.json());
 
 
 
@@ -35,6 +40,50 @@ const server = new ApolloServer({
 });
     // Start the server 
     await server.start();
+
+    // OpenAI Route for fetching data 
+
+    app.post('/openai', async (req, res) => {
+        const { query } = req.body;
+        try {
+            const response = await axios.post(
+                'https://api.openai.com/v1/chat/completions',
+                {
+                    model: "gpt-3.5-turbo",
+                    messages: [
+                        {
+                            role: "system",
+                            content: "Your system prompt here."
+                        },
+                        {
+                            role: "user",
+                            content: query,
+                        },
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 150,
+                    top_p: 1.0,
+                    frequency_penalty: 0.0,
+                    presence_penalty: 0.0,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                    },
+                }
+            );
+    
+            // Accessing the 'content' from the first choice's message
+            const botReply = response.data.choices[0].message.content;
+            res.json({ message: botReply });
+        } catch (error) {
+            console.error('Error calling OpenAI API:', error);
+            res.status(500).send('Failed to get response from OpenAI');
+        }
+    });
+    
+
     // Apply Apollo GraphQL middleware and set the path to '/graphql'
     server.applyMiddleware({ app, path: '/graphql'});
 
