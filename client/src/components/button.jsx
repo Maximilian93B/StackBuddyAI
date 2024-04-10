@@ -23,7 +23,7 @@ const Button = () => {
     const location = useLocation(); //From react router to get the user location in the app
     let buttonText;
     switch (location.pathname){
-        case'/introduction':
+        case'/':
         buttonText = 'Login/SignUp';
         break;
 
@@ -42,5 +42,4 @@ export default Button;
 
 
 
-
-
+// Button design: https://getcssscan.com/css-buttons-examples by Michael McMillan
