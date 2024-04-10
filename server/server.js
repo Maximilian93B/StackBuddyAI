@@ -4,7 +4,10 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas/index');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
+
+const cors = require('cors');
 require('dotenv').config();
+
 
 // Axios is used for OpenAPI testing 
 const axios = require('axios');
@@ -19,7 +22,8 @@ async function startApolloServer(typeDefs, resolvers) {
  const PORT = process.env.PORT || 3001;
  const app = express();
 
-// Use Morgan for detailed request logging during dev phase 
+ app.use(cors());
+ // Use Morgan for detailed request logging during dev phase 
 app.use(logger('dev'));
 app.use(express.json());
 
