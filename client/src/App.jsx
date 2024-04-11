@@ -2,13 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import LandingPage from '../src/pages/LandingPage';
 import Workstation from './pages/Workstation';
 import IntroductionPage from './pages/Introduction';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
-import IntroductionPage from './components/InfoTab';
 import LevelSelection from './components/HighlevelSelection';
+import  LandingPage from './pages/LandingPage';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -46,12 +45,10 @@ function App() {
        <Routes> {/* Use Routes to wrap Route components*/}
           <Route path = '/' element = {<IntroductionPage />} />
           <Route path = '/workstation' element = {<Workstation/> } />
-<<<<<<< HEAD
           <Route path = '/introduction' element = {<IntroductionPage/>} />
           <Route path ='/HSL' element = {<LevelSelection/>} />
-=======
           <Route path ='/LandingPage' element={<LandingPage/>} />
->>>>>>> 9f394d5020069ffd5f02216f7a0897fc3b6f08bf
+
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
         </Routes>
         <Footer />
