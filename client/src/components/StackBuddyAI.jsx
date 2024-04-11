@@ -9,7 +9,7 @@ const StackBuddyOverlay = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); // Slightly lighter overlay for a softer look
+  background-color: rgba(0, 0, 0, 0.8); // Dark overlay to focus on chat
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,13 +22,13 @@ const ChatContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 80vh;
-  width: 60vw; // Slightly more compact for focus
-  background-color: #fff; // Bright and clean background
+  width: 40vw; // Slightly more compact for focus
+  background-color: #121212;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
-  border-radius: 20px; // Softer rounded corners
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); // Soft, expansive shadow for floating effect
+  border-radius: 15px; 
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 `;
 
 
@@ -36,28 +36,36 @@ const ChatContainer = styled.div`
 const ChatHeader = styled.div`
   width: 100%;
   margin-bottom: 20px;
-  color: #4A90E2; // A vibrant, professional blue
+  color: #76FF03; 
   text-align: center;
-  font-size: 2rem;
+  font-size: 24px;
   font-weight: bold;
   padding: 10px 0;
-  border-bottom: 3px solid #EAEAEA; // Light border for a crisp separation
+  border-bottom: 1px solid #333; 
 `;
 
 
 const MessageContainer = styled.div`
+flex-grow: 1;
+width: 100%;
+overflow-y: auto;
 display: flex;
-  flex-direction: column;
-  align-items: center; 
-  justify-content: flex-start; 
-  width: 90%; 
-  height: 65vh; 
-  overflow-y: auto; 
-  padding: 20px; 
-  border: 2px solid #EAEAEA; 
-  border-radius: 10px; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  background-color: #FFFFFF; 
+flex-direction: column;
+padding: 20px;
+background-color: #1E1E1E; // Slightly lighter dark shade for contrast
+border-radius: 10px;
+margin-bottom: 20px; // Space before input
+`;
+
+const Message = styled.div`
+margin-bottom: 10px;
+padding: 10px 20px;
+border-radius: 20px;
+background-color: ${(props) => (props.role === 'user' ? '#333' : '#555')}; // Dark shades for user/bot differentiation
+color: #FFF; // White text for readability
+align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
+max-width: 80%;
+word-wrap: break-word;
 `;
 
 const MessagesDisplay = styled.div`
@@ -68,43 +76,29 @@ height: 10vh;
 max-height: 540px;
 `;
 
-
-
-const Message = styled.div`
-margin-bottom: 10px;
-padding: 10px 20px;
-border-radius: 15px;
-background-color: ${(props) => (props.role === 'user' ? '#E1F5FE' : '#FFF9C4')}; // Soft blue for user, soft yellow for bot
-color: #333; // Dark text for readability
-align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
-max-width: 80%;
-word-wrap: break-word;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Subtle shadow for depth
-&:hover {
-  background-color: ${(props) => (props.role === 'user' ? '#B3E5FC' : '#FFF59D')}; // Slightly darker on hover
-}
-animation: fadeIn 0.3s ease-out;
-`;
-
-
 const InputContainer = styled.div`
   padding: 10px;
   width: 100%;
+  border-top: 3px solid #1E1E1E; // Soft pink top border for separation
+  background-color: #1E1E1E; // Match chat container
 `;
 
+
+
 const TextInput = styled.input`
-  width: 100%;
-  padding: 12px 20px;
-  margin-top: 20px;
-  border: 2px solid #EAEAEA; // Soft border color
-  border-radius: 25px; // Gentle, inviting rounded corners
-  background-color: #FAFAFA; // Very light background to suggest interactivity
-  color: #333;
-  font-size: 16px;
-  box-sizing: border-box;
-  &:focus {
-    border-color: #B3E5FC; // Highlight focus with a soft blue
-  }
+width: calc(100% - 24px); // Account for padding
+padding: 12px;
+margin-top: 20px;
+border: 2px solid #333; // Darker border for stealth look
+border-radius: 25px; // Soft edges
+background-color: #222; // Very dark background
+color: #DDD; // Light grey text for contrast
+font-size: 16px;
+&:focus {
+  border-color: #76FF03; // Neon green focus
+  outline: none; // Removing default focus outline for custom styling
+  box-shadow: 0 0 8px #76FF03; // Glowing effect
+}
 `;
 
 

@@ -2,6 +2,8 @@
 const Project = require('../models/Projects');
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
 const { getTechStackRecommendation } = require('../services/openaiService');
+const User = require('../models/Users');
+
 
 const projectResolvers = {
   Query: {
@@ -29,9 +31,17 @@ const projectResolvers = {
         });
     
         await newProject.save();
-        await newProject.populate('owner');
+       
     
-        const projectResponseObject = {
+        // Update user document to include the new project in currentProjects
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { currentProjects: newProject._id }
+        });
+        // repopulate owner to include updated currentProjects
+        await newProject.populate('owner');
+
+        // Response 
+        const projectResponse = {
           ...newProject.toObject({ getters: true, virtuals: true }), // This ensures virtuals are applied
           id: newProject._id.toString(), // Convert _id to string
           owner: {
@@ -40,8 +50,9 @@ const projectResolvers = {
             // Add other owner fields as needed
           },
         };
-    
-        return projectResponseObject;
+        
+        // Return response =  project Object
+        return projectResponse;
       } catch (error) {
         console.error("Error creating project:", error);
         throw new Error('Failed to create project. Please try again.');
@@ -49,12 +60,10 @@ const projectResolvers = {
     },
   
     // Update a projects properties 
-    updateProject: async (_, { id, title, description, userQueries, techSelection, comments }, context) => {
-      // If user is not logged in, throw auth error
+    updateProject: async (_, {id, title, description, addUserQueries, removeUserQueryIds, addTechSelection, removeTechSelectionId, addComments, removeCommentIds }, context) => {
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to update a project');
       }
-    
       try {
         // Find the project to update
         const project = await Project.findById(id);
@@ -67,21 +76,43 @@ const projectResolvers = {
           throw new ForbiddenError('Unable to update project, You must be the owner of a project to make changes to it.');
         }
     
-        // Perform the update
-        // wait for project to be found 
-        // update 
-        await Project.findByIdAndUpdate(id, {
-          $set: {
-            ...(title && { title }),
-            ...(description && { description }),
-            ...(userQueries && { userQueries }),
-            ...(techSelection && { techSelection }),
-            ...(comments && { comments }),
-          }
-        });
+        // Update the basic fields if provided 
+        const updates = {
+          ...(title && { title }),
+          ...(description && { description })
+        };
+
+        // Perform basic updates first 
+        await Project.findByIdAndUpdate(id, updates, { new: true });
+
+        // Hand;e adding and removing for each array field 
+        const arrayUpdates = {};
+        if (addUserQueries && addUserQueries.length > 0) {
+          arrayUpdates.$push = { userQueries: { $each: addUserQueries } }; // Corrected the field name
+        }
+        if (addTechSelection && addTechSelection.length > 0) {
+          arrayUpdates.$push = {...(arrayUpdates.$push || {}), techSelection: {$each: addTechSelection } };
+        }
+        if (addComments && addComments.length > 0) {
+          arrayUpdates.$push = {...(arrayUpdates.$push || {}), comments: { $each: addComments } }; // Corrected to comments
+        }
+        // Apply array updates if any exist
+        if (Object.keys(arrayUpdates).length > 0) {
+          await Project.findByIdAndUpdate(id, arrayUpdates, { new: true });
+        }
+        // Handle removing for each array field using $pull 
+        if (removeUserQueryIds && removeUserQueryIds.length > 0) {
+          await Project.findByIdAndUpdate(id, { $pull: { userQueries: { $in: removeUserQueryIds } } }, { new: true });
+        }
+        if (removeTechSelectionId && removeTechSelectionId.length > 0) {
+          await Project.findByIdAndUpdate(id, { $pull: { techSelection: { _id: { $in: removeTechSelectionId } } } }, { new: true });
+        }
+        if (removeCommentIds && removeCommentIds.length > 0) {
+          await Project.findByIdAndUpdate(id, { $pull: { comments: { $in: removeCommentIds } } }, { new: true });
+        }
     
         // Fetch and return the updated document
-        return Project.findById(id).populate('owner');
+        return await Project.findById(id).populate('owner');
       } catch (error) {
         // Log error updating project
         console.error('Error updating project:', error);
