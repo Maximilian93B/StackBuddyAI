@@ -8,37 +8,53 @@ import {FaDatabase, FaServer, FaReact, FaNode,FaVuejs,FaAngular} from 'react-ico
 
 
 const TechSymbol = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-  margin: 5px 10px;
-  background-color: white; // This is the background of the symbols 
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  cursor: grab;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+padding: 10px;
+margin: 5px 10px;
+background-color: ${(props) => props.color || 'white'};
+border-radius: 8%;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+cursor: grab;
+transition: transform 0.2s ease;
+
+&:hover {
+  transform: scale(1.05);
+}
+
+.remove-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  display: none;
+}
+
+&:hover .remove-icon {
+  display: block;
+}
 `;
 
 // Styled component for drop zones
 const DropZone = styled.div`
-  padding: 20px;
-  background-color: white; // This is the backhground of the Drop Zone 
-  margin: 10px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  min-height: 100px
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  transition: all 0.2s ease-in-out;
- 
-  &:hover {
-    background-color: #e8e8e8; // Change background color on hover
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); // Add a shadow for depth
-    cursor: pointer;
-  }
+padding: 20px;
+background-color: #fff;
+margin: 10px;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+display: flex;
+min-height: 100px;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+&:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
 `;
 
 /*
@@ -51,40 +67,34 @@ const Label = styled.div`
 `;
 */
 
-// Define our catergoires and symbols 
+// Define our 3 Categories and symbols 
 // We need 3 categories / DB / SerSide / FrontENd 
-// Each cat will have a symbols 
-// Each symbole needs {id , icon , label }
+// Each Cat will have symbols 
+// Each symbol needs {id , icon , label }
 
-
+// We can pass colors to each symbol now !!
 const techCategories = {
   Databases: [
-    { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB' },
-    { id: 'SQL', icon: <FaDatabase />, label: 'SQL' },
-    { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL' },
-    { id: 'Redis', icon: <FaDatabase />, label: 'Redis' },
-    { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB' },
-    { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database' },
-    { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase' },
-    { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra' },
-     // Add other database symbols here using the same syntax
+    { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '#47A248' }, // MongoDB Green
+    { id: 'SQL', icon: <FaDatabase />, label: 'SQL', color: '#F29111' }, // SQL Orange (Generic SQL color; may vary)
+    { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '#336791' }, // PostgreSQL Blue
+    { id: 'Redis', icon: <FaDatabase />, label: 'Redis', color: '#D82C20' }, // Redis Red
+    { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB', color: '' }, // MariaDB Dark Blue
+    { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database', color: '' }, // Oracle Red
+    { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase', color: '' }, // Firebase Yellow
+    { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra', color: '' }, // Cassandra Blue
   ],
   ServerSide: [
-    { id: 'nodejs', icon: <FaNode />, label: 'Node.js' },
-    { id: 'Express', icon: <FaServer />, label: 'Express' },
-    { id: 'AngluarServer', icon:  <FaAngular />, label: 'Angluar' },
-    { id: 'Django', icon: <FaServer />, label: 'Django' },
+    { id: 'nodejs', icon: <FaNode />, label: 'Node.js', color: '' }, // Node.js Green
+    { id: 'Express', icon: <FaServer />, label: 'Express', color: '' }, // Express doesn't have a specific color, using black
+    { id: 'AngularServer', icon: <FaAngular />, label: 'Angular', color: '' }, // Angular Red (Typically frontend, including for conceptual consistency)
+    { id: 'Django', icon: <FaServer />, label: 'Django', color: '' }, // Django Dark Green
     // Add other server-side symbols here
   ],
   FrontEnd: [
-    { id: 'React', icon:  <FaReact/>, label: 'React' },
-    { id: 'Vue', icon:  <FaVuejs />, label: 'Vue' },
-    { id: 'Angluar', icon:  <FaAngular />, label: 'Angluar' },
-    
-    /* 
-     
-     */
-    
+    { id: 'React', icon: <FaReact />, label: 'React', color: '' }, // React Blue
+    { id: 'Vue', icon: <FaVuejs />, label: 'Vue', color: '' }, // Vue.js Green
+    { id: 'Angular', icon: <FaAngular />, label: 'Angular', color: '' }, // Angular Red
     // Add other front-end symbols here
   ],
 };
@@ -107,7 +117,12 @@ const TechDragDrop = () => {
   };
 
   // Component for the draggable tech symbol 
-  const DraggableTechSymbol = ({ id, icon, label }) => {
+  //useDrag 
+  // includes {type,item,collect: monitor() => action + state }
+  // return the drag icon 
+
+  // {pass id , icon , label , color}  to techsymbol 
+  const DraggableTechSymbol = ({ id, icon, label, color }) => {
     const [, drag] = useDrag(() => ({
       type: 'tech',
       item: { id },
@@ -117,7 +132,7 @@ const TechDragDrop = () => {
     }));
   
     return (
-      <TechSymbol ref={drag}>
+      <TechSymbol ref={drag} color={color}>
         {icon}
         <div>{label}</div>
       </TechSymbol>
@@ -153,7 +168,7 @@ const TechDragDrop = () => {
           <div key={category}>
             <h2>{category}</h2>
             {symbols.map((symbol) => (
-              <DraggableTechSymbol key={symbol.id} id={symbol.id} icon={symbol.icon} label={symbol.label} />
+              <DraggableTechSymbol key={symbol.id} id={symbol.id} icon={symbol.icon} label={symbol.label} color={symbol.color} />
             ))}
           </div>
         ))}
@@ -169,7 +184,6 @@ const TechDragDrop = () => {
               return item ? (
                 <TechSymbol key={itemId} onClick={() => removeTechSymbol(category, itemId)}>
                 {item.icon}
-                title = 'Click to remove'
                 <div>{item.label}</div>
               </TechSymbol>
             ) : null;
