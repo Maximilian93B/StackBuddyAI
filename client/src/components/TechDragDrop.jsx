@@ -3,13 +3,15 @@ import styled from 'styled-components';
 // Import hooks from react-dnd
 import {useDrag, useDrop } from 'react-dnd';
 // Import backend for drag and drop
-import {FaDatabase, FaServer, FaReact, FaNode,FaVuejs,FaAngular} from 'react-icons/fa'; // Example icon
+import {FaDatabase,FaServer, FaReact, FaNode,FaVuejs,FaAngular, FaCss3 } from 'react-icons/fa'; // Example icon
 
 const DragDropContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 4rem; // Adjust as necessary
+  max-width: 10vw;
+  max-height: 70vh;
+  gap: 4rem;
   padding: 20px;
 `;
 
@@ -18,15 +20,28 @@ const DragAreaContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 45vw;
-  gap: 70px; // Adjust as necessary
+  width: 65vw;
+  gap: 10px; // Adjust as necessary
 `;
 
 // Container for the drop zones
 const DropZoneContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px; // Adjust as necessary
+  width: 40vw;
+  gap: 20px; 
+`;
+
+
+const CategoryHeader = styled.h2`
+  font-size: 1.5rem;  
+  color: #333;        
+  margin-bottom: 10px; 
+  text-align: center; 
+  background-color: #f0f0f0;
+  padding: 10px;  
+  border-radius: 5px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15); 
 `;
 
 
@@ -37,7 +52,7 @@ justify-content: center;
 flex-direction: column;
 padding: 10px;
 margin: 15px 10px;
-background-color: ${(props) => props.color || 'white'};
+background-color: ${(props) => props.color || '#f0f0f0'};
 border-radius: 8%;
 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 cursor: grab;
@@ -46,6 +61,8 @@ transition: transform 0.2s ease;
 &:hover {
   transform: scale(1.05);
 }
+
+// Removing the icon 
 
 .remove-icon {
   position: absolute;
@@ -62,16 +79,17 @@ transition: transform 0.2s ease;
 
 // Styled component for drop zones
 const DropZone = styled.div`
+display: flex;
+height: 200px;
+width: 200px;
+align-items: center;
+justify-content: center;
+flex-direction: column;
 padding: 20px;
 background-color: #fff;
 margin: 10px;
 border-radius: 10px;
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-display: flex;
-min-height: 100px;
-align-items: center;
-justify-content: center;
-flex-direction: column;
 transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
 &:hover {
@@ -120,6 +138,16 @@ const techCategories = {
     { id: 'Angular', icon: <FaAngular />, label: 'Angular', color: '' }, // Angular Red
     // Add other front-end symbols here
   ],
+  FrontendFrameworks: [
+    { id: 'Svelte', icon: <FaCss3 />, label: 'Svelte', color: '' }, // Svelte Orange
+    { id: 'NextJs', icon: <FaCss3 />, label: 'Next.js', color: '' }, // Next.js Black
+    { id: 'NuxtJs', icon: <FaCss3 />, label: 'Nuxt.js', color: '' }, // Nuxt.js Green
+  ],
+  CSSFrameworks: [
+    { id: 'Tailwind', icon: <FaCss3 />, label: 'Tailwind CSS', color: '' }, // Tailwind Blue
+    { id: 'Bootstrap', icon: <FaCss3 />, label: 'Bootstrap', color: '' }, // Bootstrap Purple
+    { id: 'MaterialUI', icon: <FaCss3 />, label: 'Material-UI', color: '' }, // Material-UI Blue
+  ],
 };
 
 // Main Component
@@ -129,8 +157,10 @@ const TechDragDrop = () => {
     Database: [],
     ServerSide: [],
     FrontEnd: [],
+    FrontendFrameworks: [],
+    CSSFrameworks: []
   });
-
+6
   // Remove Items from the DropZone 
   const removeTechSymbol = (category,itemId) => {
     setDroppedItems(prevState => ({
@@ -188,8 +218,8 @@ const TechDragDrop = () => {
       {/* Zones to drag from */}
       <DragAreaContainer>
         {Object.entries(techCategories).map(([category, symbols]) => (
-          <div key={category}>
-            <h2>{category}</h2>
+         <div key ={category}>
+         <CategoryHeader>{category}</CategoryHeader>
             {symbols.map((symbol) => (
               <DraggableTechSymbol
                 key={symbol.id}

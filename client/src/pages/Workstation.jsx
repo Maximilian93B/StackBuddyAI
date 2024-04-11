@@ -24,38 +24,12 @@ const DashboardContainer = styled.div`
 const ContentContainer = styled.div`
 flex-grow: 1; // Takes up the remaining space
 padding: 20px; // Add padding for some spacing around your content
-display: flex; // Use flexbox for internal layout
+display: inline-flex; // Use flexbox for internal layout
 flex-direction: column; // Stack children vertically
 align-items: center; // Center children horizontally
 `;
 
-const StackBuddyContainer = styled.div`
-  ${({ $isFullPage }) => $isFullPage ? `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: hidden;
-  ` : `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 350px;
-    height: 600px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    overflow: hidden;
-  `}
-  transition: all 0.3s ease-in-out;
-  z-index: 1000;
-  background-color: #ffffff;
-`;
-
 const ToggleButton = styled.button`
-display: absolute;
 cursor: pointer;
 background-color: #4CAF50; /* Green background */
 border: none;
@@ -63,7 +37,6 @@ color: white;
 padding: 10px 20px;
 text-align: center;
 text-decoration: none;
-display: inline-block;
 font-size: 16px;
 margin: 10px 2px;
 transition: background-color 0.3s ease;
@@ -85,7 +58,7 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
 function Workstation() {
   const navigate = useNavigate();
-  const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(false); // Controls visibility of StackBuddy
+  const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(false);
 
   useEffect(() => {
       if (!AuthService.loggedIn()) {
@@ -93,10 +66,7 @@ function Workstation() {
       }
   }, [navigate]);
 
-  // Toggle visibility of StackBuddy
-  const toggleStackBuddy = () => {
-    setIsStackBuddyOpen(!isStackBuddyOpen);
-  };
+  const toggleStackBuddy = () => setIsStackBuddyOpen(prev => !prev);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -106,15 +76,17 @@ function Workstation() {
         </DashboardContainer>
         <ContentContainer>
           <TechDragDrop />
-          <ToggleButton onClick={toggleStackBuddy}>{isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}</ToggleButton>
+          <ToggleButton onClick={toggleStackBuddy}>
+            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
+          </ToggleButton>
         </ContentContainer>
         {isStackBuddyOpen && (
-        <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
-      )}
+          <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
+        )}
       </PageContainer>
     </DndProvider>
   );
-};
+}
 
 
 export default Workstation;
