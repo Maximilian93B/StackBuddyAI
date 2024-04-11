@@ -9,10 +9,10 @@ const DragDropContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  max-width: 10vw;
-  max-height: 70vh;
+  max-width: 80vw;
+  max-height: 80vh;
   gap: 4rem;
-  padding: 20px;
+  padding: 5px;
 `;
 
 // Container for the drag areas
@@ -20,7 +20,7 @@ const DragAreaContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 65vw;
+  width: 100vw;
   gap: 10px; // Adjust as necessary
 `;
 
@@ -28,20 +28,21 @@ const DragAreaContainer = styled.div`
 const DropZoneContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40vw;
-  gap: 20px; 
+  height: 100vh;
+  width: 30vw;
+  gap: 30px; 
 `;
 
 
 const CategoryHeader = styled.h2`
-  font-size: 1.5rem;  
+  font-size: 1.7rem;  
   color: #333;        
-  margin-bottom: 10px; 
+  margin-bottom: 20px; 
   text-align: center; 
-  background-color: #f0f0f0;
+  background-color: white;
   padding: 10px;  
-  border-radius: 5px; 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15); 
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.35); 
 `;
 
 
@@ -54,7 +55,7 @@ padding: 10px;
 margin: 15px 10px;
 background-color: ${(props) => props.color || '#f0f0f0'};
 border-radius: 8%;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+box-shadow: 0 2px 4px rgba(0,0,0,0.20);
 cursor: grab;
 transition: transform 0.2s ease;
 
@@ -81,7 +82,7 @@ transition: transform 0.2s ease;
 const DropZone = styled.div`
 display: flex;
 height: 200px;
-width: 200px;
+width: 400px;
 align-items: center;
 justify-content: center;
 flex-direction: column;
@@ -89,7 +90,7 @@ padding: 20px;
 background-color: #fff;
 margin: 10px;
 border-radius: 10px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
 transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
 &:hover {

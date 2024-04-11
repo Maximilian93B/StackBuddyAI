@@ -75,10 +75,10 @@ function Workstation() {
           <Dashboard />
         </DashboardContainer>
         <ContentContainer>
-          <TechDragDrop />
+          <TechDragDrop />   
           <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
-          </ToggleButton>
+          </ToggleButton>       
         </ContentContainer>
         {isStackBuddyOpen && (
           <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
