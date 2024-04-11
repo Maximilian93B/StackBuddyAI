@@ -3,8 +3,31 @@ import styled from 'styled-components';
 // Import hooks from react-dnd
 import {useDrag, useDrop } from 'react-dnd';
 // Import backend for drag and drop
-
 import {FaDatabase, FaServer, FaReact, FaNode,FaVuejs,FaAngular} from 'react-icons/fa'; // Example icon
+
+const DragDropContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4rem; // Adjust as necessary
+  padding: 20px;
+`;
+
+// Container for the drag areas
+const DragAreaContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 45vw;
+  gap: 70px; // Adjust as necessary
+`;
+
+// Container for the drop zones
+const DropZoneContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 40px; // Adjust as necessary
+`;
 
 
 const TechSymbol = styled.div`
@@ -13,7 +36,7 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 padding: 10px;
-margin: 5px 10px;
+margin: 15px 10px;
 background-color: ${(props) => props.color || 'white'};
 border-radius: 8%;
 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -161,37 +184,45 @@ const TechDragDrop = () => {
   };
 
   return (
-    <>
-     {/* Zones to drag from */}
-      <div style={{ display: 'flex', justifyContent: 'space-around', padding: '20px', gap: '40px' }}> {/*styles for Tech categories */}
+    <DragDropContainer>
+      {/* Zones to drag from */}
+      <DragAreaContainer>
         {Object.entries(techCategories).map(([category, symbols]) => (
           <div key={category}>
             <h2>{category}</h2>
             {symbols.map((symbol) => (
-              <DraggableTechSymbol key={symbol.id} id={symbol.id} icon={symbol.icon} label={symbol.label} color={symbol.color} />
+              <DraggableTechSymbol
+                key={symbol.id}
+                id={symbol.id}
+                icon={symbol.icon}
+                label={symbol.label}
+                color={symbol.color}
+              />
             ))}
           </div>
         ))}
-      </div>
+      </DragAreaContainer>
+
       {/* Drop zones */}
-      {/* The UI error that is displaying 'Click to remove' is in this block */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '40px' }}>
-        {["Database", "ServerSide", "FrontEnd"].map(category => (
+      <DropZoneContainer>
+        {["Database", "ServerSide", "FrontEnd"].map((category) => (
           <DropZone key={category} ref={createDropZone(category)}>
             <h3>{category}</h3>
-            {droppedItems[category].map(itemId => {
-              const item = Object.values(techCategories).flat().find(i => i.id === itemId);
+            {droppedItems[category].map((itemId) => {
+              const item = Object.values(techCategories)
+                .flat()
+                .find((i) => i.id === itemId);
               return item ? (
-                <TechSymbol key={itemId} onClick={() => removeTechSymbol(category, itemId)}>
-                {item.icon}
-                <div>{item.label}</div>
-              </TechSymbol>
-            ) : null;
+                <TechSymbol key={itemId} onClick={() => removeTechSymbol(category, itemId)} color={item.color}>
+                  {item.icon}
+                  <div>{item.label}</div>
+                </TechSymbol>
+              ) : null;
             })}
           </DropZone>
         ))}
-      </div>
-      </>
+      </DropZoneContainer>
+    </DragDropContainer>
   );
 };
 
