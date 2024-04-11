@@ -3,10 +3,10 @@ TO DO's :
 Back-End: 
 
 // 
-// Tech selection still needs to be calirified 
+// ADD DELETE PROJECT TO FRONT END 
 // Seed the app -- Tech Data -- ADMIN ROLES ? 
-//  Add Enviro variables 
-// 
+//  Add Enviro variables ( OPEN API DONE )
+
 
 // Look into having the Users Projects updated when the drop a new tech symbol into the Tree 
 
