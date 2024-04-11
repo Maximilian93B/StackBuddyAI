@@ -81,8 +81,8 @@ const Dashboard = () => {
           <div>
             <p>Username: {data.me.username}</p>
             <p>Email: {data.me.email}</p>
-            {data.me.projects ? ( // Check if data.me.projects exists and is not null
-              <p>Projects: {data.me.projects.map(project => project.title).join(', ')}</p>
+            {data.me.currentProjects ? ( // Check if data.me.projects exists and is not null
+              <p>Projects: {data.me.currentProjects.map(project => project.title).join(', ')}</p>
             ) : (
               <p>No projects found</p>
             )}

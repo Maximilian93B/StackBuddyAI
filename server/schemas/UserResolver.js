@@ -6,13 +6,13 @@ const { signToken } = require('../utils/auth');
 const userResolvers = {
   Query: {
     me: async (_, args, context) => {
-      
       if (!context.user) {
-        throw new AuthenticationError('Not Logged in');
+        throw new AuthenticationError("Not logged in");
       }
-        return await User.findById(context.user._id);
+      return await User.findById(context.user._id)
+        .populate('currentProjects') // Ensure this matches the field name in your User schema
+        .exec();
     },
-
     // Query to fetch all users 
     users: async () => {
       return await User.find({});

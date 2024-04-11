@@ -28,15 +28,22 @@ query GetUser($id: ID!) {
 `;
 
 export const GET_ME = gql`
-query me {
+query GetMe {
     me {
-        id 
-        username
-        email
-        projects {
-            id 
-            title
+      id
+      username
+      email
+      currentProjects {
+        id
+        title
+        description
+        techSelection {
+          category
+          technologies
         }
+        comments
+        dateStamp
+      }
     }
-}
+  }
 `;

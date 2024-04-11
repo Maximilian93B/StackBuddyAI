@@ -42,7 +42,7 @@ type User {
     id: ID!
     username: String!
     email: String!
-    projects: [Project] # Projects owned by the user
+    currentProjects: [Project] # Projects owned by the user
 }
 
 
@@ -88,23 +88,37 @@ type Mutation {
       id: ID!,
       title: String,
       description: String,
-      userQueries: [String], # optional as well
-      techSelection: [TechCategoryInput], #  updating might not require changing tech selection
-      comments: [String] #  optional 
+      userQueries: UpdateUserQueriesInput,
+      techSelection: UpdateTechCategoryInput,
+      comments: UpdateCommentsInput
     ): Project
     getTechStackRecommendation( # add recommendation for OpenAI
-        projectDescription: String!
+      projectDescription: String!
     ): TechStackRecommendation
   }
   
 
- #          Inpurt type for tech selection when creating/updating projects
+ #          Input type for tech selection when creating/updating projects
 
  input TechCategoryInput {
     category: String!
     technologies: [String!]!
 }
 
+input UpdateUserQueriesInput {
+    add: [String] # IDs or values to add
+    remove: [ID] # IDs to remove
+  }
+
+input UpdateTechCategoryInput {
+    add: [TechCategoryInput] # Tech Categories to add
+    remove: [ID] # IDs of Tech Categories to remove
+  }
+  
+input UpdateCommentsInput {
+    add: [String] # Comments to add
+    remove: [ID] # IDs of Comments to remove
+  }
 `;
 
 module.exports = typeDefs;

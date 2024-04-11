@@ -2,7 +2,7 @@ TO DO's :
 
 Back-End: 
 
-// Implement userQueries for AI chabot 
+// 
 // Tech selection still needs to be calirified 
 // Seed the app -- Tech Data -- ADMIN ROLES ? 
 //  Add Enviro variables 
@@ -88,37 +88,53 @@ DEV :
 
 
 
-Apollo Query 
+Apollo Querys 
 
-
-
-
-mutation CreateProject(
-    $title: String!, 
-    $description: String!, 
-    $userQueries: [String!],
-    $techSelection: [TechCategoryInput!],
-    $comments: [String!]
-) {
-   createProject(title: $title,description: $description, userQueries: $userQueries,techSelection: $techSelection, comments: $comments){
-       id
-       title
-       description
-       userQueries
-       techSelection {
-        category
-        technologies
-       }
-       comments 
-       dateStamp
-       owner {
-        id
-        username
-       }
+// LOGIN 
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      id
+      username
+      email
     }
+  }
+}
+
+Variables : 
+
+{
+  "email" : "testuser@example.com"
+  "password" : "thepassword"
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+mutation CreateProject($title: String!, $description: String!) {
+  createProject(title: $title, description: $description) {
+    id
+    title
+    description
+    owner {
+      id
+      username
+    }
+    dateStamp
+  }
+}
+
+// Variables 
 
 Variables : 
 {
