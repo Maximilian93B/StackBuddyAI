@@ -27,6 +27,7 @@ async function startApolloServer(typeDefs, resolvers) {
 app.use(logger('dev'));
 app.use(express.json());
 
+app.use(express.static('public'));
 
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 

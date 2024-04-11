@@ -42,9 +42,9 @@ function App() {
       <ApolloProvider client={client}>
       <NavBar />
        <Routes> {/* Use Routes to wrap Route components*/}
-          <Route path = '/' element = {<LandingPage />} />
+          <Route path = '/' element = {<IntroductionPage />} />
           <Route path = '/workstation' element = {<Workstation/> } />
-          <Route path ='/introduction' element={<IntroductionPage/>} />
+          <Route path ='/LandingPage' element={<LandingPage/>} />
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
         </Routes>
         <Footer />
