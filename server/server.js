@@ -18,6 +18,7 @@ async function startApolloServer(typeDefs, resolvers) {
 // Use Morgan for detailed request logging during dev phase 
 app.use(logger('dev'));
 
+app.use(express.static('public'));
 
 
 // Apollo Instance , GraphQL --> typeDefs, resolvers from schemas 

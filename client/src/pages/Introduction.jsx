@@ -58,7 +58,8 @@ const SubHeader = styled.p`
 
 
 function IntroductionPage() {
-    return (
+
+       return (
         <PageContainer>
             <ContentWrapper>
               <ContentContainer>
