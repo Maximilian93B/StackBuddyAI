@@ -1,11 +1,16 @@
 import React, { Children, useState } from 'react';
 import styled from 'styled-components';
 import CreateProjectForm from './CreateProjectForm';
+import { GET_ME } from '../utils/userQueries';
+import { useQuery } from '@apollo/client';
+
+
 
 
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
   display: flex;
+  min-height: 90vh;
   flex-direction: column;
   background: #f5f5f5;
   padding: 20px;
@@ -61,17 +66,36 @@ const Dropdown = ({ title, children }) => {
 };
 
 const Dashboard = () => {
+
+  // Fetch user data using Apollo Client 
+  const {loading, error, data } = useQuery(GET_ME);
+
     return (
-      <DashboardContainer>
-        <Dropdown title="User Profile">
-          {/* We will dynamically generate user Profile here based on token + _id */}
-          Profile Content
+     <DashboardContainer>
+      <Dropdown title="My Profile">
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error.message}</p>
+        ) : data.me ? ( // Check if data.me exists and is not null
+          <div>
+            <p>Username: {data.me.username}</p>
+            <p>Email: {data.me.email}</p>
+            {data.me.projects ? ( // Check if data.me.projects exists and is not null
+              <p>Projects: {data.me.projects.map(project => project.title).join(', ')}</p>
+            ) : (
+              <p>No projects found</p>
+            )}
+          </div>
+        ) : (
+          <p>No user data found</p>
+        )}
         </Dropdown>
-        <Dropdown title="Current Projects">
+        <Dropdown title="My Projects">
           {/* Current Users projects will need to be fetched  */}
           Projects Content
         </Dropdown>
-        <Dropdown title="Create Project">
+        <Dropdown title="Create A Project">
         {/* Dropdown for creating a new project */}
         <CreateProjectForm />
       </Dropdown>

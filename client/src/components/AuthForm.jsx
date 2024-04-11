@@ -12,10 +12,15 @@ import styled from 'styled-components';
 
 // SignUp Form Styles
 const Container = styled.div`
-  max-width: 500px;
-  margin: 0 auto;
+  width: 360px; // Define a fixed width or use width instead of max-width if preferred
+  margin: 5% auto; // Adjust as necessary to vertically center
   padding: 20px;
+  background-color: #f9f9f9; // Light background color
+  border-radius: 8px; // Rounded corners
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow
+  border: 1px solid #ddd; // Light border
 `;
+
 
 const StyledForm = styled.form`
   display: flex;

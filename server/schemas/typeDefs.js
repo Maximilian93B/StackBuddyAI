@@ -42,7 +42,7 @@ type User {
     id: ID!
     username: String!
     email: String!
-    projects: [Project!]! # Projects owned by the user
+    projects: [Project] # Projects owned by the user
 }
 
 
@@ -68,6 +68,10 @@ type Query {
     me: User
 }
 
+type TechStackRecommendation {
+    recommendation: String
+}
+
 #           Mutations 
 
 type Mutation {
@@ -88,6 +92,9 @@ type Mutation {
       techSelection: [TechCategoryInput], #  updating might not require changing tech selection
       comments: [String] #  optional 
     ): Project
+    getTechStackRecommendation( # add recommendation for OpenAI
+        projectDescription: String!
+    ): TechStackRecommendation
   }
   
 

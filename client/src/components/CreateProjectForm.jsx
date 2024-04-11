@@ -59,6 +59,11 @@ const ErrorMessage = styled.p`
   color: red;
 `;
 
+const SuccessMessage = styled.div`
+  color: green;
+  margin-top: 10px;
+`;
+
 // Initial state for the form, reseting the form every time 
 // We are excluding the comments + userQueries properties for the CreateProject
 const initialFormState = {
@@ -71,31 +76,35 @@ const CreateProjectForm = () => {
   // formData to hold form values, setFormData to update them
   const [formData, setFormData] = useState(initialFormState);
   // useMutation hook from Apollo Client to manage the create project mutation
-  const [createProject, { loading, error }] = useMutation(CREATE_PROJECT);
+  const [createProject, { loading, error , data}] = useMutation(CREATE_PROJECT);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Updates formData state on input change
   const handleInputChange = (e) => {
       const { name, value } = e.target; // Destructure name and value from event target
       setFormData({ ...formData, [name]: value }); // Update state
   };
-
   // Handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     // extract title and descripton from formData
-
     try {
-      await createProject({
+     const response = await createProject({
         variables: {
           title: formData.title,
           description: formData.description,
           // techSelection: formatTechSelection(formData.techSelection),
         },
       });
-      alert('Project created successfully!');
-      setFormData(initialFormState); // Reset form to initial state
+     
+      if(response.data) {
+      // set success message based on the response 
+      setSuccessMessage('Project created successfully!');
+      setFormData(initialFormState); // Reset form to inital state 
+     }
     } catch (error) {
       console.error('Error creating project:', error);
+      setSuccessMessage(''); // Ensure no success message is shown on error 
     }
   };
   
@@ -123,7 +132,9 @@ const CreateProjectForm = () => {
         />
       </div>
       <Button type="submit" disabled={loading}>Create Project</Button>
-      {error && <ErrorMessage>Error creating project: {error.message}</ErrorMessage>}
+        {/**JSX could possibly be bad for ones health ?? */}
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
+    {error && <ErrorMessage>Error creating project: {error.message}</ErrorMessage>}
     </Form>
   );
 };
