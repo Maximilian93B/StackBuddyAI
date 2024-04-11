@@ -42,7 +42,7 @@ const UserProfile = ({ data }) => {
 export default UserProfile;
 
 
-TASK :
+TASK : Look into adding new Tech Symbols through SVG maybe ?? 
 DEV: 
 
 
