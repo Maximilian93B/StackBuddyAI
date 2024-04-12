@@ -64,35 +64,6 @@ transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth tr
 }
 `;
 
-
-const SignUpButton = styled.button`
-font-family: "Open Sans", sans-serif;
-font-size: 16px;
-letter-spacing: 1px;  // Reduced for subtlety
-text-transform: uppercase;
-color: black; // White text color for better contrast on darker backgrounds
-cursor: pointer;
-background-color:white; // A soft, elegant green
-border: none; // No border for a cleaner look
-padding: 10px 20px; // Increased padding for a better touch area
-border-radius: 25px; // Fully rounded edges
-box-shadow: 0 4px 8px rgba(0,0,0,0.15); // Soft shadow for a subtle depth effect
-transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth transitions for hover effects
-
-&:hover, &:focus {
-  background-color: #367C2B; // A darker shade of green on hover/focus for feedback
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2); // Slightly deeper shadow on hover/focus
-  transform: translateY(-2px); // Slight lift effect on hover/focus
-}
-
-&:active {
-  transform: translateY(1px); // Subtle press down effect
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Less depth when button is pressed
-}
-`;
-
-
-
 const ErrorMessage = styled.p`
   color: red;
 `;
@@ -188,7 +159,7 @@ function AuthForm() {
                 onChange={handleChange}
             />
             <StyledButton type="submit" disabled={loading}>
-                {isLogin ? 'Login' : 'Sign Up'}
+                { loading ? 'loading...' : (isLogin ? 'Login' : 'Sign Up')}
             </StyledButton>
         </StyledForm>
         {formError && <ErrorMessage>{formError}</ErrorMessage>}
