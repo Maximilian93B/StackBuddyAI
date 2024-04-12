@@ -1,7 +1,10 @@
-import {useLocation} from "react-router-dom";
+
 import React from "react";
 import styled from 'styled-components';
 
+
+
+/*
 const StyledButton = styled.button`
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
@@ -18,28 +21,51 @@ const StyledButton = styled.button`
   -webkit-user-select: none;
   touch-action: manipulation;
 `;
+*/
 
-const Button = () => {
-    const location = useLocation(); //From react router to get the user location in the app
-    let buttonText;
-    switch (location.pathname){
-        case'/':
-        buttonText = 'Login/SignUp';
-        break;
+const StyledButton = styled.button`
+font-family: "Open Sans", sans-serif;
+font-size: 16px;
+letter-spacing: 1px;  // Reduced for subtlety
+text-transform: uppercase;
+color: black; // White text color for better contrast on darker backgrounds
+cursor: pointer;
+background-color:white; // A soft, elegant green
+border: none; // No border for a cleaner look
+padding: 10px 20px; // Increased padding for a better touch area
+border-radius: 25px; // Fully rounded edges
+box-shadow: 0 4px 8px rgba(0,0,0,0.15); // Soft shadow for a subtle depth effect
+transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth transitions for hover effects
 
-        //add more cases here
+&:hover, &:focus {
+  background-color: #367C2B; // A darker shade of green on hover/focus for feedback
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2); // Slightly deeper shadow on hover/focus
+  transform: translateY(-2px); // Slight lift effect on hover/focus
+}
 
-        default: 
-        buttonText = 'ClickMe';
+&:active {
+  transform: translateY(1px); // Subtle press down effect
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Less depth when button is pressed
+}
+`;
 
-    }
-    return(<StyledButton>{buttonText}</StyledButton>);
+
+
+/*
+Add functionality to button component 
+add accept onClick event , children
+We handle the redirect in the AuthForm
+ */
+const Button = ({onClick, children }) => {
+   
+  return (
+  <StyledButton onClick={onClick}>
+    {children}
+  </StyledButton>
+  );
 };
-
-
-
+   
 export default Button;
 
 
 
-// Button design: https://getcssscan.com/css-buttons-examples by Michael McMillan
