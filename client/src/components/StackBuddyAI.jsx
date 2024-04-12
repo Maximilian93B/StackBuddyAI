@@ -9,7 +9,7 @@ const StackBuddyOverlay = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); // Dark overlay to focus on chat
+  background-color: rgba(0, 0, 0, 0.6); // Lighter overlay for a softer appearance
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,13 +22,13 @@ const ChatContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 80vh;
-  width: 40vw; // Slightly more compact for focus
-  background-color: #121212;
+  width: 40vw; // 
+  background: linear-gradient(144deg, rgba(237,173,249,0.4422561260832458) 28%, rgba(253,222,158,0.5851132689403886) 51%, rgba(74,220,204,0.4450572465314251) 100%);
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
-  border-radius: 15px; 
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 25px; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 `;
 
 
@@ -41,7 +41,7 @@ const ChatHeader = styled.div`
   font-size: 24px;
   font-weight: bold;
   padding: 10px 0;
-  border-bottom: 1px solid #333; 
+  border-bottom: 1px solid #ccc; 
 `;
 
 
@@ -52,20 +52,24 @@ overflow-y: auto;
 display: flex;
 flex-direction: column;
 padding: 20px;
-background-color: #1E1E1E; // Slightly lighter dark shade for contrast
+background: linear-gradient(144deg, rgba(237,173,249,0.4422561260832458) 28%, rgba(253,222,158,0.5851132689403886) 51%, rgba(74,220,204,0.4450572465314251) 100%);
 border-radius: 10px;
 margin-bottom: 20px; // Space before input
 `;
 
 const Message = styled.div`
 margin-bottom: 10px;
-padding: 10px 20px;
-border-radius: 20px;
-background-color: ${(props) => (props.role === 'user' ? '#333' : '#555')}; // Dark shades for user/bot differentiation
-color: #FFF; // White text for readability
-align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
-max-width: 80%;
-word-wrap: break-word;
+  padding: 15px 20px;
+  border-radius: 25px;
+  background-color: ${(props) => (props.role === 'user' ? '#e0f7fa' : '#f0f0f0')};
+  color: black;
+  font-size: 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  border: 1px solid #d0e0e3;
+  font-family: 'Verdana', sans-serif;
+  align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
+  max-width: 80%;
+  word-wrap: break-word;
 `;
 
 const MessagesDisplay = styled.div`
@@ -79,8 +83,6 @@ max-height: 540px;
 const InputContainer = styled.div`
   padding: 10px;
   width: 100%;
-  border-top: 3px solid #1E1E1E; // Soft pink top border for separation
-  background-color: #1E1E1E; // Match chat container
 `;
 
 
@@ -89,15 +91,14 @@ const TextInput = styled.input`
 width: calc(100% - 24px); // Account for padding
 padding: 12px;
 margin-top: 20px;
-border: 2px solid #333; // Darker border for stealth look
+border: 2px solid #f0f0f0; 
 border-radius: 25px; // Soft edges
-background-color: #222; // Very dark background
-color: #DDD; // Light grey text for contrast
+background-color: #f9f9f9; 
 font-size: 16px;
 &:focus {
-  border-color: #76FF03; // Neon green focus
-  outline: none; // Removing default focus outline for custom styling
-  box-shadow: 0 0 8px #76FF03; // Glowing effect
+  background: linear-gradient(144deg, rgba(237,173,249,0.4422561260832458) 28%, rgba(253,222,158,0.5851132689403886) 51%, rgba(74,220,204,0.4450572465314251) 100%);
+  border-color: #b2ebf2;
+  outline: none;
 }
 `;
 
