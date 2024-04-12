@@ -19,27 +19,21 @@ const StyledButton = styled.button`
   touch-action: manipulation;
 `;
 
-const Button = () => {
-    const location = useLocation(); //From react router to get the user location in the app
-    let buttonText;
-    switch (location.pathname){
-        case'/':
-        buttonText = 'Login/SignUp';
-        break;
+/*
+Add functionality to button component 
+add accept onClick event , children
 
-        //add more cases here
-
-        default: 
-        buttonText = 'ClickMe';
-
-    }
-    return(<StyledButton>{buttonText}</StyledButton>);
+ */
+const Button = ({onClick, children }) => {
+   
+  return (
+  <StyledButton onClick={onClick}>
+    {children}
+  </StyledButton>
+  );
 };
-
-
-
+   
 export default Button;
 
 
 
-// Button design: https://getcssscan.com/css-buttons-examples by Michael McMillan
