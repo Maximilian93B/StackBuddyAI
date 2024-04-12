@@ -17,7 +17,28 @@ const StyledButton = styled.button`
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-`;
+
+// animation
+
+@keyframes shake {
+  0% { 
+    transform: rotate(3deg);
+  }
+  50% {
+   transform: rotate(-5deg);
+  }
+  70% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(3deg);
+  }
+}
+    animation: shake 2s ease-in-out infinite;
+   //
+
+  `;
 
 const Button = () => {
     const location = useLocation(); //From react router to get the user location in the app

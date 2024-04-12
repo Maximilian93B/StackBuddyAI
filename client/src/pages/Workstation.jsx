@@ -12,6 +12,10 @@ const PageContainer = styled.div`
   display: flex;
   height: 100vh; // Full height of the viewport
   background: linear-gradient(135deg, #eceff1 0%, #f9f9f9 100%); 
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 2px;
+  text-decoration: none;
+  
 `;
 
 const DashboardContainer = styled.div`
@@ -75,6 +79,7 @@ function Workstation() {
           <Dashboard />
         </DashboardContainer>
         <ContentContainer>
+          
           <TechDragDrop />   
           <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}

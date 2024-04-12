@@ -7,7 +7,7 @@ import {FaDatabase,FaServer, FaReact, FaNode,FaVuejs,FaAngular, FaCss3 } from 'r
 
 const DragDropContainer = styled.div`
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: flex-start;
   max-width: 80vw;
   max-height: 80vh;

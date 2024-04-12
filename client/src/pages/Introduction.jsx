@@ -34,14 +34,13 @@ const ContentContainer = styled.div`
 `;
 const ImageContainer = styled.div`
   flex: 1;
-<
-=======
   min-height: 550px;
   background-image: url(${BackgroundImg});
   z-index: 100;
   background-size: cover;
   background-position: center;
   color: none;
+ 
 `;
 const Header = styled.h1`
   margin-bottom: 20px; // Adjust spacing as needed
