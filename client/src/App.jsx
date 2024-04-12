@@ -6,7 +6,7 @@ import Workstation from './pages/Workstation';
 import IntroductionPage from './pages/Introduction';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
-import LevelSelection from './components/HighlevelSelection';
+import InfoTab from './components/InfoTab';
 import  LandingPage from './pages/LandingPage';
 import './App.css';
 
@@ -45,8 +45,7 @@ function App() {
        <Routes> {/* Use Routes to wrap Route components*/}
           <Route path = '/' element = {<IntroductionPage />} />
           <Route path = '/workstation' element = {<Workstation/> } />
-          <Route path = '/introduction' element = {<IntroductionPage/>} />
-          <Route path ='/HSL' element = {<LevelSelection/>} />
+          <Route path = '/introduction' element = {<InfoTab/>} />
           <Route path ='/LandingPage' element={<LandingPage/>} />
 
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}

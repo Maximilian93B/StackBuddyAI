@@ -23,7 +23,7 @@ query GetProjects {
 }
 `;
 
-export const GET_PROJECT = gqp`
+export const GET_PROJECT = gql`
 query GetProject($id: ID!) {
     project(id: $id) {
         id
