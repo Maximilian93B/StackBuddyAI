@@ -2,11 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+// Iport Auth Service 
+import AuthService from '../src/utils/auth';
 import Workstation from './pages/Workstation';
 import IntroductionPage from './pages/Introduction';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import InfoTab from './components/InfoTab';
+import NotFoundPage from './pages/ErrorPage';
 import  LandingPage from './pages/LandingPage';
 import './App.css';
 
@@ -49,6 +52,8 @@ function App() {
           <Route path ='/LandingPage' element={<LandingPage/>} />
 
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
+          {/** Route for unmatched paths , Use a wildcard '*' */}
+          <Route path ='*' element ={<NotFoundPage />} />
         </Routes>
         <Footer />
       </ApolloProvider>

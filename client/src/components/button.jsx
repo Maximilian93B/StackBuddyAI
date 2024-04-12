@@ -27,7 +27,6 @@ const StyledButton = styled.button`
 font-family: "Open Sans", sans-serif;
 font-size: 16px;
 letter-spacing: 1px;  // Reduced for subtlety
-text-transform: uppercase;
 color: black; // White text color for better contrast on darker backgrounds
 cursor: pointer;
 background-color:white; // A soft, elegant green

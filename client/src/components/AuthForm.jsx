@@ -4,9 +4,9 @@
 
 import React, { useState, } from 'react';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom'; // Corrected import for useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import { SIGNUP_MUTATION, LOGIN_MUTATION} from '../utils/UserMutations';
-// Correct import for a default export
+// Import Auth Service for JWT decode and handling 
 import AuthService from '../utils/auth';
 import styled from 'styled-components';
 
@@ -42,7 +42,6 @@ const StyledButton = styled.button`
 font-family: "Open Sans", sans-serif;
 font-size: 16px;
 letter-spacing: 1px;  // Reduced for subtlety
-text-transform: uppercase;
 color: black; // White text color for better contrast on darker backgrounds
 cursor: pointer;
 background-color:white; // A soft, elegant green
@@ -79,7 +78,7 @@ function AuthForm() {
 
     // Define our mutations + handle SingUp/login redirect to workstation
     // On successfull SignUp redirect the user to our landing page so they can log in and begin onboarding
-    const [signup, { loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
+    const [signup,{ loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             AuthService.login(data.signup.token);
             navigate('/')
@@ -89,26 +88,50 @@ function AuthForm() {
             setFormError(error.message); // Set error message 
         }
     });
+    
     // On successful login redirect the user to their workstation and forgo all the onboarding. 
-    const [login, { loading: loadingLogin, error : errorLogin }] = useMutation(LOGIN_MUTATION, {
+    const [login, { loading: loadingLogin, error: errorLogin }] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
             AuthService.login(data.login.token); 
             navigate('/workstation');
         },
-        onError: (error) => { setFormError(error.message); }
+        onError: error =>  setFormError(error.message) 
     });
     
+
+    // APP security 
+    // validate user input 
+    const validateForm = () => {
+        const { username, email, password } = formState;
+        if(!email || !password || (!isLogin && !username)) {
+            setFormError('All fields must be filed to Sign Up');
+            return false;
+        }
+        // Regex email format 
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setFormError('Must be valid email format');
+            return false;
+        }
+        if(!isLogin  && password.length < 8) {
+            setFormError('Password must be at least 8 characters long');
+            return false;
+        }
+        return true;
+    };
     
     // Function to update formState with current input values whenever a change occurs in the form fields
-    const handleChange = (e) => {
+    const handleChange = e => {
         const { name, value } = e.target;
-        setFormState({ ...formState, [name]: value });
+        setFormState(prev => ({...prev, [name]: value }));
         setFormError(''); // Clean up
     };
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(!validateForm()) return;
+
+
         const { username, email, password } = formState;
         try {
             if (isLogin) {
@@ -159,7 +182,10 @@ function AuthForm() {
                 onChange={handleChange}
             />
             <StyledButton type="submit" disabled={loading}>
-                { loading ? 'loading...' : (isLogin ? 'Login' : 'Sign Up')}
+                {isLogin ? 'Login' : 'Sign Up'}
+            </StyledButton>
+            <StyledButton onClick={toggleForm} style={{ marginTop: '10px' }}>
+                {isLogin ? 'Need to create an account?' : 'Already have an account? Log In'}
             </StyledButton>
         </StyledForm>
         {formError && <ErrorMessage>{formError}</ErrorMessage>}
