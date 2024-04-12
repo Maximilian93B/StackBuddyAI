@@ -15,6 +15,9 @@ const PageContainer = styled.div`
   font-family: "Open Sans", sans-serif;
   letter-spacing: 2px;
   text-decoration: none;
+  background: rgb(2,0,36);
+background: linear-gradient(139deg, rgba(2,0,36,0.8596230728619573) 0%, rgba(9,45,121,0.741976014038428) 64%, rgba(30,107,142,0.7783905798647583) 100%);
+
   
 `;
 
@@ -23,6 +26,9 @@ const DashboardContainer = styled.div`
   background-color: #ffffff; // Dashboard background color
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); // Add shadow for depth
   padding: 20px; // Padding inside the dashboard
+  background: rgb(2,0,36);
+background: linear-gradient(139deg, rgba(2,0,36,0.8596230728619573) 0%, rgba(9,45,121,0.741976014038428) 64%, rgba(30,107,142,0.7783905798647583) 100%);
+
 `;
 
 const ContentContainer = styled.div`
@@ -31,6 +37,7 @@ padding: 20px; // Add padding for some spacing around your content
 display: inline-flex; // Use flexbox for internal layout
 flex-direction: column; // Stack children vertically
 align-items: center; // Center children horizontally
+
 `;
 
 const ToggleButton = styled.button`
