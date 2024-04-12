@@ -62,6 +62,26 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 &:focus {
   outline: none; /* Removes the outline */
 }
+
+
+@keyframes shake {
+  0% { 
+    transform: rotate(3deg);
+  }
+  50% {
+   transform: rotate(-5deg);
+  }
+  70% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(3deg);
+  }
+}
+    animation: shake 2s ease-in-out infinite;
+
+
 `;
 
 
@@ -89,7 +109,7 @@ function Workstation() {
           
           <TechDragDrop />   
           <ToggleButton onClick={toggleStackBuddy}>
-            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
+            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy👨‍💻"}
           </ToggleButton>       
         </ContentContainer>
         {isStackBuddyOpen && (

@@ -81,9 +81,12 @@ const Dashboard = () => {
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error: {error.message}</p>;
 
+    const today = new Date();
 
     return (
       <DashboardContainer>
+        Hello, {data.me.username}!                 
+        
         <Dropdown title="My Profile">
           <p>Username: {data.me.username}</p>
           <p>Email: {data.me.email}</p>

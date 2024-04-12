@@ -36,7 +36,6 @@ const StyledButton = styled.button`
   }
 }
     animation: shake 2s ease-in-out infinite;
-   //
 
   `;
 
