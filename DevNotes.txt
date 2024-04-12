@@ -43,14 +43,11 @@ export default UserProfile;
 
 
 TASK : Look into adding new Tech Symbols through SVG maybe ?? 
-DEV: 
+DEV: ANYONE WHO WANTS IT 
 
 
-
-
-
-TASK : 
-DEV : 
+TASK :  Handle Errors --> Make a handleError component to display errors cleanly?? 
+DEV : ANYONE WHO WANTS IT ! 
 
 
 

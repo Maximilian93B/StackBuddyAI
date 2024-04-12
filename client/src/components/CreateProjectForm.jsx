@@ -64,6 +64,7 @@ const SuccessMessage = styled.div`
   margin-top: 10px;
 `;
 
+
 // Initial state for the form, reseting the form every time 
 // We are excluding the comments + userQueries properties for the CreateProject
 const initialFormState = {
@@ -133,6 +134,7 @@ const CreateProjectForm = () => {
       </div>
       <Button type="submit" disabled={loading}>Create Project</Button>
         {/**JSX could possibly be bad for ones health ?? */}
+        {loading ? 'Creating...' : 'Create Project'}
       {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
     {error && <ErrorMessage>Error creating project: {error.message}</ErrorMessage>}
     </Form>
