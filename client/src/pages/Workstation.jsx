@@ -115,17 +115,12 @@ function Workstation() {
           
           <TechDragDrop />   
           <ToggleButton onClick={toggleStackBuddy}>
-<<<<<<< HEAD
-            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy👨‍💻"}
-          </ToggleButton>       
-=======
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
           </ToggleButton>
           <QuillEditor
             initialContent={editorContent}
             handleContentChange={handleContentChange}
           />
->>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
         </ContentContainer>
         {isStackBuddyOpen && (
           <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
