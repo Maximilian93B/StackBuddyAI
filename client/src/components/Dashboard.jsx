@@ -1,4 +1,4 @@
-import React, { Children, useState } from 'react';
+import React, {  useState } from 'react';
 import styled from 'styled-components';
 import CreateProjectForm from './CreateProjectForm';
 import { GET_ME } from '../utils/userQueries';
