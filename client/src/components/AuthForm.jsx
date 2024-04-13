@@ -63,17 +63,17 @@ transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth tr
 `;
 
 const ErrorMessage = styled.p`
-olor: #D8000C; /* A deep red color for emphasis */
-background-color: #FFD2D2; /* A soft red background to make the error stand out */
-padding: 10px 20px; /* Padding to make the text more readable */
-margin-top: 10px; /* Space above the error message */
-border-radius: 5px; /* Slightly rounded corners for a softer look */
-border: 1px solid #FFBABA; /* Subtle border color that complements the background */
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-font-size: 0.9rem; /* Slightly smaller font size to keep the focus on form inputs */
-text-align: center; /* Center-align the text for better focus */
-width: 100%; /* Full width to ensure it aligns with the form elements */
-box-sizing: border-box; /* Include padding and border in the element's total width and height */
+olor: #D8000C; 
+background-color: #FFD2D2; 
+padding: 10px 20px; 
+margin-top: 10px; 
+border-radius: 5px; 
+border: 1px solid #FFBABA; 
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+font-size: 0.9rem; 
+text-align: center; 
+width: 100%; 
+box-sizing: border-box; 
 `;
 
 // Set the initial form stat outside of the block
@@ -96,16 +96,16 @@ function AuthForm() {
     const [signup,{ loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             AuthService.login(data.signup.token);
-            navigate('/')
+            navigate('/introduction')
             setFormState(initialFormState);
+            setIsLogin(true); // Switch to prompt the user to log in 
         },
         onError: (error) => {
-            const errorMessage = error.message.includes('already exists')?
+            const errorMessage = error.message.includes('already exists') ?
             'An account with this email already exsists.' :
             error.message;
             // set state to errorMessage
-            setFormState(errorMessage);
-        
+            setFormError(errorMessage);
         }
     });
     
@@ -218,7 +218,7 @@ function AuthForm() {
             />
             <StyledButton type="submit" disabled={loading}>
             {loading ? 'Processing...' : isLogin ? 'Login' : 'Sign Up'}
-            </StyledButton>
+            </  StyledButton>
             <StyledButton onClick={toggleForm} style={{ marginTop: '10px' }}>
                 {isLogin ? 'Need to create an account?' : 'Already have an account? Log In'}
             </StyledButton>

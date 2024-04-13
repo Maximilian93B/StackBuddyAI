@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-// Import hooks from react-dnd
 import {useDrag, useDrop } from 'react-dnd';
-// Import backend for drag and drop
 import {FaDatabase,FaServer, FaReact, FaNode,FaVuejs,FaAngular, FaCss3 } from 'react-icons/fa'; // Example icon
 
 const DragDropContainer = styled.div`
@@ -11,7 +9,7 @@ const DragDropContainer = styled.div`
   align-items: flex-start;
   max-width: 80vw;
   max-height: 80vh;
-  gap: 4rem;
+  gap: 1rem;
   padding: 5px;
 `;
 
@@ -20,8 +18,10 @@ const DragAreaContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100vw;
+  width: 100%
+  flex-wrap: wrap; // Allows items to wrap onto the next line
   gap: 10px; // Adjust as necessary
+
 `;
 
 // Container for the drop zones
@@ -35,48 +35,54 @@ const DropZoneContainer = styled.div`
 
 
 const CategoryHeader = styled.h2`
-  font-size: 1.7rem;  
+  font-size: 1.5rem;  
   color: #333;        
   margin-bottom: 20px; 
   text-align: center; 
+  background-image: linear-gradient(to right, #ffffff, #f1f1f1); // subtle gradient from white to light grey
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; // Modern, readable font
   background-color: white;
-  padding: 10px;  
+  padding: 15px;  
   border-radius: 8px; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.35); 
-`;
+  transition: background-color 0.3s ease, transform 0.2s ease; // smooth transitions for hover effects
+  &:hover {
+    background-image: linear-gradient(to right, #e6e6e6, #ffffff); // lighter gradient on hover
+    transform: translateY(-3px); // subtle lift effect
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); // deeper shadow to accentuate the lift
+  `;
 
+  const TechSymbol = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 15px 10px;
+  background-color: ${props => props.color || '#f0f0f0'};
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.20);
+  cursor: grab;
+  transition: transform 0.2s ease;
+  width: 100px;
+  height: 40px;
+  &:hover {
+    transform: scale(1.05);
+  }
+  // Removing the icon 
 
-const TechSymbol = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-padding: 10px;
-margin: 15px 10px;
-background-color: ${(props) => props.color || '#f0f0f0'};
-border-radius: 8%;
-box-shadow: 0 2px 4px rgba(0,0,0,0.20);
-cursor: grab;
-transition: transform 0.2s ease;
+  .remove-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    display: none;
+  }
 
-&:hover {
-  transform: scale(1.05);
-}
+  &:hover .remove-icon {
+    display: block;
+  }
+  `;
 
-// Removing the icon 
-
-.remove-icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-  display: none;
-}
-
-&:hover .remove-icon {
-  display: block;
-}
-`;
 
 // Styled component for drop zones
 const DropZone = styled.div`
@@ -99,16 +105,6 @@ transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 `;
 
-/*
-const IconWrapper = styled.div`
-  font-size: 24px;
-  margin-bottom: 10px;
-`;
-const Label = styled.div`
-  font-weight: bold;
-`;
-*/
-
 // Define our 3 Categories and symbols 
 // We need 3 categories / DB / SerSide / FrontENd 
 // Each Cat will have symbols 
@@ -117,37 +113,35 @@ const Label = styled.div`
 // We can pass colors to each symbol now !!
 const techCategories = {
   Databases: [
-    { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '#47A248' }, // MongoDB Green
-    { id: 'SQL', icon: <FaDatabase />, label: 'SQL', color: '#F29111' }, // SQL Orange (Generic SQL color; may vary)
-    { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '#336791' }, // PostgreSQL Blue
-    { id: 'Redis', icon: <FaDatabase />, label: 'Redis', color: '#D82C20' }, // Redis Red
-    { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB', color: '' }, // MariaDB Dark Blue
-    { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database', color: '' }, // Oracle Red
-    { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase', color: '' }, // Firebase Yellow
-    { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra', color: '' }, // Cassandra Blue
+    { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '#47A248', description: 'A document-oriented NoSQL database used for high volume data storage.'},
+    { id: 'SQL', icon: <FaDatabase />, label: 'SQL Server', color: '#F29111', description: 'A relational database management system developed by Microsoft.'},
+    { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '#336791', description: 'An open source relational database known for reliability and data integrity.'},
+    { id: 'Redis', icon: <FaDatabase />, label: 'Redis', color: '#D82C20', description: 'An in-memory data structure store, used as a database, cache, and message broker.'},
+    { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB', color: '', description: 'A community-developed fork of MySQL intended to remain free under the GNU GPL.'},
+    { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database', color: '', description: 'A multi-model database management system primarily designed for enterprise grid computing.'},
+    { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase', color: '', description: 'A platform developed by Google for creating mobile and web applications.'},
+    { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra', color: '', description: 'A highly scalable, high-performance distributed database designed to handle large amounts of data.'},
   ],
   ServerSide: [
-    { id: 'nodejs', icon: <FaNode />, label: 'Node.js', color: '' }, // Node.js Green
-    { id: 'Express', icon: <FaServer />, label: 'Express', color: '' }, // Express doesn't have a specific color, using black
-    { id: 'AngularServer', icon: <FaAngular />, label: 'Angular', color: '' }, // Angular Red (Typically frontend, including for conceptual consistency)
-    { id: 'Django', icon: <FaServer />, label: 'Django', color: '' }, // Django Dark Green
-    // Add other server-side symbols here
+    { id: 'nodejs', icon: <FaNode />, label: 'Node.js', color: '#47A248', description: 'A JavaScript runtime built on Chrome\'s V8 JavaScript engine.'},
+    { id: 'Express', icon: <FaServer />, label: 'Express', color: '#47A248', description: 'A minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.'},
+    { id: 'AngularServer', icon: <FaAngular />, label: 'Angular Universal', color: '', description: 'Server-side rendering (SSR) with Angular for rendering Angular applications on the server.'},
+    { id: 'Django', icon: <FaServer />, label: 'Django', color: '', description: 'A high-level Python web framework that encourages rapid development and clean, pragmatic design.'},
   ],
   FrontEnd: [
-    { id: 'React', icon: <FaReact />, label: 'React', color: '' }, // React Blue
-    { id: 'Vue', icon: <FaVuejs />, label: 'Vue', color: '' }, // Vue.js Green
-    { id: 'Angular', icon: <FaAngular />, label: 'Angular', color: '' }, // Angular Red
-    // Add other front-end symbols here
+    { id: 'React', icon: <FaReact />, label: 'React', color: '', description: 'A declarative, efficient, and flexible JavaScript library for building user interfaces.'},
+    { id: 'Vue', icon: <FaVuejs />, label: 'Vue.js', color: '', description: 'The Progressive JavaScript Framework that is approachable, versatile, and performant.'},
+    { id: 'Angular', icon: <FaAngular />, label: 'Angular', color: '', description: 'A platform for building mobile and desktop web applications using Typescript/JavaScript and other languages.'},
   ],
   FrontendFrameworks: [
-    { id: 'Svelte', icon: <FaCss3 />, label: 'Svelte', color: '' }, // Svelte Orange
-    { id: 'NextJs', icon: <FaCss3 />, label: 'Next.js', color: '' }, // Next.js Black
-    { id: 'NuxtJs', icon: <FaCss3 />, label: 'Nuxt.js', color: '' }, // Nuxt.js Green
+    { id: 'Svelte', icon: <FaCss3 />, label: 'Svelte', color: '#47A248', description: 'A radical new approach to building user interfaces, where the work to generate the app happens at build time.'},
+    { id: 'NextJs', icon: <FaCss3 />, label: 'Next.js', color: '#47A248', description: 'A React framework for production that provides hybrid static & server rendering, and route pre-fetching.'},
+    { id: 'NuxtJs', icon: <FaCss3 />, label: 'Nuxt.js', color: '#47A248', description: 'An intuitive Vue framework that simplifies the development of universal or single-page Vue apps.'},
   ],
   CSSFrameworks: [
-    { id: 'Tailwind', icon: <FaCss3 />, label: 'Tailwind CSS', color: '' }, // Tailwind Blue
-    { id: 'Bootstrap', icon: <FaCss3 />, label: 'Bootstrap', color: '' }, // Bootstrap Purple
-    { id: 'MaterialUI', icon: <FaCss3 />, label: 'Material-UI', color: '' }, // Material-UI Blue
+    { id: 'Tailwind', icon: <FaCss3 />, label: 'Tailwind CSS', color: '#47A248', description: 'A utility-first CSS framework for rapidly building custom user interfaces.'},
+    { id: 'Bootstrap', icon: <FaCss3 />, label: 'Bootstrap', color: '#47A248', description: 'The most popular HTML, CSS, and JS library in the world for building responsive, mobile-first projects on the web.'},
+    { id: 'MaterialUI', icon: <FaCss3 />, label: 'Material-UI', color: '#47A248', description: 'A popular React UI framework that features designs based on Material Design.'},
   ],
 };
 
@@ -175,16 +169,19 @@ const TechDragDrop = () => {
   // includes {type,item,collect: monitor() => action + state }
   // return the drag icon 
 
+
   // {pass id , icon , label , color}  to techsymbol 
-  const DraggableTechSymbol = ({ id, icon, label, color }) => {
+  // pass description to render on modal 
+  const DraggableTechSymbol = ({ id, icon, label, color, description }) => {
+    // React Dnd for drag functionality 
     const [, drag] = useDrag(() => ({
       type: 'tech',
       item: { id },
       collect: monitor => ({
-        isDragging: !!monitor.isDragging(),
+      isDragging: !!monitor.isDragging(),
       }),
     }));
-  
+
     return (
       <TechSymbol ref={drag} color={color}>
         {icon}
