@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import ReactQuill from 'react-quill'; // import the ReactQuill module
-import 'react-quill/dist/quill.snow.css'; // import quill stylesheet
+import ReactQuill from 'react-quill'; // Import the ReactQuill module
+import PropTypes from 'prop-types'; // Import PropTypes
+import 'react-quill/dist/quill.snow.css'; // Import Quill stylesheet
 
 const QuillEditor = ({ initialContent, handleContentChange }) => {
   const [content, setContent] = useState('');
@@ -23,6 +24,12 @@ const QuillEditor = ({ initialContent, handleContentChange }) => {
       />
     </div>
   );
+};
+
+// Define prop types for QuillEditor component
+QuillEditor.propTypes = {
+  initialContent: PropTypes.string,
+  handleContentChange: PropTypes.func.isRequired
 };
 
 export default QuillEditor;
