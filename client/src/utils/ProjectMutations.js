@@ -49,4 +49,14 @@ mutation UpdateProject($id: ID!, $title: String, $description: String, $userQuer
 }
 `;
 
-
+export const UPDATE_PROJECT_TECH = gql`
+mutation updateProjectTech($projectId: ID!, $techSelection: [TechCategoryInput!]! ) {
+updateProject(id: $projectId, techSelection: $techSelection) {
+  id
+  techSelection {
+    category
+    technologies
+  }
+}
+}
+`
