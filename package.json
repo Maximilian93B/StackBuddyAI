@@ -14,7 +14,12 @@
     "author": "",
     "license": "MIT",
     "devDependencies": {
+<<<<<<< HEAD
         "concurrently": "^8.2.0"
+=======
+        "concurrently": "^8.2.0",
+        "nodemon": "^3.1.0"
+>>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
     },
     "dependencies": {
         "apollo-server-express": "^3.13.0",

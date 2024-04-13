@@ -7,6 +7,7 @@ import TechDragDrop from '../components/TechDragDrop';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import StackBuddy from '../components/StackBuddyAI';
+import QuillEditor from '../components/QuillEditor'; 
 
 const PageContainer = styled.div`
   display: flex;
@@ -90,6 +91,7 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 function Workstation() {
   const navigate = useNavigate();
   const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(false);
+  const [editorContent, setEditorContent] = useState('');
 
   useEffect(() => {
       if (!AuthService.loggedIn()) {
@@ -98,6 +100,10 @@ function Workstation() {
   }, [navigate]);
 
   const toggleStackBuddy = () => setIsStackBuddyOpen(prev => !prev);
+
+  const handleContentChange = (content) => {
+    setEditorContent(content);
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -109,8 +115,17 @@ function Workstation() {
           
           <TechDragDrop />   
           <ToggleButton onClick={toggleStackBuddy}>
+<<<<<<< HEAD
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy👨‍💻"}
           </ToggleButton>       
+=======
+            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
+          </ToggleButton>
+          <QuillEditor
+            initialContent={editorContent}
+            handleContentChange={handleContentChange}
+          />
+>>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
         </ContentContainer>
         {isStackBuddyOpen && (
           <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
