@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { useMutation } from '@apollo/client';
+// Import hooks from react-dnd
 import {useDrag, useDrop } from 'react-dnd';
 import {FaDatabase,FaServer, FaReact, FaNode,FaVuejs,FaAngular, FaCss3 } from 'react-icons/fa'; // Example icon
+import { UPDATE_PROJECT_TECH } from '../utils/ProjectMutations';
 
 const DragDropContainer = styled.div`
   display: flex;
@@ -84,6 +87,34 @@ const CategoryHeader = styled.h2`
   `;
 
 
+//updatetechdraganddrop
+const Button = styled.div`
+  padding: 10px 15px;
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  margin: 10px 2px;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  position: absolute;
+  top: 457px; /* Adjust as needed */
+  right: 342px; /* Adjust as needed */
+  line-height: 1;
+
+  &:hover {
+    background-color: #45a049; 
+  }
+
+  &:focus {
+    outline: none; 
+  }
+`;
+
+
+
 // Styled component for drop zones
 const DropZone = styled.div`
 display: flex;
@@ -146,7 +177,7 @@ const techCategories = {
 };
 
 // Main Component
-const TechDragDrop = () => {
+const TechDragDrop = ({projectid}) => {
   // State to track dropped items by category
   const [droppedItems, setDroppedItems] = useState({
     Database: [],
@@ -155,7 +186,31 @@ const TechDragDrop = () => {
     FrontendFrameworks: [],
     CSSFrameworks: []
   });
-6
+  const [updateProjectTech, { data, loading, error }] = useMutation(UPDATE_PROJECT_TECH);
+
+  // Function to handle tech selection update
+  const handleUpdateProjectTech = async () => {
+    try {
+      
+      const updatedTechSelection = Object.entries(droppedItems).map(([category, technologies]) => ({
+        category,
+        technologies,
+      }));
+
+      
+      await updateProjectTech({
+        variables: {
+          techSelection: updatedTechSelection,
+        },
+      });
+      
+      console.log('Tech selections updated successfully!');
+    } catch (err) {
+    
+      console.error('Error updating tech selections:', err.message);
+    }
+  };
+
   // Remove Items from the DropZone 
   const removeTechSymbol = (category,itemId) => {
     setDroppedItems(prevState => ({
@@ -229,6 +284,10 @@ const TechDragDrop = () => {
             ))}
           </div>
         ))}
+        <Button onClick={handleUpdateProjectTech} disabled={loading}>
+          Click to update
+        </Button>
+        {error &&<p> Unable to complete update:{error.message}</p> }
       </DragAreaContainer>
 
       {/* Drop zones */}
