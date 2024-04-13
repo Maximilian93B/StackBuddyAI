@@ -63,11 +63,8 @@ const Footer  = () => {
     <FooterContainer>
         <FooterText>©{new Date().getFullYear()} StackBuddyAI.All rights reserved</FooterText>
         <FooterLinks>
-            <Link>{/* Links to our Githubs or portfolios can go here ?? */}</Link>
-            <Link>Link Goes here </Link>
-            <Link> Link Here</Link>
-            <Link>Link Here</Link>
-        </FooterLinks>
+            <Link> <a href="https://github.com/Maximilian93B/StackBuddyAI" target="_blank">Repository</a></Link>
+             </FooterLinks>
     </FooterContainer>
     );
 };

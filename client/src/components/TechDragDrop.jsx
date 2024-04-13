@@ -8,12 +8,18 @@ import { UPDATE_PROJECT_TECH } from '../utils/ProjectMutations';
 
 const DragDropContainer = styled.div`
   display: flex;
-  justify-content: center;
+  // justify-content: center; //removed this as it was overlapping the main screen
   align-items: flex-start;
   max-width: 80vw;
   max-height: 80vh;
+<<<<<<< HEAD
+
+  gap: 4rem;
+=======
   gap: 1rem;
+>>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
   padding: 5px;
+  
 `;
 
 // Container for the drag areas
@@ -21,10 +27,15 @@ const DragAreaContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+<<<<<<< HEAD
+  width: 100vw;
+  gap: 5px; // Adjust as necessary
+=======
   width: 100%
   flex-wrap: wrap; // Allows items to wrap onto the next line
   gap: 10px; // Adjust as necessary
 
+>>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
 `;
 
 // Container for the drop zones
@@ -38,7 +49,11 @@ const DropZoneContainer = styled.div`
 
 
 const CategoryHeader = styled.h2`
+<<<<<<< HEAD
+  font-size: 1rem;  
+=======
   font-size: 1.5rem;  
+>>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
   color: #333;        
   margin-bottom: 20px; 
   text-align: center; 
@@ -48,6 +63,10 @@ const CategoryHeader = styled.h2`
   padding: 15px;  
   border-radius: 8px; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.35); 
+<<<<<<< HEAD
+  
+`;
+=======
   transition: background-color 0.3s ease, transform 0.2s ease; // smooth transitions for hover effects
   &:hover {
     background-image: linear-gradient(to right, #e6e6e6, #ffffff); // lighter gradient on hover
@@ -85,6 +104,7 @@ const CategoryHeader = styled.h2`
     display: block;
   }
   `;
+>>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
 
 
 //updatetechdraganddrop
@@ -134,6 +154,18 @@ transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   background-color: #f0f0f0;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
+
+//  animation: bounce 10s ease infinite;
+// }
+// @keyframes bounce {
+//     70% { transform:translateY(0%); }
+//     80% { transform:translateY(-15%); }
+//     90% { transform:translateY(0%); }
+//     95% { transform:translateY(-7%); }
+//     97% { transform:translateY(0%); }
+//     99% { transform:translateY(-3%); }
+//     100% { transform:translateY(0); }
+// }
 `;
 
 // Define our 3 Categories and symbols 

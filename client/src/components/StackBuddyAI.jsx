@@ -117,8 +117,8 @@ const CloseButton = styled.button`
   top: 20px;
   right: 20px;
   cursor: pointer;
-  background-color: #f44336;
-  color: white;
+  background-color: #76FF03;
+  color: black;
   border: none;
   border-radius: 50%;
   width: 35px;
@@ -232,7 +232,7 @@ useEffect(()=> {
           onKeyPress={handleKeyPress}
         />
       </InputContainer>
-      <CloseButton onClick={onClose}>Close</CloseButton>
+      <CloseButton onClick={onClose}>X</CloseButton>
     </ChatContainer>
     </StackBuddyOverlay>
   );

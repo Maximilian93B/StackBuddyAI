@@ -85,16 +85,16 @@ const Dashboard = () => {
     // Fetch user data ( GET_ME) 
    const { loading, data, error } = useQuery(GET_ME);
 
-   // If loading return Spinner
-    if(loading) return <Spinner />
+   // If loading return loading // We should add setTimeout and a spinner ?? 
+    // if error log error 
+    if(loading) return <p>Loading...</p>
+    if(error) return <p>Error: {error.message}</p>;
 
-    // If there is an error fetching the data, display an error message
-    if(error) return <div> Error Loading data: {error.message}</div>;
-
-  
 
     return (
       <DashboardContainer>
+        Hello, {data.me.username}!                 
+        
         <Dropdown title="My Profile">
           <>
           <p>Username: {data.me.username}</p>
