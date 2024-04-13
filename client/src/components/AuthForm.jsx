@@ -96,16 +96,16 @@ function AuthForm() {
     const [signup,{ loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             AuthService.login(data.signup.token);
-            navigate('/')
+            navigate('/introduction')
             setFormState(initialFormState);
+            setIsLogin(true); // Switch to prompt the user to log in 
         },
         onError: (error) => {
-            const errorMessage = error.message.includes('already exists')?
+            const errorMessage = error.message.includes('already exists') ?
             'An account with this email already exsists.' :
             error.message;
             // set state to errorMessage
-            setFormState(errorMessage);
-        
+            setFormError(errorMessage);
         }
     });
     
@@ -218,7 +218,7 @@ function AuthForm() {
             />
             <StyledButton type="submit" disabled={loading}>
             {loading ? 'Processing...' : isLogin ? 'Login' : 'Sign Up'}
-            </StyledButton>
+            </  StyledButton>
             <StyledButton onClick={toggleForm} style={{ marginTop: '10px' }}>
                 {isLogin ? 'Need to create an account?' : 'Already have an account? Log In'}
             </StyledButton>

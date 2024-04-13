@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import CreateProjectForm from './CreateProjectForm';
 import { GET_ME } from '../utils/userQueries';
 import { useQuery } from '@apollo/client';
+import { useSpring, animated} from 'react-spring';
+import  Spinner  from './Spinner';
 
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
@@ -34,8 +36,7 @@ const DropdownHeader = styled.div`
   }
 `;
 
-const DropdownContent = styled.div`
-  display: ${props => props.$isOpen ? 'block' : 'none'};
+const DropdownContent = styled(animated.div)`
   padding: 10px;
   background: #ffffff;
   border-radius: 5px;
@@ -48,6 +49,14 @@ const DropdownContent = styled.div`
 const Dropdown = ({ title, children }) => {
     /// use state to set dashboard open/closed 
     const [isOpen, setIsOpen] = useState(false);
+  
+    const contentProps = useSpring({
+
+      maxHeight: isOpen? 1000 : 0, // Animate the height from 0 to auto 
+      opacity: isOpen ? 1 : 0, // Animate opacity from 0 to 1
+      from: { maxHeight: 0, opacity: 0 }, // Initial animation states
+      config: { tension : 250, friction: 20 } // Configure the tension and friction 
+    });
 
     return(
         <DropdownContainer>
@@ -55,7 +64,7 @@ const Dropdown = ({ title, children }) => {
                 {title}
                 <span>{isOpen ? '▲' : '▼'}</span>
             </DropdownHeader>
-            <DropdownContent $isOpen={isOpen}>
+            <DropdownContent style={contentProps}>
                 {children}
             </DropdownContent>
         </DropdownContainer>
@@ -76,19 +85,24 @@ const Dashboard = () => {
     // Fetch user data ( GET_ME) 
    const { loading, data, error } = useQuery(GET_ME);
 
-   // If loading return loading // We should add setTimeout and a spinner ?? 
-    // if error log error 
-    if(loading) return <p>Loading...</p>
-    if(error) return <p>Error: {error.message}</p>;
+   // If loading return Spinner
+    if(loading) return <Spinner />
 
+    // If there is an error fetching the data, display an error message
+    if(error) return <div> Error Loading data: {error.message}</div>;
+
+  
 
     return (
       <DashboardContainer>
         <Dropdown title="My Profile">
+          <>
           <p>Username: {data.me.username}</p>
           <p>Email: {data.me.email}</p>
+          </>
         </Dropdown>
         <Dropdown title="My Projects">
+          <>
           {data.me.currentProjects.length > 0 ? (
             <ul>
               {data.me.currentProjects.map((project) => (
@@ -101,9 +115,10 @@ const Dashboard = () => {
                 </li>
               ))}
             </ul>
-          ) : (
-            <p>No projects found</p>
+            ) : (
+            <p>No projects found</p>  
           )}
+          </>
         </Dropdown>
         <Dropdown title="Create A Project">
         {/* Dropdown for creating a new project */}
