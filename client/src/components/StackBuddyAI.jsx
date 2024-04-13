@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import { useTransition, animated} from 'react-spring';
 import styled from 'styled-components';
-
 
 const StackBuddyOverlay = styled.div`
   position: fixed;
@@ -9,7 +9,7 @@ const StackBuddyOverlay = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); // Dark overlay to focus on chat
+  background-color: rgba(0, 0, 0, 0.4); // Lighter overlay for a softer appearance
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,13 +22,13 @@ const ChatContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 80vh;
-  width: 40vw; // Slightly more compact for focus
-  background-color: #121212;
+  width: 40vw; // 
+  background: linear-gradient(180deg, #ffffff 0%, #f4f4f4 100%);
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
-  border-radius: 15px; 
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  border: 2px solid #black;
+  border-radius: 25px; 
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 `;
 
 
@@ -36,12 +36,12 @@ const ChatContainer = styled.div`
 const ChatHeader = styled.div`
   width: 100%;
   margin-bottom: 20px;
-  color: #76FF03; 
+  color: #4a90e2;
   text-align: center;
   font-size: 24px;
   font-weight: bold;
   padding: 10px 0;
-  border-bottom: 1px solid #333; 
+  border-bottom: 1px solid #e1e1e1;; 
 `;
 
 
@@ -52,20 +52,32 @@ overflow-y: auto;
 display: flex;
 flex-direction: column;
 padding: 20px;
-background-color: #1E1E1E; // Slightly lighter dark shade for contrast
+background: white;
 border-radius: 10px;
 margin-bottom: 20px; // Space before input
 `;
 
-const Message = styled.div`
+const Message = styled(animated.div)`
 margin-bottom: 10px;
-padding: 10px 20px;
+padding: 20px 20px;
 border-radius: 20px;
-background-color: ${(props) => (props.role === 'user' ? '#333' : '#555')}; // Dark shades for user/bot differentiation
-color: #FFF; // White text for readability
+background-color: ${(props) => (props.role === 'user' ? '#e0f7fa' : '#f9f9f9')};
+color: black;
+font-size: 18px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+border: 1px solid #d0e0e3;
+font-family: 'Roboto', sans-serif;
 align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
 max-width: 80%;
 word-wrap: break-word;
+&:nth-child(odd) {
+  background-color: #e0f7fa; // Slightly different shade for alternating messages
+}
+animation: fadeIn 0.3s;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 `;
 
 const MessagesDisplay = styled.div`
@@ -79,8 +91,6 @@ max-height: 540px;
 const InputContainer = styled.div`
   padding: 10px;
   width: 100%;
-  border-top: 3px solid #1E1E1E; // Soft pink top border for separation
-  background-color: #1E1E1E; // Match chat container
 `;
 
 
@@ -89,15 +99,15 @@ const TextInput = styled.input`
 width: calc(100% - 24px); // Account for padding
 padding: 12px;
 margin-top: 20px;
-border: 2px solid #333; // Darker border for stealth look
+border: 2px solid #e0e0e3; 
 border-radius: 25px; // Soft edges
-background-color: #222; // Very dark background
-color: #DDD; // Light grey text for contrast
+background-color: #white; 
 font-size: 16px;
 &:focus {
-  border-color: #76FF03; // Neon green focus
-  outline: none; // Removing default focus outline for custom styling
-  box-shadow: 0 0 8px #76FF03; // Glowing effect
+  background: white;
+  border-color: #4a90e2;
+  outline: none;
+
 }
 `;
 
@@ -116,8 +126,9 @@ const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  &:hover {
-    background-color: #D32F2F;
+  :hover {
+    transform: rotate(90deg); // A playful hover effect
+    transition: transform 0.2s;
   }
 `;
 
@@ -128,13 +139,46 @@ const StackBuddyAI = ({isVisible, onClose }) => {
   // 
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState(' ');
-
   // Send a message to OpenAI 
   // Post Input to our OpenAI endpoint 
+  const [loading, setLoading] =useState(false);
+
+  // animation for message entry using React Spring
+  const transitions = useTransition(messages, {
+      keys: message => message.id, 
+      from: { opacity: 0, transform: 'translate3d(0,-40px,0)' },
+      enter: { opacity: 1, transform: 'translate3d(0,0px,0)' },
+      leave: { opacity: 0, transform: 'translate3d(0,-40px,0)' },
+      config: { tension: 280, friction: 30 }
+  });
+
+
+
+  // Add a useEffect to handle the initial welcome message
+  
+// Initially this caused an infinite loop because i did not manage the dependencies properly
+// to fix the issue i will Make sure useEffect does not depend on other Props, 
+// Problem solved
+/**
+if(message.length === 0 )
+[], only run once after the component mounts to prevent the infinite loop on mount
+
+*/  
+useEffect(()=> {
+    const welcomeMessage = {
+      role:'bot',
+      content: 'Hey I/m StackBuddy. Im here to assist you in finding the right tech stack for your projects, You can ask me anything and i will try my best to help.' 
+    };
+    // Check if messages array is empty before setting the welcome message so we can prevent the unenecessary updates
+    if (messages.length === 0) {
+      setMessages([welcomeMessage]);
+    }
+  }, []); // Ensure it only runs once after the component mounts 
+
   // 
   const sendMessage = async () => {
     if (inputText.trim() === '') return;
-
+    setLoading(true);
     try {
       // Post the input text to our openai endpoint 
       // Extract the botReply 
@@ -142,11 +186,13 @@ const StackBuddyAI = ({isVisible, onClose }) => {
       // 
       const response = await axios.post('http://localhost:3001/openai', { query: inputText });
       const botReply = response.data.message;
-      setMessages([...messages, { role: 'user', content: inputText }, { role: 'bot', content: botReply }]);
+      setMessages((prevMessages) => [...prevMessages, { role: 'user', content: inputText }, { role: 'bot', content: botReply }]);
       setInputText('');
     } catch (error) {
       console.error('Error sending message', error);
     }
+    // set loading to false after response is handled
+    setLoading(false)
   };
 
     // Capture keys 
@@ -171,6 +217,7 @@ const StackBuddyAI = ({isVisible, onClose }) => {
           {messages.map((message, index) => (
             <Message key={index} role={message.role}>
               {message.content}
+              { loading && loading}
             </Message>
           ))}
         </MessagesDisplay>

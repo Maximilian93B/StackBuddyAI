@@ -1,83 +1,141 @@
 import React, { useState } from 'react';
-import { useLocation }  from 'react-router-dom'; 
+import { useNavigate }  from 'react-router-dom'; 
+import { useSpring, animated } from 'react-spring';
 import styled from "styled-components";
 
+
+
 const Container = styled.div`
-  background-color: #24346b;
-  color: #FFF;
-  padding: 20px;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+height: 100vh;
+width: 100vw;
+background: linear-gradient(144deg, rgba(237,173,249,0.4422561260832458) 28%, rgba(253,222,158,0.5851132689403886) 51%, rgba(74,220,204,0.4450572465314251) 100%);
+`;
+
+
+const AnimatedHeader = styled(animated.h1)`
+  color: white;
   text-align: center;
-
-  h1 {
-    color: #f3c20f;
-  }
-
-  div {
-    display: flex;
-    justify-content: space-between;
-    
-
-    div {
-      flex-basis: 30%;
-      background-color: #3C4F76;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer; 
-      flex-direction: column;
-      
+  font-size: 4rem; // Customize size as needed
+  margin-top: 10%;
+  margin-bottom: 5vh; // Increase if more space is needed
+`;
 
 
-      h2 {
-        color: #f3c20f;
-      }
-      
-      p {
-        color: #FFF;
-        display: none; 
-        font-weight: bold;
-        margin-top: 10px;
-        font-size: 20px;
-       
-      }
+const AnimatedSubheader = styled(animated.h2)`
+  color: #ffffff;
+  text-align: center;
+  font-size: 2.5rem; 
+  margin-top: 5vh;
+`;
 
-      
-      &:hover {
-        p {
-          display: block;
-          flex-direction: column;
-      
-        }
-      }
-    }
+const ButtonContainer = styled.div`
+display: flex
+justify-content: center;
+align-items: center;
+margin-top: 5vh;
+gap: 20px;
+`;
+
+
+
+
+const Button = styled(animated.button)`
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 20px 100px;
+  margin: 0 100px;
+  margin-top: 1vh;
+  font-size: 16px;
+  outline: none;
+  &:hover {
+    background-color: #0056b3;
   }
 `;
 
-const InfoTab = () => {
-  const handleGetStartedClick = () => {
-    // Redirect to another endpoint 
-    window.location.href = '/get-started';
-  };
 
-  return (
+const InfoText = styled(animated.div)`
+  position: absolute;
+  color: black;
+  width: 100%;
+  text-align: center;
+  bottom: 20%;
+  font-size: 2.5rem;
+  padding: 2vh 0;
+
+`;
+
+const InfoTab = () => {
+  // useNavigate to allow the user to navigate to the workstation if signed up if not go to sing up
+  const navigate = useNavigate();
+  const [infoStyle, setInfoStyle] = useSpring(() => ({opacity: 0}));
+
+  // we will define a state to handle a user hovering over our buttons and the InfoText will display dynamic text based on button context 
+    const [infoText, setInfoText] = useState('');
+
+       // Function to allow users to see dynamic text 
+       const showInfo = (text) => {
+        setInfoText(text);
+        setInfoStyle.start({ opacity: 1 });
+      };
+  
+      // We will clear the text and set a small timeout function for effect
+      const hideInfo = (text) => {
+        setInfoStyle.start({ opacity: 0 });
+        setTimeout(() => setInfoText(''), 5000);
+      }
+
+      const headerProps = useSpring({
+        from: { opacity: 0, transform: 'translateY(-30px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        delay: 300, // Delays the animation of the header
+      });
+
+      const subHeaderProps = useSpring({
+        from: { opacity: 0, transform: 'translateY(-30px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        delay: 600, // Delays the animation of the subheader
+      });
+
+  
+      return (
     <Container>
-      <h1>Welcome to StackBuddyAI</h1>
-      <div>
-        <div>
-          <h2>Introduction</h2>
-          <p>Highlight the key benefits of using the tool,such as simplifying the process of building a tech stack, <br />as well as our AI agent.</p>
-        </div>
-        <div>
-          <h2>Features</h2>
-          <p>Describe each feature briefly and emphasize how <br />it can benefit users in their tech stack planning <br />and decision-making process.</p>
-        </div>
-        <div onClick={handleGetStartedClick}> {/* Add click event */}
-          <h2>Get Started</h2>
-          <p>Conclude the onboarding process with <br />a clear call to action.</p>
-        </div>
-      </div>
+      <AnimatedHeader style={headerProps}>Welcome to StackBuddyAI</AnimatedHeader>
+      <AnimatedSubheader style ={subHeaderProps}>
+      Discover how our AI-driven tools can streamline your project planning.
+      </AnimatedSubheader>
+     <ButtonContainer>
+      <Button
+         onMouseEnter={() => showInfo('Learn about the introduction and purpose of our tool.')}
+        onMouseLeave={hideInfo}
+      >
+        Introduction 
+      </Button>
+      <Button
+        onMouseEnter={() => showInfo('Discover the features and capabilities of our tool.')}
+        onMouseLeave={hideInfo}
+        
+      >
+        Features
+      </Button>
+      <Button
+        onMouseEnter={() => showInfo('Get started using the tool with this quick guide.')}
+        onMouseLeave={hideInfo}
+        onClick={() => navigate('/')}
+      >
+        Get Started
+      </Button>
+      </ButtonContainer>
+      <InfoText style={infoStyle}>{infoText}</InfoText>
     </Container>
   );
-}
+};
 
 export default InfoTab;
 

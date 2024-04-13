@@ -19,7 +19,7 @@ const Nav = styled.nav`
   z-index: 10; // Ensuring it stays above other content
   background: #fff; // Elegant white background
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
-  padding: 10px 25px; // Reduced padding for a slimmer nav bar
+  padding: 20px 25px; // Reduced padding for a slimmer nav bar
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -53,8 +53,7 @@ return(
     <Nav>
     <Brand href="/">StackBuddyAI</Brand>
     <NavLink to="/" style={activeStyle}>Home</NavLink>
-    <NavLink to="/LandingPage" style={activeStyle}>Login/Sign-up</NavLink>
-    <NavLink to="/HSL" style={activeStyle}>Tech Selection</NavLink>
+    <NavLink to="/introduction" style={activeStyle}>Introduction</NavLink>
     <NavLink to="/Workstation" style={activeStyle}>My Workstation</NavLink>
   </Nav>
 );

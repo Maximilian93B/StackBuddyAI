@@ -4,9 +4,9 @@
 
 import React, { useState, } from 'react';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom'; // Corrected import for useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import { SIGNUP_MUTATION, LOGIN_MUTATION} from '../utils/UserMutations';
-// Correct import for a default export
+// Import Auth Service for JWT decode and handling 
 import AuthService from '../utils/auth';
 import styled from 'styled-components';
 
@@ -21,11 +21,11 @@ const Container = styled.div`
   border: 1px solid #ddd; // Light border
 `;
 
-
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 20px;
 `;
 
 const StyledInput = styled.input`
@@ -38,62 +38,132 @@ const StyledInput = styled.input`
 `;
 
 const StyledButton = styled.button`
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  &:disabled {
-    background-color: #ccc;
-  }
+font-family: "Open Sans", sans-serif;
+font-size: 16px;
+letter-spacing: 1px; 
+color: black; 
+cursor: pointer;
+background-color:white; 
+border: none; 
+padding: 10px 20px; 
+border-radius: 25px; 
+box-shadow: 0 4px 8px rgba(0,0,0,0.15); // Soft shadow for a subtle depth effect
+transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth transitions for hover effects
+
+&:hover, &:focus {
+  background-color: #367C2B; 
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2); 
+  transform: translateY(-2px); 
+}
+
+&:active {
+  transform: translateY(1px); 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
 `;
 
 const ErrorMessage = styled.p`
-  color: red;
+olor: #D8000C; 
+background-color: #FFD2D2; 
+padding: 10px 20px; 
+margin-top: 10px; 
+border-radius: 5px; 
+border: 1px solid #FFBABA; 
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+font-size: 0.9rem; 
+text-align: center; 
+width: 100%; 
+box-sizing: border-box; 
 `;
 
+// Set the initial form stat outside of the block
+
+
+const initialFormState = { email: '', password: '', username: '' };
+
+
 function AuthForm() {
-    // useState to hold form inputs
-    const [formState, setFormState] = useState({ email: '',password: '', username: '', });// Will be used for signup only
-    // Toggle between login and signup
+    const [formState, setFormState] = useState(initialFormState);// Will be used for signup only
     const [isLogin, setIsLogin] = useState(true);
     const [formError, setFormError] = useState(''); // Handle errors for form submit 
     const navigate = useNavigate(); // useNavigate to redirect the users after success or failure 
 
 
-    // Define our mutations + handle SingUp/login redirect to workstation
-    // On successfull SignUp redirect the user to our landing page so they can log in and begin onboarding
-    const [signup, { loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
+    // Define our mutations + handle SingUp/login redirect to workstatio
+    // Reset form after successful sign up
+    // clear form to empty strings 
+
+    const [signup,{ loading: loadingSignup, error: errorSignup }] = useMutation(SIGNUP_MUTATION, {
         onCompleted: (data) => {
             AuthService.login(data.signup.token);
-            navigate('/')
-            setFormState({ email: '', password: '', username: '',}); // Clean up - clear the form 
+            navigate('/introduction')
+            setFormState(initialFormState);
+            setIsLogin(true); // Switch to prompt the user to log in 
         },
         onError: (error) => {
-            setFormError(error.message); // Set error message 
+            const errorMessage = error.message.includes('already exists') ?
+            'An account with this email already exsists.' :
+            error.message;
+            // set state to errorMessage
+            setFormError(errorMessage);
         }
     });
+    
+    
     // On successful login redirect the user to their workstation and forgo all the onboarding. 
-    const [login, { loading: loadingLogin, error : errorLogin }] = useMutation(LOGIN_MUTATION, {
+    // Custom handling added to handle user errors 
+    const [login, { loading: loadingLogin, error: errorLogin }] = useMutation(LOGIN_MUTATION, {
         onCompleted: (data) => {
             AuthService.login(data.login.token); 
             navigate('/workstation');
         },
-        onError: (error) => { setFormError(error.message); }
+        onError: error => {
+            const errorMessage = error.message;
+            // if the response is "User not found" from the server 
+            if(errorMessage.includes('User not found')) {
+                // setFormError to display error
+                setFormError("No account with this email has been registered.");
+            } else if (errorMessage.includes('Invalid Credentials')) {
+                setFormError('Passwords do not match');
+            } else {
+                setFormError(errorMessage); // Default message for further handling 
+            }
+        } 
     });
     
+
+    // APP security 
+    // validate user input 
+    const validateForm = () => {
+        const { username, email, password } = formState;
+        if(!email || !password || (!isLogin && !username)) {
+            setFormError('Please fill out all fields to Sign Up');
+            return false;
+        }
+        // Regex email format 
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setFormError('The email entered does not match a valid format');
+            return false;
+        }
+        if(!isLogin  && password.length < 8) {
+            setFormError('Your password must be at least 8 characters long');
+            return false;
+        }
+        return true;
+    };
     
     // Function to update formState with current input values whenever a change occurs in the form fields
-    const handleChange = (e) => {
+
+    const handleChange = e => {
         const { name, value } = e.target;
-        setFormState({ ...formState, [name]: value });
+        setFormState(prev => ({...prev, [name]: value }));
         setFormError(''); // Clean up
     };
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(!validateForm()) return;
         const { username, email, password } = formState;
         try {
             if (isLogin) {
@@ -102,10 +172,13 @@ function AuthForm() {
             } else {
                 // Handle signup
                 await signup({ variables: { username, email, password } });
+                if(signup) {
+
+                }
             }
             // Success handling logic here (e.g., clear form, show success message, or redirect)
         } catch (error) {
-            // Handled indivudually 
+           setFormError('Unexpected Error: Sorry, Try again later - If you see this message please contact the Developers');
         }
     };
 
@@ -144,13 +217,13 @@ function AuthForm() {
                 onChange={handleChange}
             />
             <StyledButton type="submit" disabled={loading}>
-                {isLogin ? 'Login' : 'Sign Up'}
+            {loading ? 'Processing...' : isLogin ? 'Login' : 'Sign Up'}
+            </  StyledButton>
+            <StyledButton onClick={toggleForm} style={{ marginTop: '10px' }}>
+                {isLogin ? 'Need to create an account?' : 'Already have an account? Log In'}
             </StyledButton>
         </StyledForm>
         {formError && <ErrorMessage>{formError}</ErrorMessage>}
-        <button onClick={toggleForm}>
-            {isLogin ? 'Need to create an account?' : 'Already have an account?'}
-        </button>
     </Container>
 );
 }
