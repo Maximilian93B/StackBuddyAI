@@ -12,7 +12,10 @@ justify-content: flex-start;
 align-items: center;
 height: 100vh;
 width: 100vw;
-background: linear-gradient(144deg, rgba(237,173,249,0.4422561260832458) 28%, rgba(253,222,158,0.5851132689403886) 51%, rgba(74,220,204,0.4450572465314251) 100%);
+background: #005C97;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+font-family: 'Poppins', sans-serif; //
 `;
 
 
@@ -20,14 +23,13 @@ const AnimatedHeader = styled(animated.h1)`
   color: white;
   text-align: center;
   font-size: 4rem; // Customize size as needed
-  margin-top: 10%;
-  margin-bottom: 5vh; // Increase if more space is needed
+  margin-top: 5vh;
+  
 `;
 
 
-const AnimatedSubheader = styled(animated.h2)`
+const AnimatedSubheader = styled(animated.div)`
   color: #ffffff;
-  text-align: center;
   font-size: 2.5rem; 
   margin-top: 5vh;
 `;
@@ -40,33 +42,28 @@ margin-top: 5vh;
 gap: 20px;
 `;
 
-
-
-
 const Button = styled(animated.button)`
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 20px 100px;
-  margin: 0 100px;
-  margin-top: 1vh;
-  font-size: 16px;
-  outline: none;
-  &:hover {
-    background-color: #0056b3;
+background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+border: none;
+border-radius: 8px;
+padding: 20px 100px;
+margin: 0 100px;
+margin-top: 1vh;
+font-size: 1.3rem;
+outline: none;
+&:hover {
+  background-color: #0056b3;
   }
 `;
 
 
 const InfoText = styled(animated.div)`
   position: absolute;
-  color: black;
-  width: 100%;
+  color: white;
+  width: 50%;
   text-align: center;
   bottom: 20%;
-  font-size: 2.5rem;
+  font-size: 1.7rem;
   padding: 2vh 0;
 
 `;
@@ -74,7 +71,6 @@ const InfoText = styled(animated.div)`
 const InfoTab = () => {
   // useNavigate to allow the user to navigate to the workstation if signed up if not go to sing up
   const navigate = useNavigate();
-  const [infoStyle, setInfoStyle] = useSpring(() => ({opacity: 0}));
 
   // we will define a state to handle a user hovering over our buttons and the InfoText will display dynamic text based on button context 
     const [infoText, setInfoText] = useState('');
@@ -86,10 +82,7 @@ const InfoTab = () => {
       };
   
       // We will clear the text and set a small timeout function for effect
-      const hideInfo = (text) => {
-        setInfoStyle.start({ opacity: 0 });
-        setTimeout(() => setInfoText(''), 5000);
-      }
+      const hideInfo = () => setInfoText('');
 
       const headerProps = useSpring({
         from: { opacity: 0, transform: 'translateY(-30px)' },
@@ -103,41 +96,36 @@ const InfoTab = () => {
         delay: 600, // Delays the animation of the subheader
       });
 
+      const buttonProps = useSpring({
+        from: { opacity: 0, transform: 'translateY(-30px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        delay: 600, // Delays the animation of the subheader
+      })
+
   
       return (
-    <Container>
-      <AnimatedHeader style={headerProps}>Welcome to StackBuddyAI</AnimatedHeader>
-      <AnimatedSubheader style ={subHeaderProps}>
-      Discover how our AI-driven tools can streamline your project planning.
-      </AnimatedSubheader>
-     <ButtonContainer>
-      <Button
-         onMouseEnter={() => showInfo('Learn about the introduction and purpose of our tool.')}
-        onMouseLeave={hideInfo}
-      >
-        Introduction 
-      </Button>
-      <Button
-        onMouseEnter={() => showInfo('Discover the features and capabilities of our tool.')}
-        onMouseLeave={hideInfo}
-        
-      >
-        Features
-      </Button>
-      <Button
-        onMouseEnter={() => showInfo('Get started using the tool with this quick guide.')}
-        onMouseLeave={hideInfo}
-        onClick={() => navigate('/')}
-      >
-        Get Started
-      </Button>
-      </ButtonContainer>
-      <InfoText style={infoStyle}>{infoText}</InfoText>
-    </Container>
-  );
-};
-
-export default InfoTab;
+        <Container>
+          <AnimatedHeader style={headerProps}>Create, Validate, Visualize</AnimatedHeader>
+          <AnimatedSubheader style={subHeaderProps}>
+            Discover how our AI-driven tool can expedite the development planning process.
+          </AnimatedSubheader>
+          <ButtonContainer style={buttonProps}>
+            <Button onMouseEnter={() => showInfo('StackBuddy provides developers with real-time feedback during the project planning phase, offering insights tailored to their specific development needs.')} onMouseLeave={hideInfo}>
+              Introduction
+            </Button>
+            <Button onMouseEnter={() => showInfo('StackBuddy streamlines tech stack selection with its powerful features: a custom OpenAI GPT Model for personalized recommendations, an intuitive drag-and-drop workspace for easy tech stack assembly, comprehensive tools for managing project details, and a built-in text editor to boost productivity.')} onMouseLeave={hideInfo}>
+              Features
+            </Button>
+            <Button onMouseEnter={() => showInfo('Get started using StackBuddyAI today')} onMouseLeave={hideInfo} onClick={() => navigate('/')}>
+              Get Started
+            </Button>
+          </ButtonContainer>
+          {infoText && <InfoText>{infoText}</InfoText>}
+        </Container>
+      );
+    };
+    
+    export default InfoTab;
 
 
 // function InfoTab() {

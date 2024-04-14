@@ -9,44 +9,51 @@ import { SIGNUP_MUTATION, LOGIN_MUTATION} from '../utils/UserMutations';
 // Import Auth Service for JWT decode and handling 
 import AuthService from '../utils/auth';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
-
+import { animated } from 'react-spring';
 
 
 // SignUp Form Styles
 const Container = styled(animated.div)`
-  width: 360px; // Define a fixed width or use width instead of max-width if preferred
-  margin: 5% auto; // Adjust as necessary to vertically center
-  padding: 20px;
-  background-color: #f9f9f9; // Light background color
-  border-radius: 8px; // Rounded corners
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow
-  border: 1px solid #ddd; // Light border
+width: 360px;
+margin: 40px auto;
+padding: 30px;
+background-color: #ffffff;
+border-radius: 12px;
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+gap: 15px; 
 `;
 
 const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+font-family: 'Poppins', sans-serif; //
+display: flex;
+flex-direction: column;
+gap: 20px;
+padding: 20px;
 `;
 
 const StyledInput = styled.input`
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s;
   &:focus {
-    border-color: #007bff;
+    border-color: #0056b3;
+    outline: none;
+  }
   }
 `;
 
 const StyledButton = styled.button`
-font-family: "Open Sans", sans-serif;
 font-size: 16px;
 letter-spacing: 1px; 
 color: black; 
 cursor: pointer;
-background-color:white; 
+background: #11998e;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #38ef7d, #11998e); 
 border: none; 
 padding: 10px 20px; 
 border-radius: 25px; 
@@ -80,8 +87,6 @@ box-sizing: border-box;
 `;
 
 // Set the initial form stat outside of the block
-
-
 const initialFormState = { email: '', password: '', username: '' };
 
 

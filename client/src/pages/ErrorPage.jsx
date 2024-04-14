@@ -14,6 +14,7 @@ height: 85vh; // Full height of the viewport
 
 text-align: center;
 background: linear-gradient(144deg, rgba(237,173,249,0.4422561260832458) 28%, rgba(253,222,158,0.5851132689403886) 51%, rgba(74,220,204,0.4450572465314251) 100%);
+font-family: 'Poppins', sans-serif; //
 `;
 
 const Title = styled.h1`

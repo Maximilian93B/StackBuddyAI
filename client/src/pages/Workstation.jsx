@@ -16,10 +16,10 @@ const PageContainer = styled.div`
   font-family: "Open Sans", sans-serif;
   letter-spacing: 2px;
   text-decoration: none;
-  background: rgb(2,0,36);
-  background: white
+  background: #8e9eab;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  
 `;
 
 const DashboardContainer = styled.div`
@@ -37,7 +37,7 @@ padding: 20px; // Add padding for some spacing around your content
 display: inline-flex; // Use flexbox for internal layout
 flex-direction: column; // Stack children vertically
 align-items: center; // Center children horizontally
-
+font-family: 'Poppins', sans-serif; //
 `;
 
 const ToggleButton = styled.button`
@@ -53,6 +53,7 @@ margin: 10px 2px;
 transition: background-color 0.3s ease;
 border-radius: 5px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+font-family: 'Poppins', sans-serif; //
 `;
 
 
