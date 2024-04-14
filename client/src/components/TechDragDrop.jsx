@@ -12,12 +12,7 @@ const DragDropContainer = styled.div`
   align-items: flex-start;
   max-width: 80vw;
   max-height: 80vh;
-<<<<<<< HEAD
-
-  gap: 4rem;
-=======
   gap: 1rem;
->>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
   padding: 5px;
   
 `;
@@ -27,15 +22,10 @@ const DragAreaContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-<<<<<<< HEAD
-  width: 100vw;
-  gap: 5px; // Adjust as necessary
-=======
   width: 100%
   flex-wrap: wrap; // Allows items to wrap onto the next line
   gap: 10px; // Adjust as necessary
 
->>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
 `;
 
 // Container for the drop zones
@@ -49,11 +39,7 @@ const DropZoneContainer = styled.div`
 
 
 const CategoryHeader = styled.h2`
-<<<<<<< HEAD
-  font-size: 1rem;  
-=======
   font-size: 1.5rem;  
->>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
   color: #333;        
   margin-bottom: 20px; 
   text-align: center; 
@@ -63,10 +49,6 @@ const CategoryHeader = styled.h2`
   padding: 15px;  
   border-radius: 8px; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.35); 
-<<<<<<< HEAD
-  
-`;
-=======
   transition: background-color 0.3s ease, transform 0.2s ease; // smooth transitions for hover effects
   &:hover {
     background-image: linear-gradient(to right, #e6e6e6, #ffffff); // lighter gradient on hover
@@ -104,7 +86,6 @@ const CategoryHeader = styled.h2`
     display: block;
   }
   `;
->>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
 
 
 //updatetechdraganddrop

@@ -20,32 +20,8 @@ const StyledButton = styled.button`
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-<<<<<<< HEAD
-
-// animation
-
-@keyframes shake {
-  0% { 
-    transform: rotate(3deg);
-  }
-  50% {
-   transform: rotate(-5deg);
-  }
-  70% {
-    transform: rotate(5deg);
-  }
-
-  100% {
-    transform: rotate(3deg);
-  }
-}
-    animation: shake 2s ease-in-out infinite;
-
-  `;
-=======
 `;
 */
->>>>>>> 3187ba7862ca90c39d23af527eaf73ce7f3eebcd
 
 const StyledButton = styled.button`
 font-family: "Open Sans", sans-serif;
