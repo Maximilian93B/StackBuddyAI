@@ -50,7 +50,6 @@ function App() {
           <Route path = '/workstation' element = {<Workstation/> } />
           <Route path = '/introduction' element = {<InfoTab/>} />
           <Route path ='/LandingPage' element={<LandingPage/>} />
-
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
           {/** Route for unmatched paths , Use a wildcard '*' */}
           <Route path ='*' element ={<NotFoundPage />} />

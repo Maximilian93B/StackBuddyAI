@@ -12,12 +12,12 @@ import QuillEditor from '../components/QuillEditor';
 const PageContainer = styled.div`
   display: flex;
   height: 100vh; // Full height of the viewport
-  background: linear-gradient(135deg, #eceff1 0%, #f9f9f9 100%); 
+  background: white;
   font-family: "Open Sans", sans-serif;
   letter-spacing: 2px;
   text-decoration: none;
   background: rgb(2,0,36);
-background: linear-gradient(139deg, rgba(2,0,36,0.8596230728619573) 0%, rgba(9,45,121,0.741976014038428) 64%, rgba(30,107,142,0.7783905798647583) 100%);
+  background: white
 
   
 `;
@@ -28,8 +28,7 @@ const DashboardContainer = styled.div`
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); // Add shadow for depth
   padding: 20px; // Padding inside the dashboard
   background: rgb(2,0,36);
-background: linear-gradient(139deg, rgba(2,0,36,0.8596230728619573) 0%, rgba(9,45,121,0.741976014038428) 64%, rgba(30,107,142,0.7783905798647583) 100%);
-
+  background: white; 
 `;
 
 const ContentContainer = styled.div`
@@ -54,35 +53,6 @@ margin: 10px 2px;
 transition: background-color 0.3s ease;
 border-radius: 5px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-
-&:hover {
-  background-color: #45a049; /* Darker shade of green */
-}
-
-&:focus {
-  outline: none; /* Removes the outline */
-}
-
-
-@keyframes shake {
-  0% { 
-    transform: rotate(3deg);
-  }
-  50% {
-   transform: rotate(-5deg);
-  }
-  70% {
-    transform: rotate(5deg);
-  }
-
-  100% {
-    transform: rotate(3deg);
-  }
-}
-    animation: shake 2s ease-in-out infinite;
-
-
 `;
 
 

@@ -108,8 +108,8 @@ const Dashboard = () => {
               {data.me.currentProjects.map((project) => (
                 <li key={project.id}>
                   <p>Title: {project.title}</p>
-                  <p>Description: {project.description}</p>
-                  <p>Tech Stack: {project.techSelection.map(tech => `${tech.category}: ${tech.technologies.join(', ')}`).join('; ')}</p>
+                  <p>Description: {project.description}</p>ch
+                  <p>Tech Stack: {project.techSelection.map(tech => `${tech.category}: ${tech.tenologies.join(', ')}`).join('; ')}</p>
                   <p>Comments: {project.comments.join(', ')}</p>
                   <p>Date: {new Date(project.dateStamp).toLocaleDateString()}</p>
                 </li>

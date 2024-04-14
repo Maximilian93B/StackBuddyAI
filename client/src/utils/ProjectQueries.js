@@ -32,7 +32,7 @@ query GetProject($id: ID!) {
         userQueries
         techSelection {
             category
-            technologies
+            technologies[String!]
         }
         comments
         dateStamp
@@ -43,3 +43,4 @@ query GetProject($id: ID!) {
     }
 }
 `;
+

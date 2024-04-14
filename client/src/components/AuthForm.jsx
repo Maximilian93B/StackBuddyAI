@@ -9,9 +9,12 @@ import { SIGNUP_MUTATION, LOGIN_MUTATION} from '../utils/UserMutations';
 // Import Auth Service for JWT decode and handling 
 import AuthService from '../utils/auth';
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring';
+
+
 
 // SignUp Form Styles
-const Container = styled.div`
+const Container = styled(animated.div)`
   width: 360px; // Define a fixed width or use width instead of max-width if preferred
   margin: 5% auto; // Adjust as necessary to vertically center
   padding: 20px;
@@ -82,7 +85,7 @@ box-sizing: border-box;
 const initialFormState = { email: '', password: '', username: '' };
 
 
-function AuthForm() {
+function AuthForm({ style }) {
     const [formState, setFormState] = useState(initialFormState);// Will be used for signup only
     const [isLogin, setIsLogin] = useState(true);
     const [formError, setFormError] = useState(''); // Handle errors for form submit 
@@ -190,8 +193,23 @@ function AuthForm() {
 
     const loading = isLogin ? loadingLogin : loadingSignup;
 
+    // useSpring, animations for form 
+
+    // Originally called locally 
+    // Adding prop and calling in parent component 'Introduction'
+    /*
+    const formAnimation = useSpring({
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(-30px)',
+        from: { opacity: 0, transform: 'translateY(-30px)' },
+        config: { tension: 170, friction: 26 }
+    });
+    */
+
+
+
     return (
-        <Container>
+        <Container style={style}>
         <StyledForm onSubmit={handleSubmit}>
             {!isLogin && (
                 <StyledInput
