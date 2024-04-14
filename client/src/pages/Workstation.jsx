@@ -7,18 +7,19 @@ import TechDragDrop from '../components/TechDragDrop';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import StackBuddy from '../components/StackBuddyAI';
-import QuillEditor from '../components/QuillEditor'; 
+ 
 
-const PageContainer = styled.div`
+const PageContainer = styled.div` 
   display: flex;
   height: 100vh; // Full height of the viewport
   background: white;
   font-family: "Open Sans", sans-serif;
   letter-spacing: 2px;
   text-decoration: none;
-  background: #8e9eab;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #ECE9E6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 
 `;
 
@@ -33,7 +34,6 @@ const DashboardContainer = styled.div`
 
 const ContentContainer = styled.div`
 flex-grow: 1; // Takes up the remaining space
-padding: 20px; // Add padding for some spacing around your content
 display: inline-flex; // Use flexbox for internal layout
 flex-direction: column; // Stack children vertically
 align-items: center; // Center children horizontally
@@ -88,10 +88,6 @@ function Workstation() {
           <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
           </ToggleButton>
-          <QuillEditor
-            initialContent={editorContent}
-            handleContentChange={handleContentChange}
-          />
         </ContentContainer>
         {isStackBuddyOpen && (
           <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
