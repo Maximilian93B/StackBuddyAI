@@ -8,7 +8,7 @@ import { UPDATE_PROJECT_TECH } from '../utils/ProjectMutations';
 
 const DragDropContainer = styled.div`
   display: flex;
-  // justify-content: center; //removed this as it was overlapping the main screen
+  //justify-content: center; //removed this as it was overlapping the main screen
   align-items: flex-start;
   max-width: 80vw;
   max-height: 80vh;
@@ -43,7 +43,9 @@ const CategoryHeader = styled.h2`
   color: #333;        
   margin-bottom: 20px; 
   text-align: center; 
-  background-image: linear-gradient(to right, #ffffff, #f1f1f1); // subtle gradient from white to light grey
+  background: #8e9eab;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   font-family: 'Poppins', sans-serif; //
   background-color: white;
   padding: 15px;  
