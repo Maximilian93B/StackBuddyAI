@@ -14,23 +14,25 @@ const Brand = styled.a`
 
 // Styles for Nav Container 
 const FooterContainer = styled.nav`
-  position: sticky; 
-  top: 0; 
-  z-index: 10; // Ensuring it stays above other content
-  background: #fff; // Elegant white background
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
-  padding: 20px 25px; // Reduced padding for a slimmer nav bar
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  font-family: 'Open Sans', sans-serif; // Switched to a more elegant and readable font
-  border-top: 1px solid #f0f0f0; // Light border for a subtle division
-  border-bottom: 1px solid #f0f0f0; 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 10px 0;
-  }
+position: sticky; 
+top: 0; 
+z-index: 10; // Ensuring it stays above other content
+background: #005C97;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.3); // Subtle shadow for depth
+padding: 20px 25px; // Reduced padding for a slimmer nav bar
+display: flex;
+justify-content: flex-end;
+align-items: center;
+font-family: 'Poppins', sans-serif; //
+
+@media (max-width: 768px) {
+  flex-direction: column;
+  padding: 10px 0;
+}
 `;
+
 
 
 const FooterText = styled.p`

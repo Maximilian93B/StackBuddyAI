@@ -18,7 +18,6 @@ const PageContainer = styled.div`
   text-decoration: none;
   background: rgb(2,0,36);
   background: white
-
   
 `;
 
@@ -37,7 +36,7 @@ padding: 20px; // Add padding for some spacing around your content
 display: inline-flex; // Use flexbox for internal layout
 flex-direction: column; // Stack children vertically
 align-items: center; // Center children horizontally
-
+font-family: 'Poppins', sans-serif; //
 `;
 
 const ToggleButton = styled.button`
@@ -53,6 +52,7 @@ margin: 10px 2px;
 transition: background-color 0.3s ease;
 border-radius: 5px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+font-family: 'Poppins', sans-serif; //
 `;
 
 

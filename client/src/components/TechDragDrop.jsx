@@ -44,7 +44,7 @@ const CategoryHeader = styled.h2`
   margin-bottom: 20px; 
   text-align: center; 
   background-image: linear-gradient(to right, #ffffff, #f1f1f1); // subtle gradient from white to light grey
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; // Modern, readable font
+  font-family: 'Poppins', sans-serif; //
   background-color: white;
   padding: 15px;  
   border-radius: 8px; 
