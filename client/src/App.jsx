@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { ProjectProvider } from './utils/UserProjectContext';
 // Iport Auth Service 
 import Workstation from './pages/Workstation';
 import IntroductionPage from './pages/Introduction';
@@ -42,7 +41,6 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
-        <ProjectProvider> {/*Context for users selected projects */}
       <NavBar />
        <Routes> {/* Use Routes to wrap Route components*/}
           <Route path = '/' element = {<IntroductionPage />} />
@@ -50,11 +48,10 @@ function App() {
           <Route path = '/introduction' element = {<InfoTab/>} />
           <Route path ='/MyWorkSpace' element={<MyWorkSpace/>} />
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
-          {/** Route for unmatched paths , Use a wildcard '*' */}
+          {/** Route for unmatched paths , Useing a wildcard '*' */}
           <Route path ='*' element ={<NotFoundPage />} />
         </Routes>
         <Footer />
-        </ProjectProvider>
       </ApolloProvider>
     </>
   );
