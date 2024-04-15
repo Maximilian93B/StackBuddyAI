@@ -9,6 +9,21 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import StackBuddy from '../components/StackBuddyAI';
  
 
+// StackBuddy Overlay 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); // Semi-transparent background
+  z-index: 1000; // Ensure it's on top of everything
+`;
+
+
 const PageContainer = styled.div` 
   display: flex;
   flex-grow:1;
@@ -72,12 +87,14 @@ function Workstation() {
         <Dashboard />
         <ContentContainer>
           <TechDragDrop />
-          <ToggleButton onClick={() => setIsStackBuddyOpen(prev => !prev)}>
+          <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
           </ToggleButton>
         </ContentContainer>
         {isStackBuddyOpen && (
-          <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
+          <Overlay>
+            <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
+          </Overlay>
         )}
       </PageContainer>
     </DndProvider>
