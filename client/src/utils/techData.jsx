@@ -2,8 +2,8 @@ import { FaDatabase, FaNode, FaReact, FaVuejs, FaAngular, FaCss3, FaServer } fro
 
 export const techCategories = {
     Databases: [
-      { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '#47A248', description: 'A document-oriented NoSQL database used for high volume data storage.'},
-      { id: 'SQL', icon: <FaDatabase />, label: 'SQL Server', color: '#F29111', description: 'A relational database management system developed by Microsoft.'},
+      { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '', description: 'A document-oriented NoSQL database used for high volume data storage.'},
+      { id: 'SQL', icon: <FaDatabase />, label: 'SQL Server', color: '', description: 'A relational database management system developed by Microsoft.'},
       { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '#336791', description: 'An open source relational database known for reliability and data integrity.'},
       { id: 'Redis', icon: <FaDatabase />, label: 'Redis', color: '#D82C20', description: 'An in-memory data structure store, used as a database, cache, and message broker.'},
       { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB', color: '', description: 'A community-developed fork of MySQL intended to remain free under the GNU GPL.'},

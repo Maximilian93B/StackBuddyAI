@@ -67,14 +67,16 @@ font-family: 'Poppins', sans-serif; //
 
 
 function Workstation() {
+  
+  
   const navigate = useNavigate();
   const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(false);
   const [editorContent, setEditorContent] = useState('');
   // Custom hook for managing when a user selects a project
-const { selectedProject, setSelectedProject} = useProject();
+  const { selectedProject, setSelectedProject} = useProject();
   
 // UseEffect to manage if user is authorized to enter page or not 
-useEffect(() => {
+  useEffect(() => {
       if (!AuthService.loggedIn()) {
           navigate('/login');
       }
