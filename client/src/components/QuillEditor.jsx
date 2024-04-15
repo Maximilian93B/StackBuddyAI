@@ -24,7 +24,8 @@ const QuillContainer = styled.div`
 .ql-container {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  height: 300px; // Adjust based on your needs
+  height: 350px; // Adjust based on your needs
+  width: 100%; 
 }
 `;
 
