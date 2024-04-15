@@ -59,6 +59,16 @@ const TechDragDrop = ({ projectid }) => {
     }
   };
 
+  // Handle removing a smybol from the DropZOne 
+  const handleRemoveItem = (category, id) => {
+    setDroppedItems(prevItems => ({
+      ...prevItems,
+      [category]: []  // Resets only the specified category
+    }));
+  };
+
+
+
   return (
     <DragDropContainer>
       {Object.entries(techCategories).map(([category, symbols]) => (
@@ -70,9 +80,12 @@ const TechDragDrop = ({ projectid }) => {
             key={category}
             category={category}
             onDrop={handleDrop}
+            onRemoveItem={(id) => handleRemoveItem(category, id)}
+            items={droppedItems[category] || []}
             handleUpdate={handleUpdate}
             loading={loading}
           >
+            <button onClick={() => handleRemoveItem(category)}>Clear {category}</button>
             <h3>{category}</h3>
             {droppedItems[category]?.map((item, index) => (
               <DraggableTechSymbol key={index} {...item} />

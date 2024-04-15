@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Dashboard from '../components/Dashboard';
 import QuillEditor from '../components/QuillEditor';
+import StackBuddyAI from '../components/StackBuddyAI';
+import AuthService from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
+import DropZone from '../components/DropZone';
 
 // Added Genereal styles 
 
@@ -44,9 +48,10 @@ background-color: white;
 `;
 
 // Takes up top of Content
-const StackBuddyContianer = styled.div`
+const StackBuddyContainer = styled.div`
 width: 100%;
 height: 50%;
+margin: 150px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -65,23 +70,63 @@ const QuillContainer = styled.div`
 `;
 
 
+
+const ToggleButton = styled.button`
+cursor: pointer;
+background-color: #4CAF50; /* Green background */
+border: none;
+color: white;
+padding: 10px 20px;
+text-align: center;
+text-decoration: none;
+font-size: 16px;
+margin: 10px 2px;
+transition: background-color 0.3s ease;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+font-family: 'Poppins', sans-serif; //
+`;
+
+
+
 function MyWorkSpace() {
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (!AuthService.loggedIn()) {
+        navigate('/login');
+    }
+}, [navigate]);
+
+
+  // Set state for StackBuddy 
+  const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(true);
+
+// Function to toggle StackBuddy 
+const toggleStackBuddy = () => {
+  setIsStackBuddyOpen(!isStackBuddyOpen);
+};
+
+
     return (
         <PageContainer>
           <DashboardContainer>
           <Dashboard />
           </DashboardContainer>
             <ContentContainer>
-              <StackBuddyContianer>
-
-              </StackBuddyContianer>
+            <StackBuddyContainer>
+            <ToggleButton onClick={toggleStackBuddy}>
+            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
+            </ToggleButton>
+            {isStackBuddyOpen && <StackBuddyAI isVisible={isStackBuddyOpen} onClose={toggleStackBuddy} />}
+          </StackBuddyContainer>
             <QuillContainer>
               <QuillEditor/>
             </QuillContainer>
-
             </ContentContainer>
             <ProjectsContainer>
-              <Dashboard/>
+            <Dashboard/>
             </ProjectsContainer>
         </PageContainer>
     );
