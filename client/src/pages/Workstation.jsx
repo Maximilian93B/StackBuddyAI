@@ -119,6 +119,9 @@ useEffect(() => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      <ToggleButton onClick={toggleStackBuddy}>
+            {isStackBuddyOpen ? "Hide StackBuddy" : "👨🏽‍💻 StackBuddy"}
+          </ToggleButton>
       <PageContainer>
         <Dashboard />
         <TechDragDrop />
@@ -132,9 +135,7 @@ useEffect(() => {
           </Overlay>
         )}
       </PageContainer>
-      <ToggleButton onClick={toggleStackBuddy}>
-            {isStackBuddyOpen ? "Hide StackBuddy" : "👨🏽‍💻 StackBuddy"}
-          </ToggleButton>
+      
     </DndProvider>
   );
 }
