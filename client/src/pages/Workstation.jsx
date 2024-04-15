@@ -29,8 +29,8 @@ const Overlay = styled.div`
 const PageContainer = styled.div` 
   display: flex;
   flex-grow:1;
-  height: 100vh; // Full height of the viewport
-  width: 100vw;
+  height:auto; //100vh; // Full height of the viewport
+  width: auto;
   font-family: "Open Sans", sans-serif;
   background: #134E5E;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #71B280, #134E5E);  /* Chrome 10-25, Safari 5.1-6 */
@@ -49,18 +49,40 @@ font-family: 'Poppins', sans-serif; //
 
 const ToggleButton = styled.button`
 cursor: pointer;
-background-color: #4CAF50; /* Green background */
+background-color: #52E370;
+// background: #134E5E;  /* fallback for old browsers */
+// background-color: #71B280;  /* Chrome 10-25, Safari 5.1-6 */
+
+// background-color: #4CAF50; /* Green background */
 border: none;
-color: white;
+// color: white;
 padding: 10px 20px;
 text-align: center;
 text-decoration: none;
-font-size: 16px;
+font-size: 1.2rem;
 margin: 10px 2px;
 transition: background-color 0.3s ease;
 border-radius: 5px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-font-family: 'Poppins', sans-serif; //
+font-family: 'Poppins', sans-serif; 
+// animation
+
+@keyframes shake {
+  0% { 
+    transform: rotate(3deg);
+  }
+  50% {
+   transform: rotate(-5deg);
+  }
+  70% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(3deg);
+  }
+}
+    animation: shake 2s ease-in-out infinite;
 `;
 
 
@@ -97,13 +119,15 @@ useEffect(() => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      <ToggleButton onClick={toggleStackBuddy}>
+            {isStackBuddyOpen ? "Hide StackBuddy" : "👨🏽‍💻 StackBuddy"}
+          </ToggleButton>
       <PageContainer>
         <Dashboard />
+        <TechDragDrop />
         <ContentContainer>
-          <TechDragDrop />
-          <ToggleButton onClick={toggleStackBuddy}>
-            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
-          </ToggleButton>
+          
+          
         </ContentContainer>
         {isStackBuddyOpen && (
           <Overlay>
@@ -111,6 +135,7 @@ useEffect(() => {
           </Overlay>
         )}
       </PageContainer>
+      
     </DndProvider>
   );
 }
