@@ -3,14 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 // Iport Auth Service 
-import AuthService from '../src/utils/auth';
 import Workstation from './pages/Workstation';
 import IntroductionPage from './pages/Introduction';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import InfoTab from './components/InfoTab';
 import NotFoundPage from './pages/ErrorPage';
-import  LandingPage from './pages/LandingPage';
+import  MyWorkSpace from './pages/MyProjectWkSpace';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -49,7 +48,7 @@ function App() {
           <Route path = '/' element = {<IntroductionPage />} />
           <Route path = '/workstation' element = {<Workstation/> } />
           <Route path = '/introduction' element = {<InfoTab/>} />
-          <Route path ='/LandingPage' element={<LandingPage/>} />
+          <Route path ='/MyWorkSpace' element={<MyWorkSpace/>} />
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
           {/** Route for unmatched paths , Use a wildcard '*' */}
           <Route path ='*' element ={<NotFoundPage />} />

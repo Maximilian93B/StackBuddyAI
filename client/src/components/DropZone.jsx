@@ -1,26 +1,34 @@
- import Reat from 'react';
+ import React from 'react';
  import {useDrop } from 'react-dnd';
  import styled from 'styled-components';
+ 
+// Styles for DropZone
 
 
  const StyledDropZone = styled.div`
  display: flex;
  flex-direction: column;
  align-items: center;
- justify-content: center;
- padding: 20px;
+ height: 100%; // Full height to ensure there is space for the button at the bottom
+ width: 80%;
+ padding: 5px;
  margin: 10px;
  border-radius: 10px;
- background-color: #fff;
+ background: white;
  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
 `;
 
+
+
 const DropZone = ({ onDrop, children, category }) => {
+
+
+
   // Set up the drop container --> use hook (useDrop)
   const [, drop] = useDrop({
     accept: 'tech', // Specify the drop zone only accetps our tech symbols 
     drop: (item) => {
-      // function to handle what happens when symvols are dropped into the dropZone
+      // function to handle what happens when symbols are dropped into the dropZone
       onDrop(category, item);
       console.log(`Dropped item ${item.id} in ${category}`,item);// Log details 
     },
@@ -29,10 +37,12 @@ const DropZone = ({ onDrop, children, category }) => {
       isOver: !!monitor.isOver() // pass function as prop with the details 
     })
   });
-  // Return the DropZone
-  
-  return <StyledDropZone ref={drop}>{children}</StyledDropZone>;
-};
+    return (
+      <StyledDropZone ref={drop}>
+        {children}
+      </StyledDropZone>
+    );
+  };
 
 export default DropZone;
   
