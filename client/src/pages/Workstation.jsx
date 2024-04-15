@@ -99,8 +99,9 @@ useEffect(() => {
     <DndProvider backend={HTML5Backend}>
       <PageContainer>
         <Dashboard />
+        <TechDragDrop />
         <ContentContainer>
-          <TechDragDrop />
+          
           <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
           </ToggleButton>
