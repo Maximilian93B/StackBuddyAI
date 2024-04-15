@@ -18,17 +18,46 @@ const projectResolvers = {
   },
 
   Mutation: {
-    createProject: async (_, { title, description }, context) => {
+    createProject: async (_, { title, description, userQueries, techSelection, comments, notes }, context) => {
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to create a project');
+      }
+
+      // Create the new project object
+      const newProjectData = {
+        title,
+        description,
+        userQueries,
+        techSelection,
+        comments,
+        owner: context.user._id,
+      };
+
+      // If 'notes' is provided, add it to the new project data
+      if (notes) {
+        newProjectData.notes = notes.map(note => ({
+          content: note.content,
+          dateAdded: note.dateAdded || new Date(),
+        }));
       }
     
       try {
         const newProject = new Project({
           title,
           description,
+          userQueries,
+          techSelection,
+          comments,
           owner: context.user._id,
         });
+
+        // If 'notes' is provided, add it to the new project data
+        if (notes) {
+          newProjectData.notes = notes.map(note => ({
+            content: note.content,
+            dateAdded: note.dateAdded || new Date(),
+          }));
+        }
     
         await newProject.save();
        
@@ -60,32 +89,39 @@ const projectResolvers = {
     },
   
     // Update a projects properties 
-    updateProject: async (_, {id, title, description, addUserQueries, removeUserQueryIds, addTechSelection, removeTechSelectionId, addComments, removeCommentIds }, context) => {
+    updateProject: async (_, {id, title, description, addUserQueries, removeUserQueryIds, addTechSelection, removeTechSelectionId, addComments, removeCommentIds, notes }, context) => {
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to update a project');
       }
       try {
-        // Find the project to update
-        const project = await Project.findById(id);
+        // Find the project to update and check user has the right to update it
+        const project = await Project.findById(id).populate('owner');
         // If the project does not exist
         if (!project) {
           throw new Error('Unable to locate Project with that ID');
         }
         // If not the project owner
-        if (project.owner.toString() !== context.user._id) {
+        if (project.owner._id.toString() !== context.user._id.toString()) {
           throw new ForbiddenError('Unable to update project, You must be the owner of a project to make changes to it.');
         }
     
-        // Update the basic fields if provided 
-        const updates = {
-          ...(title && { title }),
-          ...(description && { description })
-        };
+        // Update the basic fields if provided
+        // const updates = {
+        //   ...(title && { title }),
+        //   ...(description && { description })
+        // };
+        const updates = {};
+        if (title) updates.title = title;
+        if (description) updates.description = description;
 
         // Perform basic updates first 
-        await Project.findByIdAndUpdate(id, updates, { new: true });
+        // await Project.findByIdAndUpdate(id, updates, { new: true });
+        await Project.findByIdAndUpdate(id, updates);
 
-        // Hand;e adding and removing for each array field 
+        // Prepare complex updates with $push and $pull
+        const complexUpdates = { $set: {}, $push: {}, $pull: {} };
+
+        // Handle adding and removing for each array field 
         const arrayUpdates = {};
         if (addUserQueries && addUserQueries.length > 0) {
           arrayUpdates.$push = { userQueries: { $each: addUserQueries } }; // Corrected the field name
@@ -97,9 +133,9 @@ const projectResolvers = {
           arrayUpdates.$push = {...(arrayUpdates.$push || {}), comments: { $each: addComments } }; // Corrected to comments
         }
         // Apply array updates if any exist
-        if (Object.keys(arrayUpdates).length > 0) {
-          await Project.findByIdAndUpdate(id, arrayUpdates, { new: true });
-        }
+        // if (Object.keys(arrayUpdates).length > 0) {
+        //   await Project.findByIdAndUpdate(id, arrayUpdates, { new: true });
+        // }
         // Handle removing for each array field using $pull 
         if (removeUserQueryIds && removeUserQueryIds.length > 0) {
           await Project.findByIdAndUpdate(id, { $pull: { userQueries: { $in: removeUserQueryIds } } }, { new: true });
@@ -109,6 +145,20 @@ const projectResolvers = {
         }
         if (removeCommentIds && removeCommentIds.length > 0) {
           await Project.findByIdAndUpdate(id, { $pull: { comments: { $in: removeCommentIds } } }, { new: true });
+        }
+
+        // Set updates, specifically for nested objects like notes
+        // if (notes) {
+        //   await Project.findByIdAndUpdate(id, { $set: { notes } }, { new: true });
+        // }
+        if (notes) complexUpdates.$set.notes = notes.map(note => ({
+          content: note.content,
+          dateAdded: note.dateAdded || new Date()
+        }));
+
+        // Apply complex updates if necessary
+        if (Object.keys(complexUpdates.$set).length || Object.keys(complexUpdates.$push).length || Object.keys(complexUpdates.$pull).length) {
+          await Project.findByIdAndUpdate(id, complexUpdates, { new: true });
         }
     
         // Fetch and return the updated document
