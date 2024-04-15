@@ -37,20 +37,21 @@ const DropZone = ({ onDrop, onRemoveItem, children, category, items = [] }) => {
   });
 
 
-  // Debugging 
   const handleClick = (item) => {
-    console.log(`Item clicked:`, item); // Ensure this logs
+    console.log(`Item clicked: ${item.id}`,item);
     onRemoveItem(item.id);
 };
 
+
+
 return (
   <StyledDropZone ref={drop}>
-    {children}
-    {items.map(item => (
-      <div key={item.id} onClick={() => handleClick(item)}>
-        {item.label || item.id} // Make sure you display identifiable information
-      </div>
-    ))}
+      {children}
+      {items.map(item => (
+          <div key={item.id} onClick={() => handleClick(item)} style={{ padding: '10px', margin: '5px', cursor: 'pointer' }}>
+             
+          </div>
+      ))}
   </StyledDropZone>
 );
 };
