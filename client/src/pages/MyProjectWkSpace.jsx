@@ -5,6 +5,8 @@ import QuillEditor from '../components/QuillEditor';
 import StackBuddyAI from '../components/StackBuddyAI';
 import AuthService from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
+import DropZone from '../components/DropZone';
+
 // Added Genereal styles 
 
 const PageContainer = styled.div` 
@@ -122,10 +124,9 @@ const toggleStackBuddy = () => {
             <QuillContainer>
               <QuillEditor/>
             </QuillContainer>
-
             </ContentContainer>
             <ProjectsContainer>
-              <Dashboard/>
+            <Dashboard/>
             </ProjectsContainer>
         </PageContainer>
     );
