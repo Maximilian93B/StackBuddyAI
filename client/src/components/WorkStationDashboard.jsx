@@ -3,6 +3,9 @@ import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { GET_ME } from '../utils/userQueries';
 import { useSpring , animated} from 'react-spring';
+import ProjectContext from '../utils/UserProjectContext';
+
+
 
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
@@ -81,11 +84,6 @@ const NoProjectsText = styled.p`
   color: #999;
 `;
 
-const TechStack = styled.span`
-  color: #666;
-  font-style: italic;
-`;
-
 
     const Dropdown = ({ title, children,}) => {
         /// use state to set dashboard open/closed 
@@ -98,70 +96,65 @@ const TechStack = styled.span`
           config: { tension : 250, friction: 20 } // Configure the tension and friction 
         });
     
+        // Allow users to toggle 
+        const toggleDropdown = () => setIsOpen(!isOpen);
     
-        return(
-            <DropdownContainer>
-                <DropdownHeader onClick ={() => setIsOpen(!isOpen)} >
-                    {title}
-                    <span>{isOpen ? '▲' : '▼'}</span>
-                </DropdownHeader>
-                <DropdownContent style={contentProps}>
-                    {children}
-                </DropdownContent>
-            </DropdownContainer>
-        );
-    };
-    
-
-    const WsDashBoard = () => {
-        const { loading, data, error } = useQuery(GET_ME);
-        
-        // slide in animation for header 
-        const GreetingSpring = useSpring({
-        from: { opacity: 0, transform: 'translateX(-100%)' },
-        to: { opacity: 1, transform: 'translateX(0)' },
-        config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
-        });        
-        
-        if(loading) return <p>Loading...</p>
-        if(error) return <p>Error: {error.message}</p>
-
-          
         return (
-            <DashboardContainer>
-              <GreetingText style={GreetingSpring}>Welcome, {data.me.username}!</GreetingText>
-              <Dropdown title="Custom Info">
-                <p>Something can go here.</p>
-              </Dropdown>
-              <Dropdown title="My Projects">
+          <DropdownContainer>
+              <DropdownHeader onClick={toggleDropdown}>
+                  {title}
+                  <span>{isOpen ? '▲' : '▼'}</span>
+              </DropdownHeader>
+              <DropdownContent style={contentProps}>
+                  {typeof children === 'function' ? children({ isOpen }) : children}
+              </DropdownContent>
+          </DropdownContainer>
+      );
+  };
+    
+// Main component 
+const WsDashBoard = () => {
+  const { loading, data, error } = useQuery(GET_ME);
+  // slide in animation for header 
+  
+  const GreetingSpring = useSpring({
+    from: { opacity: 0, transform: 'translateX(-100%)' },
+    to: { opacity: 1, transform: 'translateX(0)' },
+    config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
+  });        
+
+    if(loading) return <p>Loading...</p>
+    if(error) return <p>Error: {error.message}</p>
+  
+  return (
+    <DashboardContainer>
+      <GreetingText style={GreetingSpring}>Welcome, {data.me.username}!</GreetingText>
+      <Dropdown title="Custom Info">
+      <p>Something can go here.</p>
+      </Dropdown>
+
+      <Dropdown title="My Projects">
                 {data.me.currentProjects.length > 0 ? (
-                <ProjectList>
-                    {data.me.currentProjects.map((project) => (
-                    <ProjectItem key={project.id}>
-                        <ProjectParagraph>Title: {project.title}</ProjectParagraph>
-                        <ProjectParagraph>Description: {project.description}</ProjectParagraph>
-                        <ProjectParagraph>
-                        Tech Stack: {project.techSelection.map(tech => (
-                            <TechStack key={tech.category}>{tech.category}: {tech.technologies.join(', ')}</TechStack>
-                        )).join('; ')}
-                        </ProjectParagraph>
-                        <ProjectParagraph>Comments: {project.comments.join(', ')}</ProjectParagraph>
-                        <ProjectParagraph>Date: {new Date(project.dateStamp).toLocaleDateString()}</ProjectParagraph>
-                        </ProjectItem>
-                    ))}
+                    <ProjectList>
+                        {data.me.currentProjects.map(project => (
+                            <ProjectItem key={project.id} onClick={() => setSelectedProject(project)}>
+                                <ProjectParagraph>Title: {project.title}</ProjectParagraph>
+                                {/* Additional project details */}
+                            </ProjectItem>
+                        ))}
                     </ProjectList>
-                    ) : (
+                ) : (
                     <NoProjectsText>No projects found</NoProjectsText>
                 )}
-                </Dropdown>
-              <Dropdown title="Settings">
-                {/* Settings specific to this dashboard */}
-              </Dropdown>
-              <Dropdown title="Create A Project">
-       
-              </Dropdown>
-            </DashboardContainer>
-          );
-        };
-        
-        export default WsDashBoard;
+            </Dropdown>
+
+      <Dropdown title="Settings">
+      {/* Settings specific to this dashboard */}
+      </Dropdown>
+      <Dropdown title="Create A Project">
+
+      </Dropdown>
+    </DashboardContainer>
+  );
+};
+export default WsDashBoard;

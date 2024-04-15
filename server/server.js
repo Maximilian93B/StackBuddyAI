@@ -72,7 +72,7 @@ const server = new ApolloServer({
                         },
                     ],
                     temperature: 0.7, // this controls the randomness of the response. Higher Temp = more creative responses
-                    max_tokens: 100, // This will set the maximum tokens in the response. Very high level definition (Token = word) 
+                    max_tokens: 150, // This will set the maximum tokens in the response. Very high level definition (Token = word) 
                     top_p: 1.0, //  Allows for a more diverse response if hte number is higher// Still trying to figure this one out but this "Controls the diversity via nucleus sampling" 1 = no sampling, the lower the value the more "focused" the response 
                     frequency_penalty: 0.0,// This helps reduce the chance of the model repeating the same thing verbatim ( exactly line for line)
                     presence_penalty: 0.0, // This Encourages the model to introduce new concepts as the use talks to it  to it will not get in the DEATH LOOP.  
@@ -94,7 +94,7 @@ const server = new ApolloServer({
         } catch (error) {
             console.error('Error calling OpenAI API:', error);
             res.status(500).send('Failed to get response from OpenAI');
-        }my 
+        }
     });
     
 

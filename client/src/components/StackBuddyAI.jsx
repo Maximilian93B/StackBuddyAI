@@ -199,7 +199,6 @@ useEffect(()=> {
       // Post the input text to our openai endpoint 
       // Extract the botReply 
       // update the messages state with new role 'user' and bot messages 
-      // 
       const response = await axios.post('http://localhost:3001/openai', { query: inputText });
       const botReply = response.data.message;
       setMessages((prevMessages) => [...prevMessages, { role: 'user', content: inputText }, { role: 'bot', content: botReply }]);

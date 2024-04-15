@@ -5,30 +5,53 @@ import axios from 'axios';
 
 
 const InsightsContainer = styled.div`
-  padding: 20px;
-  margin-top: 20px;
+padding: 40px;
+margin-top: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+background: #ffffff; // Soft white background
+box-shadow: 0 4px 8px rgba(0,0,0,0.1); // Subtle shadow
+border-radius: 10px; // Rounded corners
 `;
+
 
 const InputArea = styled.textarea`
-  width: 80%;
-  height: 100px;
-  margin-bottom: 20px;
+width: 80%;
+height: 100px;
+margin-bottom: 20px;
+padding: 10px;
+font-size: 16px; // Larger font size for better readability
+border: 2px solid #e2e8f0; // Soft border color
+border-radius: 8px;
+&:focus {
+  outline: none;
+  border-color: #a0aec0; // Focus color
+}
 `;
 
+
 const SubmitButton = styled.button`
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+padding: 10px 20px;
+background-color: #4CAF50; // Soft green background
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s; // Smooth transition for hover
+&:hover {
+  background-color: #369f41; // Slightly darker green on hover
+}
 `;
 
 const InsightsDisplay = styled.div`
-  margin-top: 20px;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 5px;
+margin-top: 20px;
+background-color: #f9fafb; // Very light grey background
+padding: 20px;
+border-radius: 8px;
+width: 80%;
+color: #2d3748; // Darker text color for contrast
+box-shadow: 0 2px 4px rgba(0,0,0,0.05); // Very subtle shadow
 `;
 
 
@@ -71,10 +94,10 @@ const StackBuddyInsights = () => {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Enter project description here..."
+            placeholder="StackBuddy is ready if you need them..."
             />
             <SubmitButton onClick={fetchInsights}>
-                Generate Insights
+                Use StackBuddy
             </SubmitButton>
             {loading ? <p>Loading...</p> : <InsightsDisplay>{insights}</InsightsDisplay>}
         </InsightsContainer>
