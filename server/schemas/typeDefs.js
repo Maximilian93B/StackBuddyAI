@@ -31,12 +31,13 @@ type Project {
     userQueries: [String!] # User queries for tech stack recommendation
     techSelection: [TechCategory] # Tech categories and selected technologies
     comments: [String!] # User comments on the project
+    notes: [Note] # Include Note type in the Project type
     dateStamp: String! 
     owner: User! # The user who owns the project --> Will use for permissions for project
 }
 
 
-#           User type
+#        Define User type
 
 type User {
     id: ID!
@@ -59,6 +60,10 @@ type TechCategory {
     technologies: [String!] # Technologies selected for each category
 }
 
+type Note {
+  content: String!
+  dateAdded: String!
+}
 
 type Query {
     projects: [Project!]!
@@ -83,6 +88,7 @@ type Mutation {
       userQueries: [String], # Made optional
       techSelection: [TechCategoryInput!], # require at least one TechCategoryInput
       comments: [String] # Made optional
+      notes: [NoteInput] # Added notes input for project creation
     ): Project
     updateProject(
       id: ID!,
@@ -91,6 +97,7 @@ type Mutation {
       userQueries: UpdateUserQueriesInput,
       techSelection: UpdateTechCategoryInput,
       comments: UpdateCommentsInput
+      notes: [NoteInput] # Added notes input for project updates
     ): Project
     getTechStackRecommendation( # add recommendation for OpenAI
       projectDescription: String!
@@ -100,24 +107,29 @@ type Mutation {
 
  #          Input type for tech selection when creating/updating projects
 
- input TechCategoryInput {
+  input TechCategoryInput {
     category: String!
     technologies: [String!]!
-}
+  }
 
-input UpdateUserQueriesInput {
+  input UpdateUserQueriesInput {
     add: [String] # IDs or values to add
     remove: [ID] # IDs to remove
   }
 
-input UpdateTechCategoryInput {
+  input UpdateTechCategoryInput {
     add: [TechCategoryInput] # Tech Categories to add
     remove: [ID] # IDs of Tech Categories to remove
   }
   
-input UpdateCommentsInput {
+  input UpdateCommentsInput {
     add: [String] # Comments to add
     remove: [ID] # IDs of Comments to remove
+  }
+
+  input NoteInput {
+    content: String!
+    dateAdded: String
   }
 `;
 

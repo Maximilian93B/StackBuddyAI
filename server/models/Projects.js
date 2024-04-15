@@ -6,13 +6,21 @@ const ProjectSchema = new mongoose.Schema({
   description: { type: String, required: true },
   // Array to store user queries for tech stack recommendations
   userQueries: [String],
-  techSelection: [{
-    // Example categories: "Database", "Backend", "Frontend", etc.
-    category: String,
-    // Array of recommended technologies for each category
-    technologies: [String],
-  }],
+  techSelection: [
+    {
+      category: {
+        type: String,
+        enum: ['Databases', 'Server', 'FrontEnd', 'FrontendFW', 'CSSFrameworks'], // Added enum to validate categories
+        required: true
+      },
+      technologies: [{ type: String, required: true }] // Technologies array as strings
+    }
+  ],
   comments: [String],
+  notes: [{ // New notes field for Quill editor input
+    content: String,
+    dateAdded: { type: Date, default: Date.now }
+  }],
   dateStamp: { type: Date, default: Date.now },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // No project Can exist without an Owner 
 }, {
