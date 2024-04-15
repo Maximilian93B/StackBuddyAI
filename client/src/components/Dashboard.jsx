@@ -4,7 +4,8 @@ import CreateProjectForm from './CreateProjectForm';
 import { GET_ME } from '../utils/userQueries';
 import { useQuery } from '@apollo/client';
 import { useSpring, animated} from 'react-spring';
-
+import { useProject } from '../utils/UserProjectContext'; // Adjust the path as needed
+import ProjectDetails from './ProjectDetails';
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
   display: flex;
@@ -119,18 +120,22 @@ const Dashboard = () => {
     My Projects = [currentProjects]
     Create Project = imported CreateProject Form component. 
    */
-        // Greeting effect using useSpring
-        const GreetingSpring = useSpring({
-          from: { opacity: 0, transform: 'translateX(-100%)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
-          config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
-        });
+  // Greeting effect using useSpring
+  const GreetingSpring = useSpring({
+    from: { opacity: 0, transform: 'translateX(-100%)' },
+    to: { opacity: 1, transform: 'translateX(0)' },
+    config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
+  });
+
     // Fetch user data ( GET_ME) 
    const { loading, data, error } = useQuery(GET_ME);
+   const { selectedProject } = useProject();
    // If loading return loading // We should add setTimeout and a spinner ?? 
     // if error log error 
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error: {error.message}</p>;
+    
+    
     return (
       <DashboardContainer>
         <GreetingText style={GreetingSpring}>
@@ -142,32 +147,35 @@ const Dashboard = () => {
         </Dropdown>
         <Dropdown title="My Projects">
           {data.me.currentProjects.length > 0 ? (
-          <ProjectList>
-            {data.me.currentProjects.map((project) => (
-              <ProjectItem key={project.id}>
-                <ProjectParagraph>Title: {project.title}</ProjectParagraph>
-                <ProjectParagraph>Description: {project.description}</ProjectParagraph>
-                <ProjectParagraph>
-                  Tech Stack: {project.techSelection.map(tech => (
-                    <TechStack key={tech.category}>{tech.category}: {tech.technologies.join(', ')}</TechStack>
-                  )).join('; ')}
-                </ProjectParagraph>
-                <ProjectParagraph>Comments: {project.comments.join(', ')}</ProjectParagraph>
-                <ProjectParagraph>Date: {new Date(project.dateStamp).toLocaleDateString()}</ProjectParagraph>
+            <ProjectList>
+              {data.me.currentProjects.map((project) => (
+                <ProjectItem key={project.id}>
+                  <ProjectParagraph>Title: {project.title}</ProjectParagraph>
+                  <ProjectParagraph>Description: {project.description}</ProjectParagraph>
+                  <ProjectParagraph>
+                    Tech Stack: {project.techSelection.map(tech => (
+                      <TechStack key={tech.category}>{tech.category}: {tech.technologies.join(', ')}</TechStack>
+                    )).join('; ')}
+                  </ProjectParagraph>
+                  <ProjectParagraph>Comments: {project.comments.join(', ')}</ProjectParagraph>
+                  <ProjectParagraph>Date: {new Date(project.dateStamp).toLocaleDateString()}</ProjectParagraph>
                 </ProjectItem>
               ))}
             </ProjectList>
-            ) : (
+          ) : (
             <NoProjectsText>No projects found</NoProjectsText>
           )}
         </Dropdown>
         <Dropdown title="Create A Project">
-        <CreateProjectForm />
-      </Dropdown>
-      {/* Add more dropdowns if needed */}
-    </DashboardContainer>
-  );
-    
-}
+          <CreateProjectForm />
+        </Dropdown>
+        {selectedProject && (
+    <Dropdown title="Current Project">
+        <ProjectDetails project={selectedProject} />
+    </Dropdown>
+)}
+      </DashboardContainer>
+    );
+  };
   export default Dashboard;
 

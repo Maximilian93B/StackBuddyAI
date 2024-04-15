@@ -49,7 +49,7 @@ return (
       {children}
       {items.map(item => (
           <div key={item.id} onClick={() => handleClick(item)} style={{ padding: '10px', margin: '5px', cursor: 'pointer' }}>
-             
+    
           </div>
       ))}
   </StyledDropZone>
