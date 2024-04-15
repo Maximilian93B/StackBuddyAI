@@ -2,7 +2,34 @@ import { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill'; // Import the ReactQuill module
 import PropTypes from 'prop-types'; // Import PropTypes
 import 'react-quill/dist/quill.snow.css'; // Import Quill stylesheet
+import styled from 'styled-components';
 
+
+
+const QuillContainer = styled.div`
+.quill {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+
+  &:focus-within {
+    border-color: #007bff;
+  }
+}
+.ql-toolbar {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #f4f4f4;
+}
+.ql-container {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  height: 300px; // Adjust based on your needs
+}
+`;
+
+
+// Quil Component 
 const QuillEditor = ({ initialContent, handleContentChange }) => {
   const [content, setContent] = useState('');
 
@@ -15,21 +42,52 @@ const QuillEditor = ({ initialContent, handleContentChange }) => {
     handleContentChange(editor.getHTML()); // or editor.getText() if you need the text
   };
 
-  return (
-    <div>
-      <ReactQuill 
-        theme="snow" 
-        value={content}
-        onChange={handleChange}
-      />
-    </div>
-  );
-};
-
 // Define prop types for QuillEditor component
 QuillEditor.propTypes = {
   initialContent: PropTypes.string,
   handleContentChange: PropTypes.func.isRequired
+};
+
+  // set all modules and formats from quil docs 
+
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      ['link', 'image', 'video'],
+      [{ 'color': [] }, { 'background': [] }],
+      ['clean']
+    ]
+  };
+
+  const formats = [
+    'bold', 'italic', 'underline', 'strike',
+    'blockquote', 'code-block',
+    'header', 'list', 'script',
+    'indent', 'direction', 'size',
+    'link', 'image', 'video',
+    'color', 'background'
+  ];
+
+
+// Return component with Quill/styles and modules 
+  return (
+    <QuillContainer>
+      <ReactQuill 
+        theme="snow"
+        value={content}
+        onChange={handleChange}
+        modules={modules}
+        formats={formats}
+      />
+    </QuillContainer>
+  );
 };
 
 export default QuillEditor;

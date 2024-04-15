@@ -12,21 +12,22 @@ import DraggableTechSymbol from './DraggableTechSymbol';
 const DragDropContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  max-width: 80vw;
-  max-height: 80vh;
-  gap: 1rem;
-  padding: 5px;
-  
+  width: 80vw;
+  height: 60vh;
+  gap: 5rem;
 `;
 
 const DropZoneContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  gap: 40px;
-  width: 20vw;
-  height: 100vh;
+display: flex;
+min-height: 100vh;
+width: 30vw;
+flex-direction: column;
+background: #BBD2C5;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+padding: 10px;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 

@@ -11,8 +11,8 @@
  align-items: center;
  height: 100%; // Full height to ensure there is space for the button at the bottom
  width: 80%;
- padding: 2px;
- margin: 5px;
+ padding: 5px;
+ margin: 10px;
  border-radius: 10px;
  background: white;
  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
