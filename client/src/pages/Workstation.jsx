@@ -7,7 +7,9 @@ import TechDragDrop from '../components/TechDragDrop';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import StackBuddy from '../components/StackBuddyAI';
- 
+import { useProject } from '../utils/UserProjectContext';
+
+
 
 // StackBuddy Overlay 
 const Overlay = styled.div`
@@ -68,18 +70,30 @@ function Workstation() {
   const navigate = useNavigate();
   const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(false);
   const [editorContent, setEditorContent] = useState('');
-
-  useEffect(() => {
+  // Custom hook for managing when a user selects a project
+const { selectedProject, setSelectedProject} = useProject();
+  
+// UseEffect to manage if user is authorized to enter page or not 
+useEffect(() => {
       if (!AuthService.loggedIn()) {
           navigate('/login');
       }
   }, [navigate]);
 
+  useEffect(() => {
+    // There is where we will do something when the user selects a project 
+    console.log('Selected Project in Workstation:', selectedProject)
+  }, [selectedProject]);
+
+  
   const toggleStackBuddy = () => setIsStackBuddyOpen(prev => !prev);
 
+  // Quill Editor handler 
   const handleContentChange = (content) => {
     setEditorContent(content);
   };
+
+
 
   return (
     <DndProvider backend={HTML5Backend}>
