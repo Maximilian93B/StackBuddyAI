@@ -106,14 +106,11 @@ const projectResolvers = {
         }
     
         // Update the basic fields if provided
-        // const updates = {
-        //   ...(title && { title }),
-        //   ...(description && { description })
-        // };
-        const updates = {};
-        if (title) updates.title = title;
-        if (description) updates.description = description;
-
+        const updates = {
+          ...(title && { title }),
+          ...(description && { description })
+        };
+        
         // Perform basic updates first 
         // await Project.findByIdAndUpdate(id, updates, { new: true });
         await Project.findByIdAndUpdate(id, updates);

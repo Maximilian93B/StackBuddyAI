@@ -10,7 +10,7 @@ const ProjectSchema = new mongoose.Schema({
     {
       category: {
         type: String,
-        enum: ['Databases', 'Server Side', 'Front End', 'Front End Frameworks', 'CSS Frameworks'], // Added enum to validate categories
+        enum: ['Databases', 'Server', 'FrontEnd', 'FrontendFW', 'CSSFrameworks'], // Added enum to validate categories
         required: true
       },
       technologies: [{ type: String, required: true }] // Technologies array as strings

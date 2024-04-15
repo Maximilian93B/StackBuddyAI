@@ -20,7 +20,9 @@ const userResolvers = {
 
     // Query to fetch a single user 
     user: async (_, { id }) => {
-      return await User.findById(id);
+      return await User.findById(id)
+      .populate('currentProjects')
+      .exec();
     },    
     // Add querys as we need them 
   },
