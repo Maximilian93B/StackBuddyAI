@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { GET_ME } from '../utils/userQueries';
 import { useSpring , animated} from 'react-spring';
-import ProjectContext from '../utils/UserProjectContext';
+import { useProject } from '../utils/UserProjectContext';
 
 
 
@@ -68,6 +68,7 @@ const ProjectList = styled.ul`
 const ProjectItem = styled.li`
   padding: 10px;
   border-bottom: 1px solid #eee;
+  cursor: pointer; 
   &:last-child {
     border-bottom: none;
   }
@@ -115,6 +116,8 @@ const NoProjectsText = styled.p`
 // Main component 
 const WsDashBoard = () => {
   const { loading, data, error } = useQuery(GET_ME);
+  // SetSelectedProkect state to our custom hook to access our defined context for the user
+  const { setSelectedProject } = useProject();
   // slide in animation for header 
   
   const GreetingSpring = useSpring({
@@ -137,10 +140,12 @@ const WsDashBoard = () => {
                 {data.me.currentProjects.length > 0 ? (
                     <ProjectList>
                         {data.me.currentProjects.map(project => (
-                            <ProjectItem key={project.id} onClick={() => setSelectedProject(project)}>
-                                <ProjectParagraph>Title: {project.title}</ProjectParagraph>
-                                {/* Additional project details */}
-                            </ProjectItem>
+                            <ProjectItem key={project.id} onClick={() => {
+                              console.log("Project selected:", project);
+                              setSelectedProject(project);
+                          }}>
+                              <ProjectParagraph>Title: {project.title}</ProjectParagraph>
+                          </ProjectItem>
                         ))}
                     </ProjectList>
                 ) : (

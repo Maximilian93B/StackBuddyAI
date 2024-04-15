@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import WsDashBoard from '../components/WorkStationDashboard';
-import StackBuddyAI from '../components/StackBuddyAI';
 import AuthService from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import StackBuddyInsights from '../components/StackBuddy/AIinsight';
-
+import { useProject } from '../utils/UserProjectContext';
 // Added Genereal styles 
 
 const PageContainer = styled.div` 
@@ -91,6 +90,14 @@ font-family: 'Poppins', sans-serif; //
 
 function MyWorkSpace() {
   const navigate = useNavigate();
+  // Custom hook for project context
+  const { selectedProject } = useProject();
+
+  useEffect(() => {
+    console.log('Selected Project', selectedProject);
+    // Right logic for project here 
+
+  }, [selectedProject]); 
 
 
   useEffect(() => {
@@ -116,10 +123,7 @@ const toggleStackBuddy = () => {
           </DashboardContainer>
             <ContentContainer>
             <StackBuddyContainer>
-            <ToggleButton onClick={toggleStackBuddy}>
-            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
-            </ToggleButton>
-            {isStackBuddyOpen && <StackBuddyAI isVisible={isStackBuddyOpen} onClose={toggleStackBuddy} />}
+        
           </StackBuddyContainer>
             <QuillContainer>
   
