@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Dashboard from '../components/Dashboard';
 import QuillEditor from '../components/QuillEditor';
 import StackBuddyAI from '../components/StackBuddyAI';
-
+import AuthService from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
 // Added Genereal styles 
 
 const PageContainer = styled.div` 
@@ -87,6 +88,15 @@ font-family: 'Poppins', sans-serif; //
 
 
 function MyWorkSpace() {
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (!AuthService.loggedIn()) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   // Set state for StackBuddy 
   const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(true);
