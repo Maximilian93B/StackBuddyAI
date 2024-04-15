@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Dashboard from '../components/Dashboard';
-import QuillEditor from '../components/QuillEditor';
+import WsDashBoard from '../components/WorkStationDashboard';
 import StackBuddyAI from '../components/StackBuddyAI';
 import AuthService from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
-import DropZone from '../components/DropZone';
+import StackBuddyInsights from '../components/StackBuddy/AIinsight';
 
 // Added Genereal styles 
 
@@ -112,7 +111,7 @@ const toggleStackBuddy = () => {
     return (
         <PageContainer>
           <DashboardContainer>
-          <Dashboard />
+      <WsDashBoard />
           </DashboardContainer>
             <ContentContainer>
             <StackBuddyContainer>
@@ -122,11 +121,11 @@ const toggleStackBuddy = () => {
             {isStackBuddyOpen && <StackBuddyAI isVisible={isStackBuddyOpen} onClose={toggleStackBuddy} />}
           </StackBuddyContainer>
             <QuillContainer>
-              <QuillEditor/>
+  
             </QuillContainer>
             </ContentContainer>
             <ProjectsContainer>
-            <Dashboard/>
+            <StackBuddyInsights />
             </ProjectsContainer>
         </PageContainer>
     );
