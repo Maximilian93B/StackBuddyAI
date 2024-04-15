@@ -15,7 +15,6 @@ const DashboardContainer = styled.div`
   background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 // container sepration
@@ -87,37 +86,31 @@ const TechStack = styled.span`
 `;
 
 
-
-
-// Dropdown component to be used in DashBoard 
-// Set state to children  
 const Dropdown = ({ title, children }) => {
-    /// use state to set dashboard open/closed 
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const contentProps = useSpring({
-      maxHeight: isOpen? 1000 : 0, // Animate the height from 0 to auto 
-      opacity: isOpen ? 1 : 0, // Animate opacity from 0 to 1
-      from: { maxHeight: 0, opacity: 0 }, // Initial animation states
-      config: { tension : 250, friction: 20 } // Configure the tension and friction 
-    });
+  /// use state to set dashboard open/closed 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const contentProps = useSpring({
+    maxHeight: isOpen? 1000 : 0, // Animate the height from 0 to auto 
+    opacity: isOpen ? 1 : 0, // Animate opacity from 0 to 1
+    from: { maxHeight: 0, opacity: 0 }, // Initial animation states
+    config: { tension : 250, friction: 20 } // Configure the tension and friction 
+  });
 
 
-    return(
-        <DropdownContainer>
-            <DropdownHeader onClick ={() => setIsOpen(!isOpen)} >
-                {title}
-                <span>{isOpen ? '▲' : '▼'}</span>
-            </DropdownHeader>
-            <DropdownContent style={contentProps}>
-                {children}
-            </DropdownContent>
-        </DropdownContainer>
-    );
+  return(
+      <DropdownContainer>
+          <DropdownHeader onClick ={() => setIsOpen(!isOpen)} >
+              {title}
+              <span>{isOpen ? '▲' : '▼'}</span>
+          </DropdownHeader>
+          <DropdownContent style={contentProps}>
+              {children}
+          </DropdownContent>
+      </DropdownContainer>
+  );
 };
-
 const Dashboard = () => {
-
   // Fetch user data using Apollo Client 
   // use GET_ME to fetch all user data first 
   // then display data in dashbaord 
@@ -126,18 +119,14 @@ const Dashboard = () => {
     My Projects = [currentProjects]
     Create Project = imported CreateProject Form component. 
    */
-  
         // Greeting effect using useSpring
         const GreetingSpring = useSpring({
           from: { opacity: 0, transform: 'translateX(-100%)' },
           to: { opacity: 1, transform: 'translateX(0)' },
           config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
         });
-
-
     // Fetch user data ( GET_ME) 
    const { loading, data, error } = useQuery(GET_ME);
-
    // If loading return loading // We should add setTimeout and a spinner ?? 
     // if error log error 
     if(loading) return <p>Loading...</p>
