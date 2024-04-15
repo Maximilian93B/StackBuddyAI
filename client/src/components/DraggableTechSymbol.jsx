@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import styled from 'styled-components';
 
 
-// Styles realted to TechSymbols 
+// Styles for  TechSymbols 
 const TechSymbol = styled.div`
 display: flex;
 align-items: center;
@@ -38,21 +38,21 @@ height: 40px;
     // Component for Dragable Tech 
 
 const DraggableTechSymbol = ({ id, icon, label, color,}) => {
+    //console.log('Props in Draggable Tech Symbol', {id, icon , label , color }); 
     // Set up the destructure of 'isDragging' from useDrag hook and collect the state using collect property
     const [{ isDragging }, drag] = useDrag(() => ({
       type: 'tech', // Type of symbol to be dragged
-      item: { id }, // Data of the symbol
-      collect: monitor => ({isDragging: !!monitor.isDragging(),
-      }), // Collect dragging to adjust apprearance 
+      item: { id, icon , label, color }, // Data of the symbol 
+      collect: monitor => ({isDragging: !!monitor.isDragging() }), // Collect dragging to adjust apprearance 
     }));
 
     // Return the TechSymbol with drag ref and styles 
     return (
       <TechSymbol ref={drag} color={color} style={{ opacity: isDragging ? 0.5 : 1 }}>
-        {icon}
-        <div>{label}</div>
+          {icon}
+          <div>{label}</div>
       </TechSymbol>
-    );
-  };
+  );
+};
 
   export default DraggableTechSymbol; 

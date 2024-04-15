@@ -21,10 +21,11 @@ font-size: 0.9rem; /* Smaller font size for labels */
 `;
 
 const Input = styled.input`
-padding: 8px;
-border-radius: 4px;
+padding: 12px;
+border-radius: 8px;
 border: 1px solid #ccc;
-font-size: 0.9rem; 
+font-size: 1rem;
+transition: all 0.3s ease-in-out;
 `;
 
 const TextArea = styled.textarea`
