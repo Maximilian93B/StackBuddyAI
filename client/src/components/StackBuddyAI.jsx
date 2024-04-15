@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { useTransition, animated} from 'react-spring';
+import { useTransition, animated, useSpring} from 'react-spring';
 import styled from 'styled-components';
 
 const StackBuddyOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); // Lighter overlay for a softer appearance
+  position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  height: 80vh;
+  width: 40vw
+  background-color: rgba(0, 0, 0, 0.4); // Lighter overlay for a softer appearance
   z-index: 999;
+  ${props => props.style}
 `;
 
 const ChatContainer = styled.div`
@@ -29,6 +29,7 @@ const ChatContainer = styled.div`
   border: 2px solid #black;
   border-radius: 25px; 
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  ${props => props.style}
 `;
 
 
@@ -42,6 +43,7 @@ const ChatHeader = styled.div`
   font-weight: bold;
   padding: 10px 0;
   border-bottom: 1px solid #e1e1e1;; 
+  ${props => props.style}
 `;
 
 
@@ -55,9 +57,11 @@ padding: 20px;
 background: white;
 border-radius: 10px;
 margin-bottom: 20px; // Space before input
+${props => props.style}
 `;
 
 const Message = styled(animated.div)`
+${props => props.style}
 margin-bottom: 10px;
 padding: 20px 20px;
 border-radius: 20px;
@@ -114,7 +118,7 @@ font-size: 16px;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 20px;
   cursor: pointer;
   background-color: #76FF03;
@@ -134,7 +138,7 @@ const CloseButton = styled.button`
 
 
 // Pass isVisible to accept state change to toggle view 
-const StackBuddyAI = ({isVisible, onClose }) => {
+const StackBuddyAI = ({isVisible, onClose, overlayStyle, containerStyle, headerStyle, messageStyle  }) => {
   // useState to keep track of all the messages in the chatbox 
   // 
   const [messages, setMessages] = useState([]);
@@ -142,6 +146,18 @@ const StackBuddyAI = ({isVisible, onClose }) => {
   // Send a message to OpenAI 
   // Post Input to our OpenAI endpoint 
   const [loading, setLoading] =useState(false);
+
+
+// fade in animation for stackbuddy 
+  const fade = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    reset: true,
+    reverse: !isVisible,
+    onRest: () => { if (!isVisible) {/* Handle when animation is done, if necessary */} },
+  });
+
+
 
   // animation for message entry using React Spring
   const transitions = useTransition(messages, {
@@ -190,6 +206,7 @@ useEffect(()=> {
       setInputText('');
     } catch (error) {
       console.error('Error sending message', error);
+
     }
     // set loading to false after response is handled
     setLoading(false)
@@ -210,17 +227,18 @@ useEffect(()=> {
 
   return (
     <StackBuddyOverlay>
-    <ChatContainer>
+    <animated.div style={fade}>
+      <ChatContainer>
       <MessageContainer>
         <ChatHeader>StackBuddyGPT</ChatHeader>
         <MessagesDisplay>
           {messages.map((message, index) => (
             <Message key={index} role={message.role}>
               {message.content}
-              { loading && loading}
             </Message>
           ))}
         </MessagesDisplay>
+        <CloseButton onClick={onClose}>X</CloseButton>
       </MessageContainer>
 
       <InputContainer>
@@ -232,8 +250,8 @@ useEffect(()=> {
           onKeyPress={handleKeyPress}
         />
       </InputContainer>
-      <CloseButton onClick={onClose}>X</CloseButton>
-    </ChatContainer>
+      </ChatContainer>
+    </animated.div>
     </StackBuddyOverlay>
   );
 }

@@ -1,5 +1,5 @@
  import React from 'react';
- import {useDrop } from 'react-dnd';
+ import { useDrop } from 'react-dnd';
  import styled from 'styled-components';
  
 // Styles for DropZone
@@ -20,9 +20,7 @@
 
 
 
-const DropZone = ({ onDrop, children, category }) => {
-
-
+const DropZone = ({ onDrop, onRemoveItem, children, category, items = [] }) => {
 
   // Set up the drop container --> use hook (useDrop)
   const [, drop] = useDrop({
@@ -37,12 +35,25 @@ const DropZone = ({ onDrop, children, category }) => {
       isOver: !!monitor.isOver() // pass function as prop with the details 
     })
   });
-    return (
-      <StyledDropZone ref={drop}>
-        {children}
-      </StyledDropZone>
-    );
-  };
+
+
+  // Debugging 
+  const handleClick = (item) => {
+    console.log(`Item clicked:`, item); // Ensure this logs
+    onRemoveItem(item.id);
+};
+
+return (
+  <StyledDropZone ref={drop}>
+    {children}
+    {items.map(item => (
+      <div key={item.id} onClick={() => handleClick(item)}>
+        {item.label || item.id} // Make sure you display identifiable information
+      </div>
+    ))}
+  </StyledDropZone>
+);
+};
 
 export default DropZone;
   
