@@ -95,7 +95,7 @@ type Mutation {
       title: String,
       description: String,
       userQueries: UpdateUserQueriesInput,
-      techSelection: [UpdateTechCategoryInput],
+      techSelection: UpdateTechCategoryInput,
       comments: UpdateCommentsInput
       notes: [NoteInput] # Added notes input for project updates
     ): Project
