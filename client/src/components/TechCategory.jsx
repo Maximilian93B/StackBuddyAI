@@ -9,14 +9,13 @@ import { techCategories } from '../utils/techData'; // import tech data
 const CategoryHeader = styled.h2`
 font-size: 1.2rem;  
 color: Black;        
-margin-bottom: 10px; 
+margin-bottom: 25px; 
 text-align: center; 
-background: #abbaab;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #ffffff, #abbaab);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #ffffff, #abbaab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 font-family: 'Poppins', sans-serif; 
-padding: 13px; 
-border-radius: 8px; 
+padding: 15px; 
+border-radius: 10px; 
 box-shadow: 0 2px 5px rgba(0,0,0,0.35); 
 transition: background-color 0.3s ease, transform 0.2s ease; // smooth transitions for hover effects
 &:hover {
@@ -26,6 +25,8 @@ transition: background-color 0.3s ease, transform 0.2s ease; // smooth transitio
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); // deeper shadow to accentuate the lift
 }
 `;
+
+
 
 
   const TechCategory = ({ category, symbols }) => (

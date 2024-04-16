@@ -30,7 +30,7 @@ const PageContainer = styled.div`
   display: flex;
   flex-grow:1;
   height:auto; //100vh; // Full height of the viewport
-  width: auto;
+  width: 100vw;
   font-family: "Open Sans", sans-serif;
   background: #134E5E;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #71B280, #134E5E);  /* Chrome 10-25, Safari 5.1-6 */
@@ -41,7 +41,6 @@ const PageContainer = styled.div`
 const ContentContainer = styled.div`
 display: flex;
 flex-grow: 1; // Takes up the remaining space
-padding: 10px;
 flex-direction: column; // Stack children vertically
 align-items: center; // Center children horizontally
 font-family: 'Poppins', sans-serif; //
