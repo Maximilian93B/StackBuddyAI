@@ -10,9 +10,9 @@ const DashboardContainer = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background: #BBD2C5;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  background: #005C97;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
   padding: 20px;
   border-radius: 8px;
 `;
@@ -26,7 +26,7 @@ const DropdownContainer = styled.div`
 const DropdownHeader = styled.div`
   cursor: pointer;
   padding: 10px 20px;
-  background: #e3e3e3;
+  background: linear-gradient(to bottom, #005C97, white); 
   border-radius: 5px;
   display: flex;
   justify-content: space-between;

@@ -12,8 +12,8 @@ const CategoryHeader = styled.h2`
   margin-bottom: 10px; 
   text-align: center; 
   background: #11998e;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to right, #005C97, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #005C97, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   font-family: 'Poppins', sans-serif; 
   padding: 13px; 
   border-radius: 8px; 
@@ -24,6 +24,7 @@ const CategoryHeader = styled.h2`
     background-image: linear-gradient(to right, #e6e6e6, #ffffff); // lighter gradient on hover
     transform: translateY(-3px); // subtle lift effect
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); // deeper shadow to accentuate the lift
+  }
   `;
 
 
