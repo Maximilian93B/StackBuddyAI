@@ -32,7 +32,10 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 
+
 const TechDragDrop = ({ projectid }) => {
+  const newProjectid = "661b25139de2ed29ae867def";
+  projectid = newProjectid;
 
   const [droppedItems, setDroppedItems] = useState({});
   const [updateProjectTech, { loading, error }] = useMutation(UPDATE_PROJECT_TECH);
@@ -50,7 +53,7 @@ const TechDragDrop = ({ projectid }) => {
   const handleUpdate = async () => {
     const updatesTechSelection = {
       add: Object.entries(droppedItems).map(([category, techs]) => ({
-          category,
+          category: "661b25139de2ed29ae867def",
           technologies: techs.map(tech => tech.id)
       })),
       remove: []
@@ -61,7 +64,7 @@ const TechDragDrop = ({ projectid }) => {
     try {
       await updateProjectTech({
         variables: { 
-          projectId: "661d4ddf47d5e9438fc07d9d",// projectid,
+          projectId: projectid,// projectid,
           techSelection: updatesTechSelection 
         } 
       });
