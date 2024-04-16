@@ -9,6 +9,7 @@ import DraggableTechSymbol from './DraggableTechSymbol';
 // Testing for hard coded Tech symbol
 //import { FaDatabase, FaNode, FaReact, FaVuejs, FaAngular, FaCss3, FaServer } from 'react-icons/fa';
 
+
 const DragDropContainer = styled.div`
   display: flex;
   align-items: flex-start;
@@ -34,6 +35,9 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 const TechDragDrop = ({ projectid }) => {
   const [droppedItems, setDroppedItems] = useState({});
   const [updateProjectTech, { loading, error }] = useMutation(UPDATE_PROJECT_TECH);
+
+  // State to manage the Slide up Effect 
+
 
   // Handle dropping items into categories
   const handleDrop = (category, item) => {
@@ -98,37 +102,3 @@ const TechDragDrop = ({ projectid }) => {
   );
 };
 export default TechDragDrop;
-
-
-/*
-// PROOF OF CONCEPT CODE FOR DRAG AND DROP ZONES 
-
-/*
-
-// Define 1 drop zone 
-  const createDropZone = (category) => useDrop(() => ({
-    accept: 'tech',
-    drop: (item) => console.log(`Dropped ${item.id} in ${category}`),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
-
-  // Declare our 3 Drop Zones with props for each 
-  const [databaseProps, dropDatabase] = createDropZone("Database", FaDatabase);
-  const [serverSideProps, dropServerSide] = createDropZone("Server-Side", FaServer);
-  const [frontEndProps, dropFrontEnd] = createDropZone("Front-End", FaHtml5);
-  // Wrap components in DndProvider to provide the React DnD context
-
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <DraggableItem ref={drag}>Draggable Tech</DraggableItem>
-      <DropZone ref={dropDatabase}><IconWrapper><FaDatabase /></IconWrapper><Label>Database</Label></DropZone>
-      <DropZone ref={dropServerSide}><IconWrapper><FaServer /></IconWrapper><Label>Server-Side</Label></DropZone>
-      <DropZone ref={dropFrontEnd}><IconWrapper><FaHtml5 /></IconWrapper><Label>Front-End</Label></DropZone>
-    </DndProvider>
-  );
-};
-export default TechDragDrop;
-*/
-
