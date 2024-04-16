@@ -34,7 +34,7 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 
 const TechDragDrop = ({ projectid }) => {
-  const newProjectid = "661b25139de2ed29ae867def";
+  const newProjectid = "661e7134b21c959549816886";
   projectid = newProjectid;
 
   const [droppedItems, setDroppedItems] = useState({});
@@ -53,7 +53,7 @@ const TechDragDrop = ({ projectid }) => {
   const handleUpdate = async () => {
     const updatesTechSelection = {
       add: Object.entries(droppedItems).map(([category, techs]) => ({
-          category: "661b25139de2ed29ae867def",
+          category: projectid,
           technologies: techs.map(tech => tech.id)
       })),
       remove: []
@@ -64,7 +64,7 @@ const TechDragDrop = ({ projectid }) => {
     try {
       await updateProjectTech({
         variables: { 
-          projectId: projectid,// projectid,
+          projectId: projectid,
           techSelection: updatesTechSelection 
         } 
       });

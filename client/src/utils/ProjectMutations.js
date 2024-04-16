@@ -34,7 +34,7 @@ mutation UpdateProject(
   $title: String, 
   $description: String, 
   $userQueries: [String], 
-  $techSelection: [UpdateTechCategoryInput], 
+  $techSelection: UpdateTechCategoryInput, 
   $comments: [String]
 ) {
   updateProject(id: $id, 
@@ -65,7 +65,7 @@ mutation UpdateProject(
 export const UPDATE_PROJECT_TECH = gql`
 mutation updateProjectTech(
   $projectId: ID!, 
-  $techSelection: [UpdateTechCategoryInput!] 
+  $techSelection: UpdateTechCategoryInput! 
 ) {
 updateProject(
   id: $projectId, 
