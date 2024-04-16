@@ -4,8 +4,8 @@ import CreateProjectForm from './CreateProjectForm';
 import { GET_ME } from '../utils/userQueries';
 import { useQuery } from '@apollo/client';
 import { useSpring, animated} from 'react-spring';
-import { useProject } from '../utils/UserProjectContext'; // Adjust the path as needed
-import ProjectDetails from './ProjectDetails';
+import { useProject } from '../utils/UserProjectContext';
+
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
   display: flex;
@@ -120,22 +120,24 @@ const Dashboard = () => {
     My Projects = [currentProjects]
     Create Project = imported CreateProject Form component. 
    */
-  // Greeting effect using useSpring
-  const GreetingSpring = useSpring({
-    from: { opacity: 0, transform: 'translateX(-100%)' },
-    to: { opacity: 1, transform: 'translateX(0)' },
-    config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
-  });
-
+        // Greeting effect using useSpring
+        const GreetingSpring = useSpring({
+          from: { opacity: 0, transform: 'translateX(-100%)' },
+          to: { opacity: 1, transform: 'translateX(0)' },
+          config: { tension: 200, friction: 26 } // Customize the animation tension and friction as needed
+        });
+        const { setSelectedProject } = useProject();
     // Fetch user data ( GET_ME) 
    const { loading, data, error } = useQuery(GET_ME);
-   const { selectedProject } = useProject();
    // If loading return loading // We should add setTimeout and a spinner ?? 
     // if error log error 
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error: {error.message}</p>;
-    
-    
+
+    const handleSelectProject = (projectId) => {
+      setSelectedProject(projectId);
+    };
+
     return (
       <DashboardContainer>
         <GreetingText style={GreetingSpring}>
@@ -145,7 +147,7 @@ const Dashboard = () => {
           <p>Username: {data.me.username}</p>
           <p>Email: {data.me.email}</p>
         </Dropdown>
-        <Dropdown title="My Projects">
+        {/* <Dropdown title="My Projects">
           {data.me.currentProjects.length > 0 ? (
             <ProjectList>
               {data.me.currentProjects.map((project) => (
@@ -165,17 +167,28 @@ const Dashboard = () => {
           ) : (
             <NoProjectsText>No projects found</NoProjectsText>
           )}
-        </Dropdown>
+        </Dropdown> */}
         <Dropdown title="Create A Project">
-          <CreateProjectForm />
-        </Dropdown>
-        {selectedProject && (
-    <Dropdown title="Current Project">
-        <ProjectDetails project={selectedProject} />
-    </Dropdown>
-)}
-      </DashboardContainer>
-    );
-  };
+        <CreateProjectForm />
+      </Dropdown>
+      <Dropdown title="My Projects">
+                {data.me.currentProjects.length > 0 ? (
+                    <ProjectList>
+                        {data.me.currentProjects.map(project => (
+                            <ProjectItem key={project.id} onClick={() => {
+                              console.log("Project selected:", project);
+                              setSelectedProject(project);
+                          }}>
+                              <ProjectParagraph>Title: {project.title}</ProjectParagraph>
+                          </ProjectItem>
+                        ))}
+                    </ProjectList>
+                ) : (
+                    <NoProjectsText>No projects found</NoProjectsText>
+                )}
+            </Dropdown>
+    </DashboardContainer>
+  );
+    
+}
   export default Dashboard;
-
