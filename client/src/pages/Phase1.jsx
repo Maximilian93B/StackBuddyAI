@@ -52,16 +52,13 @@ const Phase1 = () => {
     // Set the title state to toggle the title 
     const [isTitleEntered, setIsTitleEntered] = useState(false);
 
+
+
+
     const headerProps = useSpring({
         from: { opacity: 0, transform: 'translateY(-30px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
         delay: 300, // Delays the animation of the header
-      });
-
-      const subHeaderProps = useSpring({
-        from: { opacity: 0, transform: 'translateY(-30px)' },
-        to: { opacity: 1, transform: 'translateY(0)' },
-        delay: 600, // Delays the animation of the subheader
       });
 
       const handleInputSubmit = () => {
@@ -80,7 +77,7 @@ const Phase1 = () => {
       return (
         <Container>
           <AnimatedHeader style={headerProps}>
-            {isTitleEntered ? 'Enter Description' : 'Enter Title'}
+            {isTitleEntered ? 'Enter a Description of your new Project' : 'Enter Project Title'}
           </AnimatedHeader>
           <Input
             type="text"

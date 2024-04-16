@@ -2,7 +2,6 @@ import { FaDatabase, FaNode, FaReact, FaVuejs, FaAngular, FaCss3, FaServer } fro
 
 export const techCategories = {
     Databases: [
-<<<<<<< HEAD
       { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '', description: 'A document-oriented NoSQL database used for high volume data storage.'},
       { id: 'SQL', icon: <FaDatabase />, label: 'SQL Server', color: '', description: 'A relational database management system developed by Microsoft.'},
       { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '#336791', description: 'An open source relational database known for reliability and data integrity.'},
@@ -11,16 +10,6 @@ export const techCategories = {
       { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database', color: '', description: 'A multi-model database management system primarily designed for enterprise grid computing.'},
       { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase', color: '', description: 'A platform developed by Google for creating mobile and web applications.'},
       { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra', color: '', description: 'A highly scalable, high-performance distributed database designed to handle large amounts of data.'},
-=======
-      { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', description: 'A document-oriented NoSQL database used for high volume data storage.'},
-      { id: 'SQL', icon: <FaDatabase />, label: 'SQL Server', description: 'A relational database management system developed by Microsoft.'},
-      { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', description: 'An open source relational database known for reliability and data integrity.'},
-      { id: 'Redis', icon: <FaDatabase />, label: 'Redis',  description: 'An in-memory data structure store, used as a database, cache, and message broker.'},
-      { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB', description: 'A community-developed fork of MySQL intended to remain free under the GNU GPL.'},
-      { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database',  description: 'A multi-model database management system primarily designed for enterprise grid computing.'},
-      { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase', description: 'A platform developed by Google for creating mobile and web applications.'},
-      { id: 'Cassandra', icon: <FaDatabase />, label: 'Cassandra',  description: 'A highly scalable, high-performance distributed database designed to handle large amounts of data.'},
->>>>>>> 073d23b79ffd03625ee8b49de2ac999dbd564214
     ],
     Server: [
       { id: 'nodejs', icon: <FaNode />, label: 'Node.js', description: 'A JavaScript runtime built on Chrome\'s V8 JavaScript engine.'},
