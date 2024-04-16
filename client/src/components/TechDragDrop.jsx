@@ -56,12 +56,12 @@ const TechDragDrop = ({ projectid }) => {
       remove: []
   };
 
-  console.log(JSON.stringify(updatesTechSelection, null, 2));
+  console.log(JSON.stringify(`This is object to update Tech Selection: ${updatesTechSelection}`, null, 2));
 
     try {
       await updateProjectTech({
         variables: { 
-          projectId: "661b25139de2ed29ae867def",// projectid,
+          projectId: "661d4ddf47d5e9438fc07d9d",// projectid,
           techSelection: updatesTechSelection 
         } 
       });

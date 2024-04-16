@@ -89,13 +89,14 @@ const projectResolvers = {
     },
   
     // Update a projects properties
-    updateProject: async (_, {id, title, description, addUserQueries, removeUserQueryIds, addTechSelection, removeTechSelectionId, addComments, removeCommentIds, notes }, context) => {
+    // updateProject: async (_, {id, title, description, addUserQueries, removeUserQueryIds, addTechSelection, removeTechSelectionId, addComments, removeCommentIds, notes }, context) => {
+      updateProject: async (_, { id, title, description, userQueries, techSelection, comments, notes }, context) => {
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to update a project');
       }
       try {
         // Find the project to update and check user has the right to update it
-        const project = await Project.findById(id).populate('owner');
+        const project = await Project.findById(id);
         // If the project does not exist
         if (!project) {
           throw new Error('Unable to locate Project with that ID');
@@ -105,58 +106,182 @@ const projectResolvers = {
           throw new ForbiddenError('Unable to update project, You must be the owner of a project to make changes to it.');
         }
     
-        // Update the basic fields if provided
-        const updates = {
-          ...(title && { title }),
-          ...(description && { description })
-        };
-        
-        // Perform basic updates first 
-        // await Project.findByIdAndUpdate(id, updates, { new: true });
-        await Project.findByIdAndUpdate(id, updates);
+        // Initialize update object
+        const updateObj = {};
 
-        // Prepare complex updates with $push and $pull
-        const complexUpdates = { $set: {}, $push: {}, $pull: {} };
-
-        // Handle adding and removing for each array field 
-        const arrayUpdates = {};
-        if (addUserQueries && addUserQueries.length > 0) {
-          arrayUpdates.$push = { userQueries: { $each: addUserQueries } }; // Corrected the field name
-        }
-        if (addTechSelection && addTechSelection.length > 0) {
-          arrayUpdates.$push = {...(arrayUpdates.$push || {}), techSelection: {$each: addTechSelection } };
-        }
-        if (addComments && addComments.length > 0) {
-          arrayUpdates.$push = {...(arrayUpdates.$push || {}), comments: { $each: addComments } }; // Corrected to comments
-        }
-        // Apply array updates if any exist
-        // if (Object.keys(arrayUpdates).length > 0) {
-        //   await Project.findByIdAndUpdate(id, arrayUpdates, { new: true });
-        // }
-        // Handle removing for each array field using $pull 
-        if (removeUserQueryIds && removeUserQueryIds.length > 0) {
-          await Project.findByIdAndUpdate(id, { $pull: { userQueries: { $in: removeUserQueryIds } } }, { new: true });
-        }
-        if (removeTechSelectionId && removeTechSelectionId.length > 0) {
-          await Project.findByIdAndUpdate(id, { $pull: { techSelection: { _id: { $in: removeTechSelectionId } } } }, { new: true });
-        }
-        if (removeCommentIds && removeCommentIds.length > 0) {
-          await Project.findByIdAndUpdate(id, { $pull: { comments: { $in: removeCommentIds } } }, { new: true });
-        }
-
-        // Set updates, specifically for nested objects like notes
-        // if (notes) {
-        //   await Project.findByIdAndUpdate(id, { $set: { notes } }, { new: true });
-        // }
-        if (notes) complexUpdates.$set.notes = notes.map(note => ({
+        if (title) updateObj.title = title;
+        if (description) updateObj.description = description;
+        if (notes) updateObj.notes = notes.map(note => ({
           content: note.content,
           dateAdded: note.dateAdded || new Date()
         }));
 
-        // Apply complex updates if necessary
-        if (Object.keys(complexUpdates.$set).length || Object.keys(complexUpdates.$push).length || Object.keys(complexUpdates.$pull).length) {
-          await Project.findByIdAndUpdate(id, complexUpdates, { new: true });
+        // Update techSelection by pulling removed items first
+        if (techSelection && techSelection.remove && techSelection.remove.length) {
+          await Project.findByIdAndUpdate(id, { $pull: { techSelection: { category: { $in: techSelection.remove } } } });
         }
+
+        // Then pushing added items
+        if (techSelection && techSelection.add && techSelection.add.length) {
+          techSelection.add.forEach(async (addition) => {
+            await Project.findByIdAndUpdate(id, {
+              $push: { techSelection: { category: addition.category, technologies: addition.technologies } }
+            });
+          });
+        }
+
+        // Comments and userQueries can be updated in a similar manner
+        if (comments && comments.remove) {
+          await Project.findByIdAndUpdate(id, { $pull: { comments: { $in: comments.remove } } });
+        }
+        if (comments && comments.add) {
+          comments.add.forEach(async (comment) => {
+            await Project.findByIdAndUpdate(id, { $push: { comments: comment } });
+          });
+        }
+
+        if (userQueries && userQueries.remove) {
+          await Project.findByIdAndUpdate(id, { $pull: { userQueries: { $in: userQueries.remove } } });
+        }
+        if (userQueries && userQueries.add) {
+          userQueries.add.forEach(async (query) => {
+            await Project.findByIdAndUpdate(id, { $push: { userQueries: query } });
+          });
+        }
+
+
+
+
+
+        // const updates = {};
+        // if (title) updates.title = title;
+        // if (description) updates.description = description;
+        // if (notes) {
+        //   updates.notes = notes; // Assuming direct set is fine for notes
+        // }
+
+        // const techAdditions = techSelection?.add || [];
+        // const techRemovals = techSelection?.remove || [];
+
+        // if (techAdditions.length > 0 || techRemovals.length > 0) {
+        //   // Apply technology updates in two stages to avoid conflicts
+        //   if (techRemovals.length > 0) {
+        //     await Project.findByIdAndUpdate(id, {
+        //       $pull: { techSelection: { _id: { $in: techRemovals } } }
+        //     });
+        //   }
+        //   if (techAdditions.length > 0) {
+        //     await Project.findByIdAndUpdate(id, {
+        //       $push: { techSelection: { $each: techAdditions } }
+        //     });
+        //   }
+        // }
+
+        // // Apply simpler updates in a single go
+        // if (Object.keys(updates).length > 0) {
+        //   await Project.findByIdAndUpdate(id, { $set: updates });
+        // }
+
+      //   // Prepare update operations
+      // const updates = { $set: {}, $push: {}, $pull: {} };
+
+      // if (title) updates.$set.title = title;
+      // if (description) updates.$set.description = description;
+      // if (notes) updates.$set.notes = notes.map(note => ({ content: note.content, dateAdded: note.dateAdded || new Date() }));
+
+      // // Update userQueries: handle add and remove operations
+      // if (userQueries?.add?.length) {
+      //   updates.$push.userQueries = { $each: userQueries.add };
+      // }
+      // if (userQueries?.remove?.length) {
+      //   updates.$pull.userQueries = { $in: userQueries.remove };
+      // }
+
+      // // Update techSelection: handle add and remove operations
+      // if (techSelection?.add?.length) {
+      //   techSelection.add.forEach(tech => {
+      //     updates.$push.techSelection = updates.$push.techSelection || { $each: [] };
+      //     updates.$push.techSelection.$each.push({
+      //       category: tech.category,
+      //       technologies: tech.technologies
+      //     });
+      //   });
+      // }
+      // if (techSelection?.remove?.length) {
+      //   updates.$pull.techSelection = { $in: techSelection.remove.map(techId => techId) };
+      // }
+
+      // // Update comments: handle add and remove operations
+      // if (comments?.add?.length) {
+      //   updates.$push.comments = { $each: comments.add };
+      // }
+      // if (comments?.remove?.length) {
+      //   updates.$pull.comments = { $in: comments.remove };
+      // }
+
+      // // Execute the update operation
+      // await Project.findByIdAndUpdate(id, updates, { new: true });
+
+
+      
+
+
+
+
+        // const updates = {
+        //   ...(title && { title }),
+        //   ...(description && { description })
+        // };
+        
+        // // Perform basic updates first 
+        // // await Project.findByIdAndUpdate(id, updates, { new: true });
+        // await Project.findByIdAndUpdate(id, updates);
+
+        // // Prepare complex updates with $push and $pull
+        // const complexUpdates = { $set: {}, $push: {}, $pull: {} };
+
+        // // Handle adding and removing for each array field 
+        // const arrayUpdates = {};
+        // if (addUserQueries && addUserQueries.length > 0) {
+        //   arrayUpdates.$push = { userQueries: { $each: addUserQueries } }; // Corrected the field name
+        // }
+        // if (addTechSelection && addTechSelection.length > 0) {
+        //   arrayUpdates.$push = {...(arrayUpdates.$push || {}), techSelection: {$each: addTechSelection } };
+        // }
+        // if (addComments && addComments.length > 0) {
+        //   arrayUpdates.$push = {...(arrayUpdates.$push || {}), comments: { $each: addComments } }; // Corrected to comments
+        // }
+        // // Apply array updates if any exist
+        // // if (Object.keys(arrayUpdates).length > 0) {
+        // //   await Project.findByIdAndUpdate(id, arrayUpdates, { new: true });
+        // // }
+        // // Handle removing for each array field using $pull 
+        // if (removeUserQueryIds && removeUserQueryIds.length > 0) {
+        //   await Project.findByIdAndUpdate(id, { $pull: { userQueries: { $in: removeUserQueryIds } } }, { new: true });
+        // }
+        // if (removeTechSelectionId && removeTechSelectionId.length > 0) {
+        //   await Project.findByIdAndUpdate(id, { $pull: { techSelection: { _id: { $in: removeTechSelectionId } } } }, { new: true });
+        // }
+        // if (removeCommentIds && removeCommentIds.length > 0) {
+        //   await Project.findByIdAndUpdate(id, { $pull: { comments: { $in: removeCommentIds } } }, { new: true });
+        // }
+
+        // // Set updates, specifically for nested objects like notes
+        // // if (notes) {
+        // //   await Project.findByIdAndUpdate(id, { $set: { notes } }, { new: true });
+        // // }
+        // if (notes) complexUpdates.$set.notes = notes.map(note => ({
+        //   content: note.content,
+        //   dateAdded: note.dateAdded || new Date()
+        // }));
+
+        // // Apply complex updates if necessary
+        // if (Object.keys(complexUpdates.$set).length || Object.keys(complexUpdates.$push).length || Object.keys(complexUpdates.$pull).length) {
+        //   await Project.findByIdAndUpdate(id, complexUpdates, { new: true });
+        // }
+
+        // Apply other simple updates
+        await Project.findByIdAndUpdate(id, { $set: updateObj });
     
         // Fetch and return the updated document
         return await Project.findById(id).populate('owner');
