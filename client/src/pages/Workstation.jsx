@@ -8,7 +8,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import StackBuddyAI from '../components/StackBuddyAI';  // Adjust the path according to your project structure
 import { useProject } from '../utils/UserProjectContext';
-
+import QuillEditor from '../components/QuillEditor';
 
 const Overlay = styled.div`
   position: fixed;
@@ -79,7 +79,7 @@ function Workstation() {
   const [editorContent, setEditorContent] = useState('');
   // Custom hook for managing when a user selects a project
   const { selectedProject, setSelectedProject} = useProject();
-  
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 // UseEffect to manage if user is authorized to enter page or not 
   useEffect(() => {
       if (!AuthService.loggedIn()) {
@@ -101,7 +101,11 @@ function Workstation() {
   const handleContentChange = (content) => {
     setEditorContent(content);
   };
-
+  // Toggle quill edtior 
+  const toggleEditor = () => {
+    setIsEditorOpen(!isEditorOpen);
+    console.log("Editor toggled", isEditorOpen); // Debug: Check if state changes
+  };
 
 
   return (
@@ -113,10 +117,21 @@ function Workstation() {
           <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? 'Hide StackBuddy' : 'Show StackBuddy'}
           </ToggleButton>
+          <ToggleButton onClick={toggleEditor}>
+            {isEditorOpen ? 'Hide Editor' : 'Show Editor'}
+          </ToggleButton>
         </ButtonContainer>
         {isStackBuddyOpen && (
           <Overlay>
             <StackBuddyAI isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
+          </Overlay>
+        )}
+        {isEditorOpen && (
+          <Overlay>
+          <QuillEditor
+            initialContent={editorContent}
+            handleContentChange={handleContentChange}
+          />
           </Overlay>
         )}
       </PageContainer>

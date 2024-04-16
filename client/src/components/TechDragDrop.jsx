@@ -16,7 +16,7 @@ const DragDropContainer = styled.div`
   align-items: flex-start;
   padding: ;
   margin: 8px;
-  width: 100vw;
+  width: 90vw;
   height: 100vh;
   gap: 5rem;
 `;
@@ -30,6 +30,28 @@ const DropZoneContainer = styled.div`
   background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   padding: 20px;
   border-radius: 8px;
+`;
+
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  background: #005C97;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049; /* Darker shade on hover */
+  }
+
+  &:disabled {
+    background-color: #ccc; /* Gray out the button when disabled */
+    cursor: not-allowed;
+  }
 `;
 
 
@@ -87,16 +109,15 @@ const TechDragDrop = ({ projectid }) => {
   };
 
 
-
   return (
     <DragDropContainer>
       {Object.entries(techCategories).map(([category, symbols]) => (
         <TechCategory key={category} category={category} symbols={symbols} />
       ))}
       <DropZoneContainer>
-        <button onClick={handleUpdate} disabled={loading}>
-          Update Project Tech
-        </button>
+        <StyledButton onClick={handleUpdate} disabled={loading}>
+          
+        </StyledButton>
         {Object.keys(techCategories).map(category => (
           <DropZone
             key={category}
@@ -107,16 +128,17 @@ const TechDragDrop = ({ projectid }) => {
             handleUpdate={handleUpdate}
             loading={loading}
           >
-            <button onClick={() => handleRemoveItem(category)}>Clear {category}</button>
+            <StyledButton onClick={() => handleRemoveItem(category)}>Clear {category}</StyledButton>
             <h3>{category}</h3>
             {droppedItems[category]?.map((item, index) => (
               <DraggableTechSymbol key={index} {...item} />
             ))}
           </DropZone>
         ))}
+        {error && <p style={{ color: 'red' }}>Error updating tech stack: {error.message}</p>}
       </DropZoneContainer>  
-      {error && <p style={{ color: 'red' }}>Error updating tech stack: {error.message}</p>}
     </DragDropContainer>
   );
 };
+
 export default TechDragDrop;
