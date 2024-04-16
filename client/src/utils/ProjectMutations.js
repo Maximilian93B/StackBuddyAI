@@ -29,8 +29,21 @@ mutation CreateProject(
 // Update an exisiting project 
 // Allows user to change all apsects of project details 
 export const UPDATE_PROJECT = gql`
-mutation UpdateProject($id: ID!, $title: String, $description: String, $userQueries: [String], $techSelection: [TechCategoryInput], $comments: [String]) {
-  updateProject(id: $id, title: $title, description: $description, userQueries: $userQueries, techSelection: $techSelection, comments: $comments) {
+mutation UpdateProject(
+  $id: ID!, 
+  $title: String, 
+  $description: String, 
+  $userQueries: [String], 
+  $techSelection: UpdateTechCategoryInput, 
+  $comments: [String]
+) {
+  updateProject(id: $id, 
+    title: $title, 
+    description: $description, 
+    userQueries: $userQueries, 
+    techSelection: $techSelection, 
+    comments: $comments
+  ) {
       id
       title
       description
@@ -50,8 +63,14 @@ mutation UpdateProject($id: ID!, $title: String, $description: String, $userQuer
 `;
 
 export const UPDATE_PROJECT_TECH = gql`
-mutation updateProjectTech($projectId: ID!, $techSelection: [TechCategoryInput!]! ) {
-updateProject(id: $projectId, techSelection: $techSelection) {
+mutation updateProjectTech(
+  $projectId: ID!, 
+  $techSelection: UpdateTechCategoryInput! 
+) {
+updateProject(
+  id: $projectId, 
+  techSelection: $techSelection
+) {
   id
   techSelection {
     category
