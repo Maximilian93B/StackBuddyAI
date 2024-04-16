@@ -1,13 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import WsDashBoard from '../components/WorkStationDashboard';
+
 import AuthService from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import StackBuddyInsights from '../components/StackBuddy/AIinsight';
 import { useProject } from '../utils/UserProjectContext';
 // Added Genereal styles 
-import ProjectDetails from '../components/ProjectDetails'; // Adjust if you have this component or create it
 import QuillEditor from '../components/QuillEditor';
 
 const PageContainer = styled.div` 
@@ -116,23 +115,32 @@ function MyWorkSpace() {
     handleContentChange(editor.getHTML()); // or editor.getText() if you need the text
   };
 
+
+
+  // Set state for StackBuddy 
+  const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(true);
+
+// Function to toggle StackBuddy 
+const toggleStackBuddy = () => {
+  setIsStackBuddyOpen(!isStackBuddyOpen);
+};
+
+
     return (
         <PageContainer>
-          <DashboardContainer>
-      <WsDashBoard />
-          </DashboardContainer>
             <ContentContainer>
-        
+            {selectedProject && <ProjectDetails project={selectedProject} />}
+            <ToggleButton onClick={toggleStackBuddy}>
+            {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
+          </ToggleButton>
+          {isStackBuddyOpen && <StackBuddyInsights />}
             <StackBuddyContainer>
             <QuillContainer>
           {selectedProject && <QuillEditor content={selectedProject.description} />}
            </QuillContainer>
           </StackBuddyContainer>
-              <QuillEditor/>
+             
             </ContentContainer>
-            <ProjectsContainer>
-            <StackBuddyInsights />
-            </ProjectsContainer>
         </PageContainer>
     );
 };
