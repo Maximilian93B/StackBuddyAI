@@ -66,23 +66,6 @@ border-radius: 5px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 font-family: 'Poppins', sans-serif; 
 // animation
-
-@keyframes shake {
-  0% { 
-    transform: rotate(3deg);
-  }
-  50% {
-   transform: rotate(-5deg);
-  }
-  70% {
-    transform: rotate(5deg);
-  }
-
-  100% {
-    transform: rotate(3deg);
-  }
-}
-    animation: shake 2s ease-in-out infinite;
 `;
 
 
@@ -121,9 +104,6 @@ function Workstation() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <ToggleButton onClick={toggleStackBuddy}>
-            {isStackBuddyOpen ? "Hide StackBuddy" : "👨🏽‍💻 StackBuddy"}
-          </ToggleButton>
       <PageContainer>
         <Dashboard />
         <TechDragDrop />

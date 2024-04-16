@@ -173,7 +173,7 @@ function IntroductionPage() {
       <ContentContainer style={contentAnimation}>
         <AnimatedHeader style={headerAnimation}>Welcome to StackBuddyAI</AnimatedHeader>
         <AnimatedSubHeader style={subHeaderAnimation}>
-        StackBuddy is designed to be the ultimate companion for developers at every level, especially those just starting their coding journey. This innovative app combines advanced AI technology with a comprehensive understanding of software development to provide personalized tech stack recommendations. Whether you're building a simple web app or a complex, scalable system, StackBuddy guides you in selecting the ideal technologies that align with your project requirements.
+        StackBuddyAI is designed to be the ultimate companion for developers at every level, especially those just starting their coding journey. This innovative app combines advanced AI technology to provide personalized tech stack recommendations. Whether you're building a simple web app or a complex, scalable system, StackBuddy guides you in selecting the ideal technologies that align with your project goals!
         </AnimatedSubHeader>
         <Button style={buttonAnimation} onClick={() => setIsAuthVisible(!isAuthVisible)}>Join Now</Button>
       </ContentContainer>
