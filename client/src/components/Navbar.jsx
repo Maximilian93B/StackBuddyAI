@@ -56,8 +56,9 @@ return(
     <Brand href="/">StackBuddyAI</Brand>
     <NavLink to="/" style={activeStyle}>Home</NavLink>
     <NavLink to="/introduction" style={activeStyle}>Introduction</NavLink>
+    <NavLink to="/CreateWithStackBuddy" style={activeStyle}>Create With StackBuddy</NavLink>
     <NavLink to="/Workstation" style={activeStyle}>My Workstation</NavLink>
-    <NavLink to="/MyWorkSpace" style={activeStyle}>My WorkSpace</NavLink>
+   
   </Nav>
 );
 }

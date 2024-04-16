@@ -6,6 +6,7 @@ import { UPDATE_PROJECT_TECH } from '../utils/ProjectMutations';
 import DropZone from './DropZone';
 import { techCategories } from '../utils/techData'; // import tech data 
 import DraggableTechSymbol from './DraggableTechSymbol';
+import { useProject } from '../utils/UserProjectContext';
 // Testing for hard coded Tech symbol
 //import { FaDatabase, FaNode, FaReact, FaVuejs, FaAngular, FaCss3, FaServer } from 'react-icons/fa';
 
@@ -22,9 +23,9 @@ display: flex;
 min-height: 100vh;
 width: 30vw;
 flex-direction: column;
-background: #BBD2C5;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+background: #005C97;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
 padding: 10px;
 border-radius: 8px;
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -32,6 +33,7 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 
 const TechDragDrop = ({ projectid }) => {
+
   const [droppedItems, setDroppedItems] = useState({});
   const [updateProjectTech, { loading, error }] = useMutation(UPDATE_PROJECT_TECH);
 
@@ -46,13 +48,23 @@ const TechDragDrop = ({ projectid }) => {
 
   // Handle updating the tech stack
   const handleUpdate = async () => {
-    const updatesTechSelection = Object.entries(droppedItems).map(([category, techs]) => ({
-      category,
-      technologies: techs.map(tech => tech.id)
-    }));
+    const updatesTechSelection = {
+      add: Object.entries(droppedItems).map(([category, techs]) => ({
+          category,
+          technologies: techs.map(tech => tech.id)
+      })),
+      remove: []
+  };
+
+  console.log(JSON.stringify(updatesTechSelection, null, 2));
 
     try {
-      await updateProjectTech({ variables: { techSelection: updatesTechSelection } });
+      await updateProjectTech({
+        variables: { 
+          projectId: "661b25139de2ed29ae867def",// projectid,
+          techSelection: updatesTechSelection 
+        } 
+      });
       console.log('Tech selection updated successfully!');
     } catch (error) {
       console.error('Error updating tech stack:', error.message);
@@ -75,6 +87,9 @@ const TechDragDrop = ({ projectid }) => {
         <TechCategory key={category} category={category} symbols={symbols} />
       ))}
       <DropZoneContainer>
+        <button onClick={handleUpdate} disabled={loading}>
+          Update Project Tech
+        </button>
         {Object.keys(techCategories).map(category => (
           <DropZone
             key={category}

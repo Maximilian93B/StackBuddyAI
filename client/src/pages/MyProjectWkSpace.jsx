@@ -1,13 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Dashboard from '../components/Dashboard';
-import QuillEditor from '../components/QuillEditor';
-import StackBuddyAI from '../components/StackBuddyAI';
+
 import AuthService from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
-import DropZone from '../components/DropZone';
-
+import StackBuddyInsights from '../components/StackBuddy/AIinsight';
+import { useProject } from '../utils/UserProjectContext';
 // Added Genereal styles 
+import QuillEditor from '../components/QuillEditor';
 
 const PageContainer = styled.div` 
   display: flex;
@@ -91,6 +91,15 @@ font-family: 'Poppins', sans-serif; //
 
 function MyWorkSpace() {
   const navigate = useNavigate();
+  // Custom hook for project context
+  const { selectedProject } = useProject();
+
+  useEffect(() => {
+    console.log('Selected Project', selectedProject);
+    // Right logic for project here
+    
+
+  }, [selectedProject]); 
 
 
   useEffect(() => {
@@ -98,6 +107,14 @@ function MyWorkSpace() {
         navigate('/login');
     }
 }, [navigate]);
+
+
+  //Quill Editor 
+  const handleChange = (content, delta, source, editor) => {
+    setContent(content);
+    handleContentChange(editor.getHTML()); // or editor.getText() if you need the text
+  };
+
 
 
   // Set state for StackBuddy 
@@ -111,23 +128,19 @@ const toggleStackBuddy = () => {
 
     return (
         <PageContainer>
-          <DashboardContainer>
-          <Dashboard />
-          </DashboardContainer>
             <ContentContainer>
-            <StackBuddyContainer>
+            {selectedProject && <ProjectDetails project={selectedProject} />}
             <ToggleButton onClick={toggleStackBuddy}>
             {isStackBuddyOpen ? "Hide StackBuddy" : "Use StackBuddy"}
-            </ToggleButton>
-            {isStackBuddyOpen && <StackBuddyAI isVisible={isStackBuddyOpen} onClose={toggleStackBuddy} />}
-          </StackBuddyContainer>
+          </ToggleButton>
+          {isStackBuddyOpen && <StackBuddyInsights />}
+            <StackBuddyContainer>
             <QuillContainer>
-              <QuillEditor/>
-            </QuillContainer>
+          {selectedProject && <QuillEditor content={selectedProject.description} />}
+           </QuillContainer>
+          </StackBuddyContainer>
+             
             </ContentContainer>
-            <ProjectsContainer>
-            <Dashboard/>
-            </ProjectsContainer>
         </PageContainer>
     );
 };

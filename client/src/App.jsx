@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import InfoTab from './components/InfoTab';
 import NotFoundPage from './pages/ErrorPage';
 import  MyWorkSpace from './pages/MyProjectWkSpace';
+import CreateWithStackBuddy from './pages/CreateWithStackBuddy';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -38,8 +39,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-
-
   return (
     <>
       <ApolloProvider client={client}>
@@ -49,8 +48,10 @@ function App() {
           <Route path = '/workstation' element = {<Workstation/> } />
           <Route path = '/introduction' element = {<InfoTab/>} />
           <Route path ='/MyWorkSpace' element={<MyWorkSpace/>} />
+          <Route path ='/CreateWithStackBuddy' element={<CreateWithStackBuddy/>} />
+
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
-          {/** Route for unmatched paths , Use a wildcard '*' */}
+          {/** Route for unmatched paths , Useing a wildcard '*' */}
           <Route path ='*' element ={<NotFoundPage />} />
         </Routes>
         <Footer />

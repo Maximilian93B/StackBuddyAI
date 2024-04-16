@@ -88,7 +88,7 @@ const projectResolvers = {
       }
     },
   
-    // Update a projects properties 
+    // Update a projects properties
     updateProject: async (_, {id, title, description, addUserQueries, removeUserQueryIds, addTechSelection, removeTechSelectionId, addComments, removeCommentIds, notes }, context) => {
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to update a project');
