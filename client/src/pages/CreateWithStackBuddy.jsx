@@ -105,6 +105,12 @@ const Spacer = styled.div`
   height: 20px; // Adjust the height for more or less space
 `;
 
+// Loading 
+const LoadingIndicator = styled.div`
+  font-size: 1.2rem;
+  color: #ffffff;
+`;
+
 const CreateWithStackBuddy = () => {
   const [inputTitle, setInputTitle] = useState('');
   const [inputDescription, setInputDescription] = useState('');
@@ -171,10 +177,17 @@ const CreateWithStackBuddy = () => {
     delay: 300,
   });
 
+  //StackBuddy Insights animations 
+  const insightsProps = useSpring({
+    from: { opacity: 0, transform: 'translateY(-30px)' },
+    to: { opacity: 1, transform: 'translateY(0)' },
+    delay: 1000, // Delay the animation
+  });
+
   return (
     <Container>
     <AnimatedHeader style={headerProps}>
-      {enteringTitle ? 'Creat a Project With StackBuddy!' : 'Tell StackBuddy about your idea.'}
+      {enteringTitle ? "Create a Project with StackBuddy!" : "Tell StackBuddy about your idea." }
     </AnimatedHeader>
     <InputField
       type="text"
@@ -183,19 +196,20 @@ const CreateWithStackBuddy = () => {
       onChange={e => enteringTitle ? setInputTitle(e.target.value) : setInputDescription(e.target.value)}
       onKeyPress={handleKeyPress}
     />
-    {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
-    {insights && (
-      <InsightsContainer>
-        <InsightHeader>
-          <FaLightbulb style={{ marginRight: '10px' }} /> {/* Icon with some spacing */}
-          StackBuddy Insights
-        </InsightHeader>
-        {insights}
-        <Spacer/>
-        <ProceedButton onClick={handleNavigate}>Use Your Workstaion</ProceedButton>
-      </InsightsContainer>
-    )}
-  </Container>
+     {loading && <LoadingIndicator>Loading...</LoadingIndicator>}
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
+   {insights && (
+        <InsightsContainer style={insightsProps}>
+          <InsightHeader>
+            <FaLightbulb style={{ marginRight: '10px' }} /> {/* Icon with some spacing */}
+            StackBuddy Insights
+          </InsightHeader>
+          {insights}
+          <Spacer />
+          <ProceedButton onClick={handleNavigate}>Use Your Workstation</ProceedButton>
+        </InsightsContainer>
+      )}
+    </Container>
 );
 };
 

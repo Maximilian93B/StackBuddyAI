@@ -173,7 +173,7 @@ function IntroductionPage() {
       <ContentContainer style={contentAnimation}>
         <AnimatedHeader style={headerAnimation}>Welcome to StackBuddyAI</AnimatedHeader>
         <AnimatedSubHeader style={subHeaderAnimation}>
-        StackBuddyAI is designed to be the ultimate companion for developers at every level, especially those just starting their coding journey. This innovative app combines advanced AI technology to provide personalized tech stack recommendations. Whether you're building a simple web app or a complex, scalable system, StackBuddy guides you in selecting the ideal technologies that align with your project goals!
+        Meet StackBuddyAI, the ultimate project planning companion for developers! Whether you're a seasoned developer or just dipping your toes into the world of coding, StackBuddyAI has your back. This cutting-edge app harnesses the power of AI to give you tailor-made recommendations for your tech stack. From crafting a sleek website to building a robust, future-proof system, StackBuddyAI is your trusty guide, helping you choose the perfect tools to bring your project to life. Say goodbye to confusion and hello to confident coding with StackBuddyAI by your side!
         </AnimatedSubHeader>
         <Button style={buttonAnimation} onClick={() => setIsAuthVisible(!isAuthVisible)}>Join Now</Button>
       </ContentContainer>

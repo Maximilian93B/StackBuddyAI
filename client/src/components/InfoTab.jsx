@@ -19,11 +19,11 @@ font-family: 'Poppins', sans-serif; //
 `;
 
 
-const AnimatedHeader = styled(animated.h1)`
-  color: white;
+const AnimatedHeader = styled(animated.h1)`  
+color: white;
   text-align: center;
-  font-size: 4rem; // Customize size as needed
-  margin-top: 5vh;
+  font-size: 3.7rem; // Customize size as needed
+  margin-top: 6vh;
   
 `;
 
@@ -38,7 +38,7 @@ const ButtonContainer = styled.div`
 display: flex
 justify-content: center;
 align-items: center;
-margin-top: 5vh;
+margin-top: 6vh;
 gap: 20px;
 `;
 
@@ -105,7 +105,7 @@ const InfoTab = () => {
   
       return (
         <Container>
-          <AnimatedHeader style={headerProps}>Create, Validate, Visualize</AnimatedHeader>
+          <AnimatedHeader style={headerProps}>Empowering Developers, One Stack at a Time</AnimatedHeader>
           <AnimatedSubheader style={subHeaderProps}>
             Discover how our AI-driven tool can expedite the development planning process.
           </AnimatedSubheader>
