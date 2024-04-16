@@ -41,7 +41,6 @@ const DropZone = ({ onDrop, onRemoveItem, children, category, items = [] }) => {
 
 
   const handleClick = (item) => {
-<<<<<<< HEAD
     console.log(`Item clicked: ${item.id}`,item);
     onRemoveItem(item.id);
 };
@@ -54,23 +53,6 @@ return (
       ))}
   </StyledDropZone>
 );
-=======
-      console.log(`Item clicked: ${item.id}`,item);
-      onRemoveItem(item.id);
-  };
-
-
-  return (
-    <StyledDropZone ref={drop}>
-        {children}
-        {items.map(item => (
-            <div key={item.id} onClick={() => handleClick(item)} style={{ padding: '10px', margin: '5px', cursor: 'pointer' }}>
-              
-            </div>
-        ))}
-    </StyledDropZone>
-  );
->>>>>>> main
 };
 export default DropZone;
   
