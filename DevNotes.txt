@@ -146,3 +146,9 @@ Variables :
   ],
   "comments": ["Initial commit", "Added React"]
 }
+
+
+
+User FLow 
+
+Landing Page -----> Intro -----> Prompt  the AI ----> 

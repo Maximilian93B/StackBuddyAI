@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import StackBuddyInsights from '../components/StackBuddy/AIinsight';
 import { useProject } from '../utils/UserProjectContext';
 // Added Genereal styles 
+import ProjectDetails from '../components/ProjectDetails'; // Adjust if you have this component or create it
+import QuillEditor from '../components/QuillEditor';
 
 const PageContainer = styled.div` 
   display: flex;
@@ -107,14 +109,11 @@ function MyWorkSpace() {
 }, [navigate]);
 
 
-  // Set state for StackBuddy 
-  const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(true);
-
-// Function to toggle StackBuddy 
-const toggleStackBuddy = () => {
-  setIsStackBuddyOpen(!isStackBuddyOpen);
-};
-
+  //Quill Editor 
+  const handleChange = (content, delta, source, editor) => {
+    setContent(content);
+    handleContentChange(editor.getHTML()); // or editor.getText() if you need the text
+  };
 
     return (
         <PageContainer>
@@ -122,12 +121,13 @@ const toggleStackBuddy = () => {
       <WsDashBoard />
           </DashboardContainer>
             <ContentContainer>
-            <StackBuddyContainer>
         
-          </StackBuddyContainer>
+            <StackBuddyContainer>
             <QuillContainer>
-  
-            </QuillContainer>
+          {selectedProject && <QuillEditor content={selectedProject.description} />}
+           </QuillContainer>
+          </StackBuddyContainer>
+              <QuillEditor/>
             </ContentContainer>
             <ProjectsContainer>
             <StackBuddyInsights />

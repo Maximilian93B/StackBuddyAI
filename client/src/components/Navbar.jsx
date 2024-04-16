@@ -58,6 +58,7 @@ return(
     <NavLink to="/introduction" style={activeStyle}>Introduction</NavLink>
     <NavLink to="/Workstation" style={activeStyle}>My Workstation</NavLink>
     <NavLink to="/MyWorkSpace" style={activeStyle}>My WorkSpace</NavLink>
+    <NavLink to="/Phase1" style={activeStyle}>Phase1</NavLink>
   </Nav>
 );
 }
