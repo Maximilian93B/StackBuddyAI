@@ -46,7 +46,6 @@ const DropZone = ({ onDrop, onRemoveItem, children, category, items = [] }) => {
 };
 
 
-
 return (
   <StyledDropZone ref={drop}>
       {children}
