@@ -14,7 +14,7 @@
  padding: 5px;
  margin: 10px;
  border-radius: 10px;
- background: white;
+ background: linear-gradient(to bottom, #005C97, white); 
  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
 `;
 
