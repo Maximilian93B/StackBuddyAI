@@ -4,8 +4,8 @@ export const techCategories = {
     Databases: [
       { id: 'mongodb', icon: <FaDatabase />, label: 'MongoDB', color: '', description: 'A document-oriented NoSQL database used for high volume data storage.'},
       { id: 'SQL', icon: <FaDatabase />, label: 'SQL Server', color: '', description: 'A relational database management system developed by Microsoft.'},
-      { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '#336791', description: 'An open source relational database known for reliability and data integrity.'},
-      { id: 'Redis', icon: <FaDatabase />, label: 'Redis', color: '#D82C20', description: 'An in-memory data structure store, used as a database, cache, and message broker.'},
+      { id: 'PostgreSQL', icon: <FaDatabase />, label: 'PostgreSQL', color: '', description: 'An open source relational database known for reliability and data integrity.'},
+      { id: 'Redis', icon: <FaDatabase />, label: 'Redis', color: '', description: 'An in-memory data structure store, used as a database, cache, and message broker.'},
       { id: 'MariaDB', icon: <FaDatabase />, label: 'MariaDB', color: '', description: 'A community-developed fork of MySQL intended to remain free under the GNU GPL.'},
       { id: 'OracleDatabase', icon: <FaDatabase />, label: 'Oracle Database', color: '', description: 'A multi-model database management system primarily designed for enterprise grid computing.'},
       { id: 'Firebase', icon: <FaDatabase />, label: 'Firebase', color: '', description: 'A platform developed by Google for creating mobile and web applications.'},

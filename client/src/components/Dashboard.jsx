@@ -11,9 +11,8 @@ const DashboardContainer = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background: #005C97;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  background: -webkit-linear-gradient(to right, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   padding: 20px;
   border-radius: 8px;
 `;
@@ -27,7 +26,10 @@ const DropdownContainer = styled.div`
 const DropdownHeader = styled.div`
   cursor: pointer;
   padding: 10px 20px;
-  background: linear-gradient(to bottom, #005C97, white); 
+  background: #abbaab;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ffffff, #abbaab);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffffff, #abbaab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
@@ -47,6 +49,7 @@ const DropdownContent = styled(animated.div)`
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-top: 5px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 // Greeting :)
@@ -112,6 +115,7 @@ const Dropdown = ({ title, children }) => {
   );
 };
 const Dashboard = () => {
+  const { setSelectedProject } = useProject();
   // Fetch user data using Apollo Client 
   // use GET_ME to fetch all user data first 
   // then display data in dashbaord 
@@ -146,26 +150,21 @@ const Dashboard = () => {
           <p>Email: {data.me.email}</p>
         </Dropdown>
         <Dropdown title="My Projects">
-          {data.me.currentProjects.length > 0 ? (
-            <ProjectList>
-              {data.me.currentProjects.map((project) => (
-                <ProjectItem key={project.id}>
-                  <ProjectParagraph>Title: {project.title}</ProjectParagraph>
-                  <ProjectParagraph>Description: {project.description}</ProjectParagraph>
-                  <ProjectParagraph>
-                    Tech Stack: {project.techSelection.map(tech => (
-                      <TechStack key={tech.category}>{tech.category}: {tech.technologies.join(', ')}</TechStack>
-                    )).join('; ')}
-                  </ProjectParagraph>
-                  <ProjectParagraph>Comments: {project.comments.join(', ')}</ProjectParagraph>
-                  <ProjectParagraph>Date: {new Date(project.dateStamp).toLocaleDateString()}</ProjectParagraph>
-                </ProjectItem>
-              ))}
-            </ProjectList>
-          ) : (
-            <NoProjectsText>No projects found</NoProjectsText>
-          )}
-        </Dropdown>
+                {data.me.currentProjects.length > 0 ? (
+                    <ProjectList>
+                        {data.me.currentProjects.map(project => (
+                            <ProjectItem key={project.id} onClick={() => {
+                              console.log("Project selected:", project);
+                              setSelectedProject(project);
+                          }}>
+                              <ProjectParagraph>Title: {project.title}</ProjectParagraph>
+                          </ProjectItem>
+                        ))}
+                    </ProjectList>
+                ) : (
+                    <NoProjectsText>No projects found</NoProjectsText>
+                )}
+            </Dropdown>
         <Dropdown title="Create A Project">
           <CreateProjectForm />
         </Dropdown>
