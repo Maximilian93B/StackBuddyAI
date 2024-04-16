@@ -6,12 +6,10 @@ import styled from 'styled-components';
 import TechDragDrop from '../components/TechDragDrop';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import StackBuddy from '../components/StackBuddyAI';
+import StackBuddyAI from '../components/StackBuddyAI';  // Adjust the path according to your project structure
 import { useProject } from '../utils/UserProjectContext';
 
 
-
-// StackBuddy Overlay 
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -21,16 +19,15 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); // Semi-transparent background
-  z-index: 1000; // Ensure it's on top of everything
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 `;
-
 
 const PageContainer = styled.div` 
   display: flex;
   flex-grow:1;
   height:auto; //100vh; // Full height of the viewport
-  width: auto;
+  width: 100vw;
   font-family: "Open Sans", sans-serif;
   background: #134E5E;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #71B280, #134E5E);  /* Chrome 10-25, Safari 5.1-6 */
@@ -39,23 +36,28 @@ const PageContainer = styled.div`
 
 
 const ContentContainer = styled.div`
-display: flex;
-flex-grow: 1; // Takes up the remaining space
-padding: 10px;
-flex-direction: column; // Stack children vertically
-align-items: center; // Center children horizontally
-font-family: 'Poppins', sans-serif; //
+ width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
+
+
+
+const ButtonContainer = styled.div`
+position: fixed; // Fix the button on the viewport
+  bottom: 10%;
+  right: 86%;
+  z-index: 1100; // Higher z-index to ensure it's on top of all other conten
+`;
+
+
+
 
 const ToggleButton = styled.button`
 cursor: pointer;
 background-color: #52E370;
-// background: #134E5E;  /* fallback for old browsers */
-// background-color: #71B280;  /* Chrome 10-25, Safari 5.1-6 */
-
-// background-color: #4CAF50; /* Green background */
 border: none;
-// color: white;
 padding: 10px 20px;
 text-align: center;
 text-decoration: none;
@@ -64,16 +66,14 @@ margin: 10px 2px;
 transition: background-color 0.3s ease;
 border-radius: 5px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-font-family: 'Poppins', sans-serif; 
-// animation
+font-family: 'Poppins', sans-serif;
+color: white; // Ensure text is visible
 `;
 
 
 
 
 function Workstation() {
-  
-  
   const navigate = useNavigate();
   const [isStackBuddyOpen, setIsStackBuddyOpen] = useState(false);
   const [editorContent, setEditorContent] = useState('');
@@ -93,7 +93,9 @@ function Workstation() {
   }, [selectedProject]);
 
   
-  const toggleStackBuddy = () => setIsStackBuddyOpen(prev => !prev);
+ // StackBuddy Toggle 
+ const toggleStackBuddy = () => setIsStackBuddyOpen(!isStackBuddyOpen);
+
 
   // Quill Editor handler 
   const handleContentChange = (content) => {
@@ -107,17 +109,17 @@ function Workstation() {
       <PageContainer>
         <Dashboard />
         <TechDragDrop />
-        <ContentContainer>
-          
-          
-        </ContentContainer>
+        <ButtonContainer>
+          <ToggleButton onClick={toggleStackBuddy}>
+            {isStackBuddyOpen ? 'Hide StackBuddy' : 'Show StackBuddy'}
+          </ToggleButton>
+        </ButtonContainer>
         {isStackBuddyOpen && (
           <Overlay>
-            <StackBuddy isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
+            <StackBuddyAI isVisible={isStackBuddyOpen} onClose={() => setIsStackBuddyOpen(false)} />
           </Overlay>
         )}
       </PageContainer>
-      
     </DndProvider>
   );
 }

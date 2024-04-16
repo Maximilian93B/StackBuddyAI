@@ -9,18 +9,16 @@
  display: flex;
  flex-direction: column;
  align-items: center;
- height: 100%; // Full height to ensure there is space for the button at the bottom
- width: 80%;
- padding: 5px;
+ height: 80%; // Full height to ensure there is space for the button at the bottom
+ width: 70%;
+ padding: 10px;
  margin: 10px;
  border-radius: 10px;
  background: #abbaab;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #ffffff, #abbaab);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #ffffff, #abbaab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
- 
  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
+
 `;
 
 
@@ -43,6 +41,20 @@ const DropZone = ({ onDrop, onRemoveItem, children, category, items = [] }) => {
 
 
   const handleClick = (item) => {
+<<<<<<< HEAD
+    console.log(`Item clicked: ${item.id}`,item);
+    onRemoveItem(item.id);
+};
+return (
+  <StyledDropZone ref={drop}>
+      {children}
+      {items.map(item => (
+          <div key={item.id} onClick={() => handleClick(item)} style={{ padding: '10px', margin: '5px', cursor: 'pointer' }}>
+          </div>
+      ))}
+  </StyledDropZone>
+);
+=======
       console.log(`Item clicked: ${item.id}`,item);
       onRemoveItem(item.id);
   };
@@ -58,7 +70,7 @@ const DropZone = ({ onDrop, onRemoveItem, children, category, items = [] }) => {
         ))}
     </StyledDropZone>
   );
+>>>>>>> main
 };
-
 export default DropZone;
   
