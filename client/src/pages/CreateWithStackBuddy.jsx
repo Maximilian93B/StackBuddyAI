@@ -73,14 +73,30 @@ color: #ffffff;
 `;
 
 const ProceedButton = styled.button`
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 20px;
+font-size: 16px;
+letter-spacing: 1px; 
+color: black; 
+cursor: pointer;
+  background: #11998e;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   
+border: none; 
+padding: 15px 30px; 
+border-radius: 25px; 
+box-shadow: 0 4px 8px rgba(0,0,0,0.15); // Soft shadow for a subtle depth effect
+transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; // Smooth transitions for hover effects
+
+&:hover, &:focus {
+  background: white;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3); 
+  transform: translateY(-2px); 
+}
+
+&:active {
+  transform: translateY(1px); 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
 `;
 
 
