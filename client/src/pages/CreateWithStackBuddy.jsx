@@ -5,6 +5,8 @@ import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT } from '../utils/ProjectMutations';
 import axios from "axios";
 import { FaLightbulb } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 
 const Container = styled.div`
 display: flex;
@@ -22,7 +24,7 @@ font-family: 'Poppins', sans-serif; //
 const AnimatedHeader = styled(animated.h1)`
   color: white;
   text-align: center;
-  font-size: 4rem; // Customize size as needed
+  font-size: 3.7rem; // Customize size as needed
   margin-top: 5vh;
   
 `;
@@ -65,22 +67,36 @@ const InsightHeader = styled.div`
 `;
 
 
-
-
-
 const SuccessMessage = styled.div`
 font-size: 1.2rem;
 color: #ffffff;
 `;
 
+const ProceedButton = styled.button`
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+`;
 
-const Phase1 = () => {
+
+// Spacer for navigate button 
+const Spacer = styled.div`
+  height: 20px; // Adjust the height for more or less space
+`;
+
+const CreateWithStackBuddy = () => {
   const [inputTitle, setInputTitle] = useState('');
   const [inputDescription, setInputDescription] = useState('');
   const [enteringTitle, setEnteringTitle] = useState(true);
   const [createProject, { loading, error }] = useMutation(CREATE_PROJECT);
   const [successMessage, setSuccessMessage] = useState('');
   const [insights, setInsights] = useState('');
+  const navigate = useNavigate();
 
   const fetchInsights = async (title, description) => {
     try {
@@ -119,12 +135,20 @@ const Phase1 = () => {
     }
   };
 
+
+  // Send handleSubmit() on Enter key 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSubmit();
     }
   };
 
+  // Prompt the user to go to the /Workspace page
+  const handleNavigate = () => {
+    navigate('/workstation')
+  };
+
+  // Header animations
   const headerProps = useSpring({
     from: { opacity: 0, transform: 'translateY(-30px)' },
     to: { opacity: 1, transform: 'translateY(0)' },
@@ -134,11 +158,11 @@ const Phase1 = () => {
   return (
     <Container>
     <AnimatedHeader style={headerProps}>
-      {enteringTitle ? 'Enter Title' : 'Enter Description'}
+      {enteringTitle ? 'Creat a Project With StackBuddy!' : 'Tell StackBuddy about your idea.'}
     </AnimatedHeader>
     <InputField
       type="text"
-      placeholder={enteringTitle ? "Type your project's title..." : "Type your project's description..."}
+      placeholder={enteringTitle ? "Type your project's title..." : "Enter your project details"}
       value={enteringTitle ? inputTitle : inputDescription}
       onChange={e => enteringTitle ? setInputTitle(e.target.value) : setInputDescription(e.target.value)}
       onKeyPress={handleKeyPress}
@@ -151,45 +175,12 @@ const Phase1 = () => {
           StackBuddy Insights
         </InsightHeader>
         {insights}
+        <Spacer/>
+        <ProceedButton onClick={handleNavigate}>Use Your Workstaion</ProceedButton>
       </InsightsContainer>
     )}
   </Container>
 );
 };
 
-export default Phase1;
-
-
-
-/**
- * const handleSubmit = async () => {
-    try {
-      const response = await createProject({
-        variables: {
-          title: inputTitle,
-          description: inputDescription
-        },
-      });
-
-      if (response.data) {
-        setSuccessMessage('Project created successfully!');
-        setInputTitle(''); // Clear title
-        setInputDescription(''); // Clear description
-      }
-    } catch (e) {
-      console.error('Error creating project:', e);
-      setSuccessMessage('Failed to create project.');
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      if (enteringTitle) {
-        setEnteringTitle(false);  // Switch to description entry
-      } else {
-        handleSubmit();  // Submit the form after description
-      }
-    }
-  };
-
- */
+export default CreateWithStackBuddy;
