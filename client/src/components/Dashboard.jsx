@@ -49,6 +49,7 @@ const DropdownContent = styled(animated.div)`
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-top: 5px;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 // Greeting :)
