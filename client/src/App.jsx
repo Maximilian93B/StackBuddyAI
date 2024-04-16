@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import InfoTab from './components/InfoTab';
 import NotFoundPage from './pages/ErrorPage';
 import  MyWorkSpace from './pages/MyProjectWkSpace';
+import Phase1 from './pages/Phase1';
 import './App.css';
 
 // Construct main GraphQL API endpoint
@@ -47,6 +48,8 @@ function App() {
           <Route path = '/workstation' element = {<Workstation/> } />
           <Route path = '/introduction' element = {<InfoTab/>} />
           <Route path ='/MyWorkSpace' element={<MyWorkSpace/>} />
+          <Route path ='/Phase1' element={<Phase1/>} />
+
           {/*Define other Routes here exactly like the '/' route above just change the path and element*/}
           {/** Route for unmatched paths , Useing a wildcard '*' */}
           <Route path ='*' element ={<NotFoundPage />} />
