@@ -114,6 +114,7 @@ const Dropdown = ({ title, children }) => {
   );
 };
 const Dashboard = () => {
+  const { setSelectedProject } = useProject();
   // Fetch user data using Apollo Client 
   // use GET_ME to fetch all user data first 
   // then display data in dashbaord 
@@ -148,26 +149,21 @@ const Dashboard = () => {
           <p>Email: {data.me.email}</p>
         </Dropdown>
         <Dropdown title="My Projects">
-          {data.me.currentProjects.length > 0 ? (
-            <ProjectList>
-              {data.me.currentProjects.map((project) => (
-                <ProjectItem key={project.id}>
-                  <ProjectParagraph>Title: {project.title}</ProjectParagraph>
-                  <ProjectParagraph>Description: {project.description}</ProjectParagraph>
-                  <ProjectParagraph>
-                    Tech Stack: {project.techSelection.map(tech => (
-                      <TechStack key={tech.category}>{tech.category}: {tech.technologies.join(', ')}</TechStack>
-                    )).join('; ')}
-                  </ProjectParagraph>
-                  <ProjectParagraph>Comments: {project.comments.join(', ')}</ProjectParagraph>
-                  <ProjectParagraph>Date: {new Date(project.dateStamp).toLocaleDateString()}</ProjectParagraph>
-                </ProjectItem>
-              ))}
-            </ProjectList>
-          ) : (
-            <NoProjectsText>No projects found</NoProjectsText>
-          )}
-        </Dropdown>
+                {data.me.currentProjects.length > 0 ? (
+                    <ProjectList>
+                        {data.me.currentProjects.map(project => (
+                            <ProjectItem key={project.id} onClick={() => {
+                              console.log("Project selected:", project);
+                              setSelectedProject(project);
+                          }}>
+                              <ProjectParagraph>Title: {project.title}</ProjectParagraph>
+                          </ProjectItem>
+                        ))}
+                    </ProjectList>
+                ) : (
+                    <NoProjectsText>No projects found</NoProjectsText>
+                )}
+            </Dropdown>
         <Dropdown title="Create A Project">
           <CreateProjectForm />
         </Dropdown>
