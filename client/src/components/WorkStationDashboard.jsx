@@ -16,6 +16,7 @@ const DashboardContainer = styled.div`
   background: linear-gradient(to right, #005C97, #ffffff); /* Gradient from base color to a lighter shade */
   padding: 20px;
   border-radius: 8px;
+  font-family: 'Poppins', sans-serif; //
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 

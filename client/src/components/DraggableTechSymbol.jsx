@@ -8,10 +8,10 @@ const TechSymbol = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
-padding: 10px;
+padding: 12px;
 margin: 15px 10px;
 background-color: ${props => props.color || '#f0f0f0'};
-border-radius: 5px;
+border-radius: 10px;
 box-shadow: 0 2px 4px rgba(0,0,0,0.20);
 cursor: grab;
 transition: transform 0.2s ease;
