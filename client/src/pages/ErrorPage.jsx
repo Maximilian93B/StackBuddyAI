@@ -107,7 +107,7 @@ const NotFoundPage = () => {
             <ImageContainer>
                 <NotFoundImg src={StackBuddyBot} />
             </ImageContainer>
-            <SubHeader>Sorry! To use StackBuddy Please create an account or Log In</SubHeader>
+            <SubHeader>Sorry You must be logged in! Please create an account or Log In</SubHeader>
             <NavigateButton onClick={handleNavigate}>Sign Up / Log In</NavigateButton>
             </ContentWrapper>
         </ErrorPageContainer>
