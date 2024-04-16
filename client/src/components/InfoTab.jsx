@@ -116,7 +116,7 @@ const InfoTab = () => {
             <Button onMouseEnter={() => showInfo('StackBuddy streamlines tech stack selection with its powerful features: a custom OpenAI GPT Model for personalized recommendations, an intuitive drag-and-drop workspace for easy tech stack assembly, comprehensive tools for managing project details, and a built-in text editor to boost productivity.')} onMouseLeave={hideInfo}>
               Features
             </Button>
-            <Button onMouseEnter={() => showInfo('Get started using StackBuddyAI today')} onMouseLeave={hideInfo} onClick={() => navigate('/')}>
+            <Button onMouseEnter={() => showInfo('Get started using StackBuddyAI today')} onMouseLeave={hideInfo} onClick={() => navigate('/CreateWithStackBuddy')}>
               Get Started
             </Button>
           </ButtonContainer>

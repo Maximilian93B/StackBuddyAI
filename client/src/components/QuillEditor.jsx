@@ -19,13 +19,16 @@ const QuillContainer = styled.div`
 .ql-toolbar {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background-color: #f4f4f4;
+  background-color: black;
 }
 .ql-container {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   height: 350px; // Adjust based on your needs
   width: 100%; 
+  background: -webkit-linear-gradient(to right, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
 }
 `;
 
