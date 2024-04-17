@@ -1,4 +1,4 @@
-# Stack Buddy AI
+# Tech Stack Buddy AI
 
 <br/>
 <p align="center">
@@ -21,31 +21,45 @@
 </p>
 <br/>
 
-Welcome to the Tech Stack Buddy AI project repository! Tech Stack Buddy AI is your AI-powered assistant, designed to advise on the optimal technology stack for full-stack development projects. Leveraging artificial intelligence, Tech Stack Buddy AI analyzes your project requirements to recommend a customized technology stack that fits your project's needs. Our goal is to streamline the tech stack selection process, making it easier, faster, and more efficient for developers and teams.
+Welcome to the Tech Stack Buddy AI project repository! Imagine an app with not just a pretty interface, but serious brainpower under the hood. Tech Stack Buddy AI isn't just another tool—it's your AI-powered assistant designed to recommend the optimal technology stack tailored to your full-stack development projects. With the wisdom of a seasoned software guru, powered by OpenAI's Turbo Chat Completion model, Tech Stack Buddy AI makes your development journey smoother and your decisions smarter.
+
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+## Demo
+
+You can simply visit the link [Tech Stack Buddy AI][teck-stack-budy]
 
 ## Features
 
 ### Back-End Development
 
-- **Database Schema:** We've designed robust schemas to meticulously store user queries, project descriptions, and the AI's recommended tech stacks. This enables a historical view of decisions and preferences, enhancing future recommendations.
+- **Database Schema:** Our robust schemas store user queries, project details, and AI recommendations, creating a historical tapestry that enhances future recommendations.
 
-- **AI Module Development:** At the heart of Tech Stack Buddy AI is our sophisticated AI module. It engages with users to understand their project requirements and advises on the most suitable tech stack selection. This module is continually learning and evolving with each interaction.
+- **AI Module:** The heart of Tech Stack Buddy AI is our sophisticated AI module, which learns from each interaction to better understand project requirements and suggest the most suitable tech stack.
 
 ### Front-End Development
 
-- **Interactive UI for Project Descriptions:** Our user interface is crafted to simplify the input of project descriptions. Users can choose between a guided step-by-step wizard or a free-form text area, both designed to gather comprehensive project details efficiently.
+- **Interactive UI for Project Descriptions:** Choose between a guided wizard or a free-form text area to input project details, crafted to gather information efficiently.
 
-- **Displaying Recommendations:** The AI's tech stack recommendations are displayed in an interactive and engaging manner. For each suggestion, users can explore the reasoning behind the choice and examine potential alternatives, empowering informed decision-making.
+- **Displaying Recommendations:** Explore why each tech stack is recommended through an interactive interface, empowering you with information to make informed decisions.
 
 ### Security and Authentication
 
-- **JWT for User Authentication:** Security is paramount. Users can create accounts, submit projects, and save their recommendation histories securely using JSON Web Tokens (JWT) for authentication.
+- **JWT for Authentication:** Secure account creation, project submissions, and history saving using JSON Web Tokens.
 
-- **API Security:** We ensure that all interactions between the AI, the database, and the users are safeguarded against unauthorized access, employing best practices in API security.
+- **API Security:** We safeguard all interactions against unauthorized access with top-tier security practices.
 
 ## Getting Started
 
-To start using Tech Stack Buddy AI, clone this repository to your local machine:
+To get Tech Stack Buddy AI running locally:
 
 ```bash
 git clone https://github.com/Maximilian93B/StackBuddyAI.git
@@ -62,10 +76,9 @@ cd StackBuddyAI
 Ensure you have the following installed:
 
 - Node.js and npm
-- Python (for AI module development)
-- MongoDB (for database)
+- MongoDB (for database management)
 
-### Installation
+## Installation
 
 Install backend dependencies:
 
@@ -95,7 +108,7 @@ npm install
 npm start
 ```
 
-Your Tech Stack Buddy AI should now be running locally!
+Tech Stack Buddy AI should now be running on your machine!
 
 ## Contributing
 
@@ -111,3 +124,4 @@ This project is licensed under the [MIT License][mit-license] - see the LICENSE.
 - Special thanks to the open-source community for the invaluable resources and support.
 
 [mit-license]: <https://github.com/Maximilian93B/StackBuddyAI/blob/main/LICENSE>
+[teck-stack-budy]: <https://drive.google.com/file/d/1pol2VsgGR-GUFdxL_1V7-r9hNFqwg4U4/view>
