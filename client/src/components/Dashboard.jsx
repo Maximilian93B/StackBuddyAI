@@ -6,6 +6,8 @@ import { useQuery } from '@apollo/client';
 import { useSpring, animated} from 'react-spring';
 import { useProject } from '../utils/UserProjectContext'; // Adjust the path as needed
 import ProjectDetails from './ProjectDetails';
+
+
 // Styled components for dashboard and dropdown menus 
 const DashboardContainer = styled.div`
   display: flex;
@@ -29,7 +31,6 @@ const DropdownHeader = styled.div`
   background: #abbaab;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #ffffff, #abbaab);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #ffffff, #abbaab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
@@ -84,10 +85,6 @@ const NoProjectsText = styled.p`
   color: #999;
 `;
 
-const TechStack = styled.span`
-  color: #666;
-  font-style: italic;
-`;
 
 
 const Dropdown = ({ title, children }) => {

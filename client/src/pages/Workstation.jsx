@@ -56,7 +56,8 @@ position: fixed; // Fix the button on the viewport
 
 const ToggleButton = styled.button`
 cursor: pointer;
-background-color: #52E370;
+background: -webkit-linear-gradient(to right, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 border: none;
 padding: 10px 20px;
 text-align: center;
@@ -65,9 +66,14 @@ font-size: 1.2rem;
 margin: 10px 2px;
 transition: background-color 0.3s ease;
 border-radius: 5px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 font-family: 'Poppins', sans-serif;
 color: white; // Ensure text is visible
+&:hover, &:focus {
+  background-color: #367C2B; // A darker shade of green on hover/focus for feedback
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2); // Slightly deeper shadow on hover/focus
+  transform: translateY(-2px); // Slight lift effect on hover/focus
+}
 `;
 
 

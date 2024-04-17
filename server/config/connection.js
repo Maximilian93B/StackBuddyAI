@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Mongo URI connection string 
-const MONGODB_URI = 'mongodb://localhost:27017/StackBuddyAI_DB';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/StackBuddyAI_DB';
 
 mongoose.connect(MONGODB_URI, {
 
