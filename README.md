@@ -1,10 +1,8 @@
-# Tech Stack Buddy AI
+# Live URL COMING SOON! 
+
+# StackBuddyAI
 
 ![StackBuddyAI](./client/src/assets/StackBuddy%20Thumbnail%20.png "StackBuddyAI")
-
-
-
-
 
 <br/>
 <p align="center">
@@ -27,7 +25,9 @@
 </p>
 <br/>
 
-Welcome to the Tech Stack Buddy AI project repository! Imagine an app with not just a pretty interface, but serious brainpower under the hood. Tech Stack Buddy AI isn't just another tool—it's your AI-powered assistant designed to recommend the optimal technology stack tailored to your full-stack development projects. With the wisdom of a seasoned software guru, powered by OpenAI's Turbo Chat Completion model, Tech Stack Buddy AI makes your development journey smoother and your decisions smarter.
+StackBuddyAI is the ultimate project planning companion. Whether you're a seasoned developer or just starting your coding journey, StackBuddy AI is an all-in-one project planning tool wrapped in OpenAI's API. It features a custom agent tailored to provide guidance on technology selections for your projects based on their descriptions. This project is a proof of concept for something bigger.
+
+A tool for boardrooms and think tanks, StackBuddy AI can be used by developers to create visual representations, descriptions, and use cases for their tech stack with a unique UI.
 
 ## Table of Contents
 
@@ -41,7 +41,7 @@ Welcome to the Tech Stack Buddy AI project repository! Imagine an app with not j
 
 ## Demo
 
-You can simply visit the link [Tech Stack Buddy AI][teck-stack-budy]
+You can simply visit the link [Stack Buddy AI][]
 
 ## Features
 
@@ -49,23 +49,23 @@ You can simply visit the link [Tech Stack Buddy AI][teck-stack-budy]
 
 - **Database Schema:** Our robust schemas store user queries, project details, and AI recommendations, creating a historical tapestry that enhances future recommendations.
 
-- **AI Module:** The heart of Tech Stack Buddy AI is our sophisticated AI module, which learns from each interaction to better understand project requirements and suggest the most suitable tech stack.
+- **AI Module:** The heart of Stack BuddyAI is our AI module, which learns from each interaction to better understand project requirements and suggest the most suitable tech stack.
 
 ### Front-End Development
 
-- **Interactive UI for Project Descriptions:** Choose between a guided wizard or a free-form text area to input project details, crafted to gather information efficiently.
+- **Interactive UI for Project Descriptions:** With a unique Drag and Drop UI that allows users to drag and drop Technologies into their projects. 
 
-- **Displaying Recommendations:** Explore why each tech stack is recommended through an interactive interface, empowering you with information to make informed decisions.
+- **Displaying Recommendations:** Explore why each technology is recommended through an interactive interface, empowering you with information to make informed decisions.
 
 ### Security and Authentication
 
 - **JWT for Authentication:** Secure account creation, project submissions, and history saving using JSON Web Tokens.
 
-- **API Security:** We safeguard all interactions against unauthorized access with top-tier security practices.
+- **API Security:** We safeguard all interactions against unauthorized access and input validation across many forms.
 
 ## Getting Started
 
-To get Tech Stack Buddy AI running locally:
+To get StackBuddyAI running locally:
 
 ```bash
 git clone https://github.com/Maximilian93B/StackBuddyAI.git
