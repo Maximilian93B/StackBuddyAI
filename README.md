@@ -1,5 +1,11 @@
 # Tech Stack Buddy AI
 
+![StackBuddyAI](./client/src/assets/StackBuddy%20Thumbnail%20.png "StackBuddyAI")
+
+
+
+
+
 <br/>
 <p align="center">
   <a href="https://www.openai.com/" >
